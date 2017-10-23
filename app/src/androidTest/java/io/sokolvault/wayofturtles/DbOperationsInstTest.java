@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import io.sokolvault.wayofturtles.db.BigGoal;
+import io.sokolvault.wayofturtles.model.BigGoal;
 import io.sokolvault.wayofturtles.db.BigGoalDAO;
 import io.sokolvault.wayofturtles.db.GoalsDatabase;
 

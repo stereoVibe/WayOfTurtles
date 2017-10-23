@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles
+package io.sokolvault.wayofturtles.model
 
 abstract class AbstractGoal(argTitle: String) {
     abstract var id: Int?

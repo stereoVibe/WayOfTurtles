@@ -7,12 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.manifest.AndroidManifest;
 import org.robolectric.shadows.ShadowApplication;
 
 import java.util.ArrayList;
 
-import io.sokolvault.wayofturtles.db.BigGoal;
+import io.sokolvault.wayofturtles.model.BigGoal;
 import io.sokolvault.wayofturtles.db.BigGoalDAO;
 import io.sokolvault.wayofturtles.db.GoalsDatabase;
 

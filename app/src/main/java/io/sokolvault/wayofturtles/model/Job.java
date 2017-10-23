@@ -1,15 +1,12 @@
-package io.sokolvault.wayofturtles;
+package io.sokolvault.wayofturtles.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.sokolvault.wayofturtles.db.BigGoal;
-
-@Entity(tableName = "Job_SubGoals")
+@Entity(tableName = "sub_Goals")
 public class Job extends AbstractGoal implements SubGoal<BigGoal> {
 
 //    private String mTitle = super.getTitle();

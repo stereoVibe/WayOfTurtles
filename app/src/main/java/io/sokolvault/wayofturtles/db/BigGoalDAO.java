@@ -7,6 +7,8 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import io.sokolvault.wayofturtles.model.BigGoal;
+
 @Dao
 public interface BigGoalDAO {
 

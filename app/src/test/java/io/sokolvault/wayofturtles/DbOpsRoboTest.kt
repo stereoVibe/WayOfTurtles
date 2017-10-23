@@ -1,13 +1,18 @@
 package io.sokolvault.wayofturtles
 
 import android.content.Context
-import io.sokolvault.wayofturtles.db.BigGoal
+import io.sokolvault.wayofturtles.Utils.DbOps
+import io.sokolvault.wayofturtles.model.BigGoal
 import io.sokolvault.wayofturtles.db.BigGoalDAO
 import io.sokolvault.wayofturtles.db.GoalsDatabase
+import io.sokolvault.wayofturtles.model.Job
+import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowApplication
@@ -20,43 +25,51 @@ class DbOpsRoboTest {
     private lateinit var mBigGoalDAO: BigGoalDAO
     private lateinit var mDatabase: GoalsDatabase
     private lateinit var actual: String
+    private lateinit var bigGoal: BigGoal
     private val LOCK = Any()
+    private val LOCK2 = Any()
 
     @Before
     fun setUp() {
+        bigGoal = BigGoal("title")
         mContext = ShadowApplication.getInstance().applicationContext
         mDatabase = GoalsDatabase.getInstance(mContext)
-//        mBigGoalDAO = mock()
         mBigGoalDAO = mDatabase.bigGoalDAO()
+    }
+
+    @After
+    fun tearDown() {
+        mDatabase.clear()
     }
 
     @Test
     fun shouldInsertBigGoalIntoDBAndCheckForTitle() {
-        val bigGoal = BigGoal("title")
-
-        synchronized(LOCK) {
-            Thread {
-                var bigGoalsList: ArrayList<BigGoal>
-                synchronized(LOCK) {
-                    mBigGoalDAO.insertBigGoal(bigGoal)
-                    bigGoalsList = mBigGoalDAO.all as ArrayList<BigGoal>
-                    actual = bigGoalsList[bigGoalsList.size - 1].title
-//                    TODO: This block below of Java concurrent way should be replaced by concurrent Kotlin library
-                    (LOCK as java.lang.Object).notify()
-                }
-            }.start()
-            //TODO: This block of Java concurrent way should be replaced by concurrent Kotlin library
+        synchronized(LOCK){
+            DbOps.insertBigGoal(LOCK, bigGoal, mBigGoalDAO)
             (LOCK as java.lang.Object).wait()
-            assertEquals(bigGoal.title, actual)
+            actual = bigGoal.title
+            assertEquals("title", actual)
         }
     }
 
     @Test
     fun subGoalShouldBeInsertedOnlyIfItsParentExist(){
+        var localBigGoalID: Int? = null
+
+        synchronized(LOCK2){
+            DbOps.insertBigGoal(LOCK2, bigGoal, mBigGoalDAO)
+            (LOCK2 as java.lang.Object).wait()
+            localBigGoalID = bigGoal.id
+        }
+
         val subGoal = Job.newBuilder()
                 .setTitle("title")
-                .setCompositeGoalID(1)
+                .setCompositeGoalID(localBigGoalID!!)
+                .setTasksQuantity(10)
                 .setDescription("discr")
                 .build()
+
+        assertNotNull(subGoal.compositeGoalID)
+        assertEquals(bigGoal.id, subGoal.compositeGoalID)
     }
 }

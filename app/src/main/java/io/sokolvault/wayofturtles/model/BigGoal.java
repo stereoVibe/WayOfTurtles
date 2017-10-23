@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.db;
+package io.sokolvault.wayofturtles.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
@@ -8,10 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-
-import io.sokolvault.wayofturtles.AbstractGoal;
-import io.sokolvault.wayofturtles.CompositeGoal;
-import io.sokolvault.wayofturtles.SubGoal;
 
 @Entity(tableName = "big_Goals")
 public class BigGoal extends AbstractGoal implements CompositeGoal{

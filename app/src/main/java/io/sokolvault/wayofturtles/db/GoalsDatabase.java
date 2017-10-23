@@ -6,9 +6,8 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.util.Log;
 
-import org.robolectric.annotation.Implements;
-
-import io.sokolvault.wayofturtles.Job;
+import io.sokolvault.wayofturtles.model.BigGoal;
+import io.sokolvault.wayofturtles.model.Job;
 
 
 @Database(entities = {BigGoal.class, Job.class}, version = 1)
@@ -32,6 +31,9 @@ public abstract class GoalsDatabase extends RoomDatabase{
         return sInstance;
     }
 
+    public void clear(){
+        sInstance = null;
+    }
     public abstract BigGoalDAO bigGoalDAO();
 
 }

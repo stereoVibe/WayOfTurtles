@@ -4,54 +4,57 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+
+import io.sokolvault.wayofturtles.AbstractGoal;
+import io.sokolvault.wayofturtles.CompositeGoal;
+import io.sokolvault.wayofturtles.SubGoal;
+
 @Entity(tableName = "big_Goals")
-public class BigGoal {
+public class BigGoal extends AbstractGoal implements CompositeGoal{
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String mTitle;
-    private String mDescription;
-    private double mProgress = 0;
-    private boolean isComplete = false;
+    @Ignore
+    public BigGoal(String title){
+        super(title);
+    }
 
     @Ignore
-    public BigGoal(String mTitle, String mDescription) {
-        this.mTitle = mTitle;
-        this.mDescription = mDescription;
+    public BigGoal(String title, String description) {
+        super(title);
+        super.setDescription(description);
     }
 
-    public BigGoal(int id, String mTitle, String mDescription) {
+    public BigGoal(int id, String title) {
+        super(title);
         this.id = id;
-        this.mTitle = mTitle;
-        this.mDescription = mDescription;
     }
 
-    public String getTitle() {
-        return mTitle;
-    }
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public int getId() {
-        return id;
+    @Nullable
+    @Override
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setProgress(double mProgress) {
-        this.mProgress = mProgress;
+    @Override
+    public void setId(@Nullable Integer integer) {
+        this.id = integer;
     }
 
-    public void setComplete(boolean complete) {
-        isComplete = complete;
+
+    @NotNull
+    @Override
+    public ArrayList<SubGoal> getSubGoalsList() {
+        return null;
     }
 
-    public double getProgress() {
-        return mProgress;
-    }
+    @Override
+    public void setSubGoalsList(@NotNull ArrayList arrayList) {
 
-    public boolean isComplete() {
-        return isComplete;
     }
-
 }

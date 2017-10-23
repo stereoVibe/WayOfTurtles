@@ -14,7 +14,7 @@
 //    private var mProgress: Int = 0
 //
 //    constructor(mTitle: String, mDescription: String, isComplete: Boolean, mProgress: Int) {
-//        this.mTitle = mTitle
+//        this.title = title
 //        this.mDescription = mDescription
 //        this.isComplete = isComplete
 //        this.mProgress = mProgress

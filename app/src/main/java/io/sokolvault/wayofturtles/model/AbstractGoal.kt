@@ -1,5 +1,7 @@
 package io.sokolvault.wayofturtles.model
 
+/* Core class for all goals in the app */
+
 abstract class AbstractGoal(argTitle: String) {
     abstract var id: Int?
     var title = argTitle

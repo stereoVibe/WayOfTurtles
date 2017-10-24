@@ -1,11 +1,20 @@
 package io.sokolvault.wayofturtles.model;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import org.jetbrains.annotations.Nullable;
 
+/* One of SubGoal type class and sub goals in matter of abstraction «Goals -> Sub Goals».
+Main feature is to implement continuous (extended) tasks, something that needs repeatable actions (
+playing guitar, gym, etc.)
+* */
+
+//@Entity(tableName = "sub_Goals", foreignKeys = @ForeignKey(entity = BigGoal.class,
+//                                                           parentColumns = "id",
+//                                                           childColumns = "composite_goal_ID"))
 @Entity(tableName = "sub_Goals")
 public class Job extends AbstractGoal implements SubGoal<BigGoal> {
 
@@ -13,6 +22,7 @@ public class Job extends AbstractGoal implements SubGoal<BigGoal> {
 //    private String mDescription = super.getDescription();
     @PrimaryKey(autoGenerate = true)
     private Integer id;
+    @ColumnInfo(name = "composite_goal_ID")
     private int compositeGoalID;
     private int mTasksQuantity;
     private int mCompletedTasksQuantity;
@@ -66,14 +76,14 @@ public class Job extends AbstractGoal implements SubGoal<BigGoal> {
         return this.id;
     }
 
-    @Override
-    public void fetch(BigGoal bigGoal) {
-
-    }
-
     @Ignore
     public static Builder newBuilder() {
         return new Builder();
+    }
+
+    @Override
+    public void fetch(BigGoal bigGoal) {
+
     }
 
     public static final class Builder {

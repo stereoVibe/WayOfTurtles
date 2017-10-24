@@ -9,11 +9,17 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
+/* BigGoal class is responsible for holding all Sub Goals, like a container.
+*  Its function to fetching sub goals to appropriate Big Goal and holds overall progress,
+*  according to complete/incomplete/inProgress status of sub goals */
+
 @Entity(tableName = "big_Goals")
 public class BigGoal extends AbstractGoal implements CompositeGoal{
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @Ignore
+    private ArrayList<SubGoal> mSubGoalsList;
 
     @Ignore
     public BigGoal(String title){
@@ -42,15 +48,14 @@ public class BigGoal extends AbstractGoal implements CompositeGoal{
         this.id = integer;
     }
 
-
     @NotNull
     @Override
-    public ArrayList<SubGoal> getSubGoalsList() {
+    public ArrayList<SubGoal<CompositeGoal>> getSubGoalsList() {
         return null;
     }
 
     @Override
-    public void setSubGoalsList(@NotNull ArrayList arrayList) {
+    public void setSubGoalsList(@NotNull ArrayList<SubGoal<CompositeGoal>> arrayList) {
 
     }
 }

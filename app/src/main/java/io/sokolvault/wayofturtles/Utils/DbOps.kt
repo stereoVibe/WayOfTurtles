@@ -12,7 +12,6 @@ class DbOps {
              Thread {
                  synchronized(LOCK) {
                         bigGoalDAO.insertBigGoal(bigGoal)
-
 //                    TODO: This block below of Java concurrent way should be replaced by concurrent Kotlin library
                         (LOCK as java.lang.Object).notify()
                  }

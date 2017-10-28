@@ -12,10 +12,10 @@ import io.sokolvault.wayofturtles.model.BigGoal;
 @Dao
 public interface BigGoalDAO {
 
-    @Query("SELECT * FROM big_Goals")
+    @Query("SELECT * FROM big_goals")
     List<BigGoal> getAll();
 
-    @Query("SELECT * FROM big_Goals WHERE id = :id")
+    @Query("SELECT * FROM big_goals WHERE big_goal_id = :id")
     BigGoal getBigGoalById(int id);
 
     @Insert

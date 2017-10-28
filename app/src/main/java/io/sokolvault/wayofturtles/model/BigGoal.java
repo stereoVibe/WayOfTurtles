@@ -1,7 +1,9 @@
 package io.sokolvault.wayofturtles.model;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -13,11 +15,13 @@ import java.util.ArrayList;
 *  Its function to fetching sub goals to appropriate Big Goal and holds overall progress,
 *  according to complete/incomplete/inProgress status of sub goals */
 
-@Entity(tableName = "big_Goals")
+@Entity(tableName = "big_goals", indices = {@Index(value = "big_goal_id", unique = true)} )
 public class BigGoal extends AbstractGoal implements CompositeGoal{
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "big_goal_id")
     private int id;
+
     @Ignore
     private ArrayList<SubGoal> mSubGoalsList;
 

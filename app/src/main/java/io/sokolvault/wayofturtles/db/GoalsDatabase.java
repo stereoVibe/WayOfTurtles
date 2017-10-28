@@ -8,6 +8,7 @@ import android.util.Log;
 
 import io.sokolvault.wayofturtles.model.BigGoal;
 import io.sokolvault.wayofturtles.model.Job;
+import io.sokolvault.wayofturtles.model.SubGoal;
 
 
 @Database(entities = {BigGoal.class, Job.class}, version = 1)
@@ -35,5 +36,9 @@ public abstract class GoalsDatabase extends RoomDatabase{
         sInstance = null;
     }
     public abstract BigGoalDAO bigGoalDAO();
+    public abstract JobDAO jobsDAO();
+//    public abstract BGAllJobsDAO bgAllJobsDAO();
+//    public abstract SubGoalOfBigGoalDAO subGoalOfBigGoalDAO();
+//    public abstract BigGoalAllSubGoalsDAO bigGoalAllSubGoalsDAO();
 
 }

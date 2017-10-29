@@ -2,6 +2,7 @@ package io.sokolvault.wayofturtles
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import io.sokolvault.wayofturtles.db.GoalsDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -9,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val database: GoalsDatabase = GoalsDatabase.getInstance(this)
-//        database.bigGoalDAO().all
+//        val database: GoalsDatabase? = GoalsDatabase.getInstance(this)
+//        database?.bigGoalDAO()?.all
     }
 }

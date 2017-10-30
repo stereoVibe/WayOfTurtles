@@ -3,7 +3,7 @@ package io.sokolvault.wayofturtles.model
 /* Core class for all goals in the app */
 
 abstract class AbstractGoal(argTitle: String) {
-    abstract var id: Int?
+    abstract var id: Int
     var title = argTitle
     var description: String? = null
     var mProgress = 0.0

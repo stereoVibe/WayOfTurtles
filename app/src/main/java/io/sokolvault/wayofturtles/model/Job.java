@@ -81,25 +81,23 @@ public class Job extends AbstractGoal implements SubGoal<BigGoal> {
         this.mCompletedTasksQuantity = mCompletedTasksQuantity;
     }
 
-    @Override
-    public void setId(@Nullable Integer integer) {
-        this.id = integer;
-    }
-
     @Nullable
     @Override
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
 
     @Override
     public void fetch(BigGoal bigGoal) {
-
     }
 
     @Ignore
     public static Builder newBuilder() {
         return new Builder();
+    }
+
+    @Override
+    public void setId(int i) {
     }
 
     public static final class Builder {

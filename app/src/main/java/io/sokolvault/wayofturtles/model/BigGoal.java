@@ -41,15 +41,9 @@ public class BigGoal extends AbstractGoal implements CompositeGoal{
         this.id = id;
     }
 
-    @Nullable
     @Override
-    public Integer getId() {
+    public int getId() {
         return this.id;
-    }
-
-    @Override
-    public void setId(@Nullable Integer integer) {
-        this.id = integer;
     }
 
     @NotNull
@@ -61,5 +55,9 @@ public class BigGoal extends AbstractGoal implements CompositeGoal{
     @Override
     public void setSubGoalsList(@NotNull ArrayList<SubGoal<CompositeGoal>> arrayList) {
 
+    }
+
+    @Override
+    public void setId(int i) {
     }
 }

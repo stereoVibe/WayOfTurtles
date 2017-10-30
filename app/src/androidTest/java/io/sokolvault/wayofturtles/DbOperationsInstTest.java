@@ -42,20 +42,20 @@ public class DbOperationsInstTest {
         assertNotNull(mBigGoalDAO.getAll());
     }
 
-    @Test
-    public void insertJob(){
-        Job job;
-        mBigGoalDAO.insertBigGoal(mBigGoal);
-        if (mBigGoal.getId() != null) {
-            job = Job.newBuilder().
-                    setTitle("testTitle")
-                    .setCompositeGoalID(mBigGoal.getId())
-                    .setTasksQuantity(10)
-                    .build();
-            mJobDAO.insertSubGoal(job);
-        }
-        assertNotNull(mJobDAO.getAll());
-    }
+//    @Test
+//    public void insertJob(){
+//        Job job;
+//        mBigGoalDAO.insertBigGoal(mBigGoal);
+//        if (mBigGoal.getId() != null) {
+//            job = Job.newBuilder().
+//                    setTitle("testTitle")
+//                    .setCompositeGoalID(mBigGoal.getId())
+//                    .setTasksQuantity(10)
+//                    .build();
+//            mJobDAO.insertJobSubGoal(job);
+//        }
+//        assertNotNull(mJobDAO.getAll());
+//    }
 
     @Test
     public void insertingTest(){
@@ -72,7 +72,7 @@ public class DbOperationsInstTest {
                 .setCompositeGoalID(bigGoalId)
                 .setTasksQuantity(10)
                 .build();
-        mJobDAO.insertSubGoal(job);
+        mJobDAO.insertJobSubGoal(job);
         jobsList = mJobDAO.getAll();
 
         assertEquals(bigGoalId, jobsList.get(0).getCompositeGoalID());

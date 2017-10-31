@@ -18,8 +18,11 @@ public interface BigGoalDAO {
     @Query("SELECT * FROM big_goals WHERE big_goal_id = :id")
     BigGoal getBigGoalById(int id);
 
+//    @Insert
+//    void insertBigGoal(BigGoal bigGoal);
+
     @Insert
-    void insertBigGoal(BigGoal bigGoal);
+    long insertBigGoal(BigGoal bigGoal);
 
     @Delete
     void delete(BigGoal bigGoal);

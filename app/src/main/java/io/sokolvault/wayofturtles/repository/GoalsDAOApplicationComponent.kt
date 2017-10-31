@@ -8,10 +8,6 @@ import io.sokolvault.wayofturtles.db.JobDAO
 @Component(modules = arrayOf(GoalsDAOModule::class))
 interface GoalsDAOApplicationComponent {
 
-//    fun getDbInstance(): GoalsDatabase
-//
-//    fun getBigGoal(dbInstance: () -> GoalsDatabase)
-
     fun getBigGoalDao(): BigGoalDAO
     fun getJobDao(): JobDAO
 //    fun getTaskDao(): TaskDAO

@@ -65,6 +65,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:preference-v7:$support_version"
     implementation "com.android.support:mediarouter-v7:$support_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
     androidTestCompile "com.android.support:support-annotations:$support_version"
     androidTestCompile 'com.android.support.test:rules:1.0.1'
@@ -82,8 +83,11 @@ dependencies {
     //  Anko
     compile 'org.jetbrains.anko:anko:0.10.2'
     //  Dagger 2
-    compile 'com.google.dagger:dagger:2.5'
-    kapt 'com.google.dagger:dagger-compiler:2.5'
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+    implementation "com.google.dagger:dagger:$dagger2_version"
+    implementation "com.google.dagger:dagger-android:$dagger2_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
     //  Kovenant
     implementation 'nl.komponents.kovenant:kovenant:3.3.0'
@@ -103,6 +107,7 @@ dependencies {
     testImplementation('com.squareup.assertj:assertj-android:1.2.0') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3'
+
+    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
 }
 

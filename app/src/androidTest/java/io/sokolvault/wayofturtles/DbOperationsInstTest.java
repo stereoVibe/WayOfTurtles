@@ -1,7 +1,6 @@
 package io.sokolvault.wayofturtles;
 
 
-import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -13,7 +12,6 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -120,7 +118,7 @@ public class DbOperationsInstTest {
         JOB.setTasksQuantity(20);
         JOB.setCompletedTasksQuantity(20);
 
-        mJobDAO.updateJob(JOB);
+        mJobDAO.updateJobSubGoal(JOB);
 
         JobEntity dbJob =
                 getFirstGoalEntityAndAssertForSize(mJobDAO.getAll());

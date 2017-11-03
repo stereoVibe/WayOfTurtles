@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.VisibleForTesting;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
+import io.sokolvault.wayofturtles.AppTypeConverters;
+import io.sokolvault.wayofturtles.GoalCategory;
 import io.sokolvault.wayofturtles.model.AbstractGoal;
 import io.sokolvault.wayofturtles.model.SubGoal;
 
@@ -20,11 +23,15 @@ import io.sokolvault.wayofturtles.model.SubGoal;
 *  according to complete/incomplete/inProgress status of sub goals */
 
 @Entity(tableName = "big_goals", indices = {@Index(value = "big_goal_id", unique = true)} )
+@TypeConverters(AppTypeConverters.class)
 public class BigGoalEntity extends AbstractGoal {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "big_goal_id")
     private int id;
+
+    @ColumnInfo(name = "goal_category")
+    private Enum<GoalCategory> categoryEnum;
 
     @Ignore
     private ArrayList<SubGoal> mSubGoalsList;
@@ -44,12 +51,19 @@ public class BigGoalEntity extends AbstractGoal {
         return this.id;
     }
 
-    @Override
     public void setId(int i) {
         this.id = i;
     }
 
-//    @Ignore
+    public Enum<GoalCategory> getCategoryEnum() {
+        return categoryEnum;
+    }
+
+    public void setCategoryEnum(Enum<GoalCategory> categoryEnum) {
+        this.categoryEnum = categoryEnum;
+    }
+
+    //    @Ignore
 //    @VisibleForTesting
 //    public BigGoalEntity(int id, String title, String description) {
 //        super(title);

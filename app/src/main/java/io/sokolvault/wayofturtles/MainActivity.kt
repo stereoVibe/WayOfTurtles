@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 //        async(UI){
 //            bg {
 //                jobDAO2.asyncSubGoalInsert(Job.newBuilder()
-//                        .setCompositeGoalID(bigID)
+//                        .setmCompositeGoalID(bigID)
 //                        .setId(6)
 //                        .setTitle("This is Job 6")
 //                        .setTasksQuantity(20)
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 //        async(UI){
 //            bg {
 //                jobDAO.asyncSubGoalInsert(Job.newBuilder()
-//                        .setCompositeGoalID(bigID)
+//                        .setmCompositeGoalID(bigID)
 //                        .setId(3)
 //                        .setTitle("This is Job 3")
 //                        .setTasksQuantity(20)
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 //                HandlerThread.sleep(2000)
 //
 //                jobDAO.asyncSubGoalInsert(Job.newBuilder()
-//                        .setCompositeGoalID(bigID)
+//                        .setmCompositeGoalID(bigID)
 //                        .setId(4)
 //                        .setTitle("This is Job 4")
 //                        .setTasksQuantity(2)
@@ -84,14 +84,14 @@ class MainActivity : AppCompatActivity() {
 //                .asyncInsert(BigGoal("Вставка в БД через расширяемую функцию"))
 
 //        goalsDataComponent.getJobDao().asyncSubGoalInsert(Job.newBuilder()
-//                .setCompositeGoalID(1)
+//                .setmCompositeGoalID(1)
 //                .setId(1)
 //                .setTitle("This is Job 1")
 //                .setTasksQuantity(20)
 //                .build())
 
 //        jobDAO.asyncSubGoalInsert(Job.newBuilder()
-//                .setCompositeGoalID(bigID)
+//                .setmCompositeGoalID(bigID)
 //                .setId(6)
 //                .setTitle("This is Job 6")
 //                .setTasksQuantity(20)

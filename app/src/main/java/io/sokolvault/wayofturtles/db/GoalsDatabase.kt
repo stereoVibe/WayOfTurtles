@@ -1,30 +1,19 @@
 package io.sokolvault.wayofturtles.db
 
 import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
-import android.content.Context
-import android.util.Log
 
-import io.sokolvault.wayofturtles.model.BigGoal
-import io.sokolvault.wayofturtles.model.Job
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import io.sokolvault.wayofturtles.db.model.BigGoalEntity
+import io.sokolvault.wayofturtles.db.model.JobEntity
 
-@Database(entities = arrayOf(BigGoal::class, Job::class), version = 1)
+@Database(entities = arrayOf(BigGoalEntity::class, JobEntity::class), version = 1)
 abstract class GoalsDatabase : RoomDatabase() {
-
-    fun clear() {
-    }
 
     abstract fun bigGoalDAO(): BigGoalDAO
     abstract fun jobsDAO(): JobDAO
 //    abstract fun taskDAO(): TaskDAO
 
-    companion object {
-        val DATABASE_NAME = "goals"
-    }
+
 //        private val LOG_TAG = GoalsDatabase::class.java.simpleName
 //
 //        private val LOCK = Any()

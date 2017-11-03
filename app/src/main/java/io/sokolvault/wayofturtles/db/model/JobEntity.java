@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.model;
+package io.sokolvault.wayofturtles.db.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -7,7 +7,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-import org.jetbrains.annotations.Nullable;
+import io.sokolvault.wayofturtles.model.AbstractGoal;
+import io.sokolvault.wayofturtles.model.SubGoal;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -16,31 +17,31 @@ Main feature is to implement continuous (extended) tasks, something that needs r
 playing guitar, gym, etc.)
 * */
 
-@Entity(tableName = "sub_goals",
-        indices = {@Index(value = "id", unique = true)},
-        foreignKeys = @ForeignKey(entity = BigGoal.class,
+@Entity(tableName = "sub_goals", indices = {@Index(value = "composite_goal_id", unique = true)},
+        foreignKeys = @ForeignKey(entity = BigGoalEntity.class,
                 parentColumns = "big_goal_id",
                 childColumns = "composite_goal_id",
                 onDelete = CASCADE,
                 onUpdate = CASCADE, deferred = true))
+//@Entity(tableName = "sub_goals")
+public class JobEntity extends AbstractGoal implements SubGoal {
 
-public class Job extends AbstractGoal implements SubGoal<BigGoal> {
-
-    private int id;
     @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @ColumnInfo(name = "composite_goal_id")
     private int compositeGoalID;
     private int mTasksQuantity;
     private int mCompletedTasksQuantity;
 
-    public Job(int id, String title, int compositeGoalID){
+    public JobEntity(int id, String title, int compositeGoalID){
         super(title);
         this.id = id;
         this.compositeGoalID = compositeGoalID;
     }
 
     @Ignore
-    public Job(int id, int compositeGoalID, String title, int mTasksQuantity) {
+    public JobEntity(int id, int compositeGoalID, String title, int mTasksQuantity) {
         super(title);
         this.id = id;
         this.compositeGoalID = compositeGoalID;
@@ -48,7 +49,7 @@ public class Job extends AbstractGoal implements SubGoal<BigGoal> {
     }
 
     @Ignore
-    private Job(Builder builder) {
+    private JobEntity(Builder builder) {
         super(builder.title);
         setId(builder.id);
         setDescription(builder.description);
@@ -81,14 +82,9 @@ public class Job extends AbstractGoal implements SubGoal<BigGoal> {
         this.mCompletedTasksQuantity = mCompletedTasksQuantity;
     }
 
-    @Nullable
     @Override
     public int getId() {
         return this.id;
-    }
-
-    @Override
-    public void fetch(BigGoal bigGoal) {
     }
 
     @Ignore
@@ -98,6 +94,12 @@ public class Job extends AbstractGoal implements SubGoal<BigGoal> {
 
     @Override
     public void setId(int i) {
+        this.id = i;
+    }
+
+    @Override
+    public void fetch() {
+
     }
 
     public static final class Builder {
@@ -135,8 +137,8 @@ public class Job extends AbstractGoal implements SubGoal<BigGoal> {
             return this;
         }
 
-        public Job build() {
-            return new Job(this);
+        public JobEntity build() {
+            return new JobEntity(this);
         }
     }
 }

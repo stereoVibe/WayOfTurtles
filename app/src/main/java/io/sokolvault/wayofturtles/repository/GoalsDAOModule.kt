@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import io.sokolvault.wayofturtles.Constants
 import io.sokolvault.wayofturtles.ContextModule
 import io.sokolvault.wayofturtles.db.BigGoalDAO
 import io.sokolvault.wayofturtles.db.GoalsDatabase
@@ -15,7 +16,9 @@ class GoalsDAOModule {
     @Provides
     fun getDbInstance(context: Context): GoalsDatabase {
         return Room.databaseBuilder(context.applicationContext,
-                GoalsDatabase::class.java, GoalsDatabase.DATABASE_NAME).build()
+                GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+//        return Room.inMemoryDatabaseBuilder(context.applicationContext,
+//                GoalsDatabase::class.java).build()
     }
 
     @Provides

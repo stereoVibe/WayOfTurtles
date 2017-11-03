@@ -6,19 +6,12 @@ abstract class AbstractGoal(argTitle: String) {
     abstract var id: Int
     var title = argTitle
     var description: String? = null
+
+//  Start values for this fields in any Goal class
     var mProgress = 0.0
     var isComplete = false
 
-
-//    open fun getTitle(): String {
-//        return title
+//    fun setId(id: Int){
+//        this.id = id
 //    }
-//    abstract fun getDescription(): String
-
-//    abstract fun getProgress(): Double
-//
-//    abstract fun isComplete(): Boolean
-//
-//    abstract fun setProgress(progress: Double)
-
 }

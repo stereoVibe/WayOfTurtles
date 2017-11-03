@@ -40,7 +40,7 @@ public class DbOperationsTest {
         MockContext mockContext = new MockContext();
         mockContext.createPackageContext(mockContext.getPackageName(), Context.BIND_AUTO_CREATE);
         dbMock = Room.databaseBuilder(mockContext.getApplicationContext(),
-                GoalsDatabase.class,GoalsDatabase.DATABASE_NAME)
+                GoalsDatabase.class,Constants.Companion.getDATABASE_NAME())
                 .build();
 //        MockitoAnnotations.initMocks(this);
 //        Context mockContext = mock(Context.class);

@@ -2,8 +2,8 @@ package io.sokolvault.wayofturtles
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import io.sokolvault.wayofturtles.model.BigGoal
-import io.sokolvault.wayofturtles.model.Job
+import io.sokolvault.wayofturtles.db.model.BigGoalEntity
+import io.sokolvault.wayofturtles.db.model.JobEntity
 import io.sokolvault.wayofturtles.repository.DaggerGoalsDAOApplicationComponent
 import io.sokolvault.wayofturtles.utils.DbOps.Companion.asyncInsert
 import io.sokolvault.wayofturtles.utils.DbOps.Companion.asyncSubGoalInsert
@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        applicationContext.deleteDatabase("goals")
         setContentView(R.layout.activity_main)
 
         val goalsDataComponent = DaggerGoalsDAOApplicationComponent.builder()
@@ -20,17 +21,81 @@ class MainActivity : AppCompatActivity() {
                 .build()
 
         val bigGoalDAO = goalsDataComponent.getBigGoalDao()
-        bigGoalDAO.asyncInsert(BigGoal("Вставка в БД через расширяемую функцию"))
+        bigGoalDAO.asyncInsert(BigGoalEntity("Вставка в БД через расширяемую функцию"))
 
-        val jobDAO = goalsDataComponent.getJobDao()
-//        val taskDAO = goalsDataComponent.getTaskDao()
+        val jobDAO1 = goalsDataComponent.getJobDao()
 
-        jobDAO.asyncSubGoalInsert(Job.newBuilder()
-                .setCompositeGoalID(1)
-                .setId(1)
-                .setTitle("This is Job!")
-                .setTasksQuantity(20)
+        jobDAO1.asyncSubGoalInsert(JobEntity.newBuilder()
+                .setCompositeGoalID(3)
+                .setId(14)
+                .setTitle("This is Job 14")
+                .setTasksQuantity(5)
                 .build())
+
+//        async(UI){
+//            bg {
+//                jobDAO2.asyncSubGoalInsert(Job.newBuilder()
+//                        .setCompositeGoalID(bigID)
+//                        .setId(6)
+//                        .setTitle("This is Job 6")
+//                        .setTasksQuantity(20)
+//                        .build())
+//            }
+//        }
+
+//        HandlerThread.sleep(500)
+//
+//        async(UI) {
+//            bg{
+//                Log.d("Хуепес", jobDAO1.getAll().size.toString())
+//            }
+//        }
+//
+//        HandlerThread.sleep(500)
+
+//        async(UI){
+//            bg {
+//                jobDAO.asyncSubGoalInsert(Job.newBuilder()
+//                        .setCompositeGoalID(bigID)
+//                        .setId(3)
+//                        .setTitle("This is Job 3")
+//                        .setTasksQuantity(20)
+//                        .build())
+//                HandlerThread.sleep(2000)
+//
+//                jobDAO.asyncSubGoalInsert(Job.newBuilder()
+//                        .setCompositeGoalID(bigID)
+//                        .setId(4)
+//                        .setTitle("This is Job 4")
+//                        .setTasksQuantity(2)
+//                        .build())
+//            }
+//        }
+//
+//        async(UI) {
+//            bg{
+//                HandlerThread.sleep(3000)
+//                Log.d("Хуепес", jobDAO.getAll().size.toString())
+//            }
+//        }
+
+//        goalsDataComponent
+//                .getBigGoalDao()
+//                .asyncInsert(BigGoal("Вставка в БД через расширяемую функцию"))
+
+//        goalsDataComponent.getJobDao().asyncSubGoalInsert(Job.newBuilder()
+//                .setCompositeGoalID(1)
+//                .setId(1)
+//                .setTitle("This is Job 1")
+//                .setTasksQuantity(20)
+//                .build())
+
+//        jobDAO.asyncSubGoalInsert(Job.newBuilder()
+//                .setCompositeGoalID(bigID)
+//                .setId(6)
+//                .setTitle("This is Job 6")
+//                .setTasksQuantity(20)
+//                .build())
     }
 
 

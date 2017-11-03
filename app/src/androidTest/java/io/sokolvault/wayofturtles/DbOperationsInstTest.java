@@ -18,10 +18,12 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import io.sokolvault.wayofturtles.db.JobDAO;
+import io.sokolvault.wayofturtles.db.TaskDAO;
 import io.sokolvault.wayofturtles.db.model.BigGoalEntity;
 import io.sokolvault.wayofturtles.db.BigGoalDAO;
 import io.sokolvault.wayofturtles.db.GoalsDatabase;
 import io.sokolvault.wayofturtles.db.model.JobEntity;
+import io.sokolvault.wayofturtles.db.model.TaskEntity;
 import io.sokolvault.wayofturtles.model.AbstractGoal;
 
 @RunWith(AndroidJUnit4.class)
@@ -38,9 +40,13 @@ public class DbOperationsInstTest {
             .setTasksQuantity(10)
             .build();
 
+    private final TaskEntity TASK =
+            new TaskEntity("Task title", 1);
+
 
     private BigGoalDAO mBigGoalDAO;
     private JobDAO mJobDAO;
+    private TaskDAO mTaskDAO;
     private GoalsDatabase mDatabase;
 
     @Before
@@ -49,8 +55,9 @@ public class DbOperationsInstTest {
         mDatabase = Room.inMemoryDatabaseBuilder(context, GoalsDatabase.class).build();
         mBigGoalDAO = mDatabase.bigGoalDAO();
         mJobDAO = mDatabase.jobsDAO();
+        mTaskDAO = mDatabase.taskDAO();
 
-//        BIG_GOAL.setId(1);
+        BIG_GOAL.setId(1);
         mDatabase.bigGoalDAO().insertBigGoal(BIG_GOAL);
     }
 
@@ -88,12 +95,14 @@ public class DbOperationsInstTest {
 
     @Test
     public void insertAndGetTaskEntityTest(){
-
+        mTaskDAO.insertTaskSubGoal(TASK);
+        TaskEntity dbTask =
+                getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
+        performCoreAsserts(TASK, dbTask);
     }
 //  UPDATE & READ
     @Test
     public void updateAndGetBigGoalEntityTest(){
-        BIG_GOAL.setId(1); // Setting the ID to be sure it will match auto generating
         performCoreUpdates(BIG_GOAL);
         mBigGoalDAO.updateBigGoal(BIG_GOAL);
 
@@ -131,23 +140,41 @@ public class DbOperationsInstTest {
 
     @Test
     public void updateAndGetAndGetTaskEntityTest(){
+        /**
+         * ID for BigGoal should be updated, as it matches the compositeGoalID in
+         * all SubGoals (TaskEntity here), so it must exist. Because of auto generated id for BigGoal,
+         * we can't updated it in DB, so it needs another insert - {@link #addSecondBigGoal()}
+         **/
+        addSecondBigGoal();
 
+        mTaskDAO.insertTaskSubGoal(TASK);
+
+        performCoreUpdates(TASK);
+
+        mTaskDAO.updateTaskSubGoal(TASK);
+        TaskEntity dbTask = getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
+        performCoreAsserts(TASK, dbTask);
     }
 
 //  DELETE & READ (failed to get)
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void deleteAndFailToGetBigGoalEntityTest(){
-
+        mBigGoalDAO.delete(BIG_GOAL);
+        assertNull(mBigGoalDAO.getAll().get(0));
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void deleteAndFailToGetJobEntityTest(){
-
+        JobEntity jobEntity = mJobDAO.getAll().get(0);
+        mJobDAO.insertJobSubGoal(jobEntity);
+        assertNull(mJobDAO.getAll().get(0));
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void deleteAndFailToGetTaskEntityTest(){
-
+        TaskEntity taskEntity = mTaskDAO.getAll().get(0);
+        mTaskDAO.insertTaskSubGoal(taskEntity);
+        assertNull(mTaskDAO.getAll().get(0));
     }
 
     private void addSecondBigGoal() {
@@ -167,6 +194,7 @@ public class DbOperationsInstTest {
         assertEquals(mockGoal.getTitle(), actualGoal.getTitle());
         assertEquals(mockGoal.getDescription(), actualGoal.getDescription());
         assertEquals(mockGoal.isComplete(), actualGoal.isComplete());
+        assertEquals(mockGoal.getMGoalCategory(), actualGoal.getMGoalCategory());
         assertEquals(String.valueOf(mockGoal.getMProgress()), String.valueOf(actualGoal.getMProgress()));
     }
 
@@ -174,6 +202,7 @@ public class DbOperationsInstTest {
     private <T extends AbstractGoal> void performCoreUpdates(T goal){
         goal.setTitle("Updated title");
         goal.setDescription("Updated description");
+        goal.setMGoalCategory(GoalCategory.FAMILY);
         goal.setMProgress(100.0D);
         goal.setComplete(true);
     }

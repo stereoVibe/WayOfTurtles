@@ -24,7 +24,7 @@ class TaskEntity(title: String, compositeGoalID: Int) : AbstractGoal(title), Sub
     var categoryEnum: Enum<GoalCategory> = GoalCategory.NONE
 
     @ColumnInfo(name = "composite_goal_id")
-    var mCompositeGoalID: Int = compositeGoalID
+    var compositeGoalID: Int = compositeGoalID
 
     override fun fetch() {
     }

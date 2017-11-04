@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.db.model;
+package io.sokolvault.wayofturtles.data.db.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -8,12 +8,10 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.sokolvault.wayofturtles.AppTypeConverters;
 import io.sokolvault.wayofturtles.GoalCategory;
-import io.sokolvault.wayofturtles.model.AbstractGoal;
-import io.sokolvault.wayofturtles.model.SubGoal;
+import io.sokolvault.wayofturtles.domain.model.Goal;
+import io.sokolvault.wayofturtles.domain.model.SubGoal;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -30,7 +28,7 @@ playing guitar, gym, etc.)
                 onUpdate = CASCADE, deferred = true))
 //@Entity(tableName = "sub_goals")
 @TypeConverters(AppTypeConverters.class)
-public class JobEntity extends AbstractGoal implements SubGoal {
+public class JobEntity extends Goal implements SubGoal {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -74,6 +72,7 @@ public class JobEntity extends AbstractGoal implements SubGoal {
         this.categoryEnum = categoryEnum;
     }
 
+    @Override
     public int getCompositeGoalID() {
         return mCompositeGoalID;
     }
@@ -110,11 +109,6 @@ public class JobEntity extends AbstractGoal implements SubGoal {
 
     public void setId(int i) {
         this.id = i;
-    }
-
-    @Override
-    public void fetch() {
-
     }
 
 

@@ -13,7 +13,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.sokolvault.wayofturtles.db.GoalsDatabase;
+import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

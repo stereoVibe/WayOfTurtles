@@ -17,14 +17,14 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import io.sokolvault.wayofturtles.db.JobDAO;
-import io.sokolvault.wayofturtles.db.TaskDAO;
-import io.sokolvault.wayofturtles.db.model.BigGoalEntity;
-import io.sokolvault.wayofturtles.db.BigGoalDAO;
-import io.sokolvault.wayofturtles.db.GoalsDatabase;
-import io.sokolvault.wayofturtles.db.model.JobEntity;
-import io.sokolvault.wayofturtles.db.model.TaskEntity;
-import io.sokolvault.wayofturtles.model.AbstractGoal;
+import io.sokolvault.wayofturtles.data.db.JobDAO;
+import io.sokolvault.wayofturtles.data.db.TaskDAO;
+import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity;
+import io.sokolvault.wayofturtles.data.db.BigGoalDAO;
+import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
+import io.sokolvault.wayofturtles.data.db.model.JobEntity;
+import io.sokolvault.wayofturtles.data.db.model.TaskEntity;
+import io.sokolvault.wayofturtles.domain.model.Goal;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {
@@ -183,13 +183,13 @@ public class DbOperationsInstTest {
         assertNotNull(mBigGoalDAO.getBigGoalById(2));
     }
 
-    private <T extends AbstractGoal> T getFirstGoalEntityAndAssertForSize(List<T> goals){
+    private <T extends Goal> T getFirstGoalEntityAndAssertForSize(List<T> goals){
         assertThat(goals.size(), is(1) );
         return goals.get(0);
     }
 
 //  Bundle of asserts matches all Goals in the app.
-    private <T extends AbstractGoal> void performCoreAsserts(T mockGoal, T actualGoal){
+    private <T extends Goal> void performCoreAsserts(T mockGoal, T actualGoal){
         assertEquals(mockGoal.getId(), actualGoal.getId());
         assertEquals(mockGoal.getTitle(), actualGoal.getTitle());
         assertEquals(mockGoal.getDescription(), actualGoal.getDescription());
@@ -199,7 +199,7 @@ public class DbOperationsInstTest {
     }
 
 //  Bundle of local updates matches all Goals in the app.
-    private <T extends AbstractGoal> void performCoreUpdates(T goal){
+    private <T extends Goal> void performCoreUpdates(T goal){
         goal.setTitle("Updated title");
         goal.setDescription("Updated description");
         goal.setMGoalCategory(GoalCategory.FAMILY);

@@ -1,11 +1,11 @@
-package io.sokolvault.wayofturtles.db.model
+package io.sokolvault.wayofturtles.data.db.model
 
 import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
 import io.sokolvault.wayofturtles.AppTypeConverters
 import io.sokolvault.wayofturtles.GoalCategory
-import io.sokolvault.wayofturtles.model.AbstractGoal
-import io.sokolvault.wayofturtles.model.SubGoal
+import io.sokolvault.wayofturtles.domain.model.Goal
+import io.sokolvault.wayofturtles.domain.model.SubGoal
 
 @Entity(tableName = "tasks_sub_goals",
         indices = arrayOf(Index(value = "composite_goal_id", unique = true)),
@@ -15,7 +15,7 @@ import io.sokolvault.wayofturtles.model.SubGoal
                 onDelete = CASCADE,
                 onUpdate = CASCADE, deferred = true)))
 @TypeConverters(AppTypeConverters::class)
-class TaskEntity(title: String, compositeGoalID: Int) : AbstractGoal(title), SubGoal {
+class TaskEntity(title: String, compositeGoalID: Int) : Goal(title), SubGoal {
 
     @PrimaryKey(autoGenerate = true)
     override var id: Int = -1
@@ -24,9 +24,7 @@ class TaskEntity(title: String, compositeGoalID: Int) : AbstractGoal(title), Sub
     var categoryEnum: Enum<GoalCategory> = GoalCategory.NONE
 
     @ColumnInfo(name = "composite_goal_id")
-    var compositeGoalID: Int = compositeGoalID
+    override var compositeGoalID: Int = compositeGoalID
 
-    override fun fetch() {
-    }
 
 }

@@ -1,14 +1,13 @@
-package io.sokolvault.wayofturtles.db
+package io.sokolvault.wayofturtles.data.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import io.sokolvault.wayofturtles.AppTypeConverters
-import io.sokolvault.wayofturtles.GoalCategory
 
-import io.sokolvault.wayofturtles.db.model.BigGoalEntity
-import io.sokolvault.wayofturtles.db.model.JobEntity
-import io.sokolvault.wayofturtles.db.model.TaskEntity
+import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity
+import io.sokolvault.wayofturtles.data.db.model.JobEntity
+import io.sokolvault.wayofturtles.data.db.model.TaskEntity
 
 @TypeConverters(AppTypeConverters::class)
 @Database(entities = arrayOf(BigGoalEntity::class,

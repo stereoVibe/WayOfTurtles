@@ -1,4 +1,4 @@
-//package io.sokolvault.wayofturtles.db;
+//package io.sokolvault.wayofturtles.data.db;
 //
 //import android.arch.persistence.room.Database;
 //import android.arch.persistence.room.Room;
@@ -6,9 +6,9 @@
 //import android.content.Context;
 //import android.util.Log;
 //
-//import io.sokolvault.wayofturtles.model.BigGoal;
-//import io.sokolvault.wayofturtles.model.Job;
-//import io.sokolvault.wayofturtles.model.SubGoal;
+//import io.sokolvault.wayofturtles.domain.model.BigGoal;
+//import io.sokolvault.wayofturtles.domain.model.Job;
+//import io.sokolvault.wayofturtles.domain.model.SubGoal;
 //
 //
 //@Database(entities = {BigGoal.class, Job.class}, version = 1)

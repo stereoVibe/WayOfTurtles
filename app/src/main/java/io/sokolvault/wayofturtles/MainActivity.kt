@@ -2,11 +2,9 @@ package io.sokolvault.wayofturtles
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import io.sokolvault.wayofturtles.db.model.BigGoalEntity
-import io.sokolvault.wayofturtles.db.model.JobEntity
-import io.sokolvault.wayofturtles.repository.DaggerGoalsDAOApplicationComponent
-import io.sokolvault.wayofturtles.utils.DbOps.Companion.asyncInsert
-import io.sokolvault.wayofturtles.utils.DbOps.Companion.asyncSubGoalInsert
+import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity
+import io.sokolvault.wayofturtles.data.db.model.JobEntity
+import io.sokolvault.wayofturtles.data.repository.DaggerGoalsDAOApplicationComponent
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
 class MainActivity : AppCompatActivity() {

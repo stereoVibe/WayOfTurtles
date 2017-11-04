@@ -2,11 +2,11 @@
 //
 //import android.content.Context
 //import io.sokolvault.wayofturtles.utils.DbOps
-//import io.sokolvault.wayofturtles.model.BigGoal
-//import io.sokolvault.wayofturtles.db.BigGoalDAO
-//import io.sokolvault.wayofturtles.db.GoalsDatabase
-//import io.sokolvault.wayofturtles.db.JobDAO
-//import io.sokolvault.wayofturtles.model.Job
+//import io.sokolvault.wayofturtles.domain.model.BigGoal
+//import io.sokolvault.wayofturtles.data.db.BigGoalDAO
+//import io.sokolvault.wayofturtles.data.db.GoalsDatabase
+//import io.sokolvault.wayofturtles.data.db.JobDAO
+//import io.sokolvault.wayofturtles.domain.model.Job
 //import org.junit.After
 //import org.junit.Assert.*
 //import org.junit.Before

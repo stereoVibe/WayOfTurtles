@@ -1,8 +1,8 @@
-package io.sokolvault.wayofturtles.db
+package io.sokolvault.wayofturtles.data.db
 
 import android.arch.persistence.room.*
 import io.sokolvault.wayofturtles.AppTypeConverters
-import io.sokolvault.wayofturtles.db.model.JobEntity
+import io.sokolvault.wayofturtles.data.db.model.JobEntity
 
 @Dao
 @TypeConverters(AppTypeConverters::class)

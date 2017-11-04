@@ -1,14 +1,12 @@
-package io.sokolvault.wayofturtles.repository
+package io.sokolvault.wayofturtles
 
 import android.arch.persistence.room.Room
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import io.sokolvault.wayofturtles.Constants
-import io.sokolvault.wayofturtles.ContextModule
-import io.sokolvault.wayofturtles.db.BigGoalDAO
-import io.sokolvault.wayofturtles.db.GoalsDatabase
-import io.sokolvault.wayofturtles.db.JobDAO
+import io.sokolvault.wayofturtles.data.db.BigGoalDAO
+import io.sokolvault.wayofturtles.data.db.GoalsDatabase
+import io.sokolvault.wayofturtles.data.db.JobDAO
 
 @Module(includes = arrayOf(ContextModule::class))
 class GoalsDAOModule {

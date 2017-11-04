@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.db.model;
+package io.sokolvault.wayofturtles.data.db.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -6,17 +6,13 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
-import android.support.annotation.VisibleForTesting;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
 import io.sokolvault.wayofturtles.AppTypeConverters;
 import io.sokolvault.wayofturtles.GoalCategory;
-import io.sokolvault.wayofturtles.model.AbstractGoal;
-import io.sokolvault.wayofturtles.model.SubGoal;
+import io.sokolvault.wayofturtles.domain.model.Goal;
+import io.sokolvault.wayofturtles.domain.model.SubGoal;
 
 /* BigGoal class is responsible for holding all Sub Goals, like a container.
 *  Its function to fetching sub goals to appropriate Big Goal and holds overall progress,
@@ -24,7 +20,7 @@ import io.sokolvault.wayofturtles.model.SubGoal;
 
 @Entity(tableName = "big_goals", indices = {@Index(value = "big_goal_id", unique = true)} )
 @TypeConverters(AppTypeConverters.class)
-public class BigGoalEntity extends AbstractGoal {
+public class BigGoalEntity extends Goal {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "big_goal_id")

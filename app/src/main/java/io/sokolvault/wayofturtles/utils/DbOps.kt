@@ -1,12 +1,10 @@
 package io.sokolvault.wayofturtles.utils
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Log
-import io.sokolvault.wayofturtles.db.BigGoalDAO
-import io.sokolvault.wayofturtles.db.JobDAO
-import io.sokolvault.wayofturtles.db.model.BigGoalEntity
-import io.sokolvault.wayofturtles.db.model.JobEntity
-import io.sokolvault.wayofturtles.model.AbstractGoal
+import io.sokolvault.wayofturtles.data.db.BigGoalDAO
+import io.sokolvault.wayofturtles.data.db.JobDAO
+import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity
+import io.sokolvault.wayofturtles.data.db.model.JobEntity
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg

@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.db;
+package io.sokolvault.wayofturtles.data.db;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import io.sokolvault.wayofturtles.AppTypeConverters;
-import io.sokolvault.wayofturtles.db.model.BigGoalEntity;
+import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity;
 
 @Dao
 @TypeConverters(AppTypeConverters.class)
@@ -21,9 +21,6 @@ public interface BigGoalDAO {
 
     @Query("SELECT * FROM big_goals WHERE big_goal_id = :id")
     BigGoalEntity getBigGoalById(int id);
-
-//    @Insert
-//    void insertBigGoal(BigGoal bigGoal);
 
     @Insert
     Long insertBigGoal(BigGoalEntity bigGoal);

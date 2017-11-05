@@ -5,7 +5,7 @@
 //import io.sokolvault.wayofturtles.domain.model.BigGoal
 //import io.sokolvault.wayofturtles.data.db.BigGoalDAO
 //import io.sokolvault.wayofturtles.data.db.GoalsDatabase
-//import io.sokolvault.wayofturtles.data.db.JobDAO
+//import io.sokolvault.wayofturtles.data.db.dao.JobDAO
 //import io.sokolvault.wayofturtles.domain.model.Job
 //import org.junit.After
 //import org.junit.Assert.*

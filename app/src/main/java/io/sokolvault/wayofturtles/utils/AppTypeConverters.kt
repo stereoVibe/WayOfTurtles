@@ -1,6 +1,7 @@
-package io.sokolvault.wayofturtles
+package io.sokolvault.wayofturtles.utils
 
 import android.arch.persistence.room.TypeConverter
+import io.sokolvault.wayofturtles.domain.model.GoalCategory
 
 
 open class AppTypeConverters {

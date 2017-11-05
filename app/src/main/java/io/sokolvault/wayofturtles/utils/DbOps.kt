@@ -1,8 +1,8 @@
 package io.sokolvault.wayofturtles.utils
 
 import android.util.Log
-import io.sokolvault.wayofturtles.data.db.BigGoalDAO
-import io.sokolvault.wayofturtles.data.db.JobDAO
+import io.sokolvault.wayofturtles.data.db.dao.BigGoalDAO
+import io.sokolvault.wayofturtles.data.db.dao.JobDAO
 import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity
 import io.sokolvault.wayofturtles.data.db.model.JobEntity
 import kotlinx.coroutines.experimental.android.UI
@@ -13,7 +13,10 @@ import org.jetbrains.anko.coroutines.experimental.bg
 class DbOps {
 
     companion object {
+        var status = Status.IDLE
+
         fun BigGoalDAO.asyncInsert(bigGoalEntity: BigGoalEntity): Int {
+            status = Status.LOADING
             var bigID: Long = 0L
             async(UI) {
                 bg {
@@ -21,7 +24,14 @@ class DbOps {
                     Log.d(this.toString(), "Большая цель в базе!")
                 }
             }
-            return bigID.toInt()
+            if (bigID.toInt() > 0) {
+                status = Status.SUCCESS
+                return bigID.toInt()
+            }
+            else status = Status.ERROR
+
+            status = Status.IDLE
+            return -1
         }
 
         fun JobDAO.asyncSubGoalInsert(jobEntitySubGoal: JobEntity){
@@ -31,6 +41,10 @@ class DbOps {
                     Log.d(this.toString(), "Подцель в базе!")
                 }
             }
+        }
+
+        fun checkStatus(): Status {
+            return status
         }
     }
 

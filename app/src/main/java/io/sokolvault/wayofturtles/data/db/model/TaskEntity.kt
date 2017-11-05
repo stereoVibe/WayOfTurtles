@@ -2,8 +2,8 @@ package io.sokolvault.wayofturtles.data.db.model
 
 import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
-import io.sokolvault.wayofturtles.AppTypeConverters
-import io.sokolvault.wayofturtles.GoalCategory
+import io.sokolvault.wayofturtles.utils.AppTypeConverters
+import io.sokolvault.wayofturtles.domain.model.GoalCategory
 import io.sokolvault.wayofturtles.domain.model.Goal
 import io.sokolvault.wayofturtles.domain.model.SubGoal
 
@@ -25,6 +25,5 @@ class TaskEntity(title: String, compositeGoalID: Int) : Goal(title), SubGoal {
 
     @ColumnInfo(name = "composite_goal_id")
     override var compositeGoalID: Int = compositeGoalID
-
 
 }

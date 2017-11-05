@@ -8,8 +8,8 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import io.sokolvault.wayofturtles.AppTypeConverters;
-import io.sokolvault.wayofturtles.GoalCategory;
+import io.sokolvault.wayofturtles.utils.AppTypeConverters;
+import io.sokolvault.wayofturtles.domain.model.GoalCategory;
 import io.sokolvault.wayofturtles.domain.model.Goal;
 import io.sokolvault.wayofturtles.domain.model.SubGoal;
 

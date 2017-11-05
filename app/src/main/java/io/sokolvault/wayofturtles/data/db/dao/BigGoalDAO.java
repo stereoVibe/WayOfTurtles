@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.data.db;
+package io.sokolvault.wayofturtles.data.db.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import io.sokolvault.wayofturtles.AppTypeConverters;
+import io.sokolvault.wayofturtles.utils.AppTypeConverters;
 import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity;
 
 @Dao

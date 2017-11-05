@@ -17,14 +17,15 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import io.sokolvault.wayofturtles.data.db.JobDAO;
-import io.sokolvault.wayofturtles.data.db.TaskDAO;
+import io.sokolvault.wayofturtles.data.db.dao.JobDAO;
+import io.sokolvault.wayofturtles.data.db.dao.TaskDAO;
 import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity;
-import io.sokolvault.wayofturtles.data.db.BigGoalDAO;
+import io.sokolvault.wayofturtles.data.db.dao.BigGoalDAO;
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
 import io.sokolvault.wayofturtles.data.db.model.JobEntity;
 import io.sokolvault.wayofturtles.data.db.model.TaskEntity;
 import io.sokolvault.wayofturtles.domain.model.Goal;
+import io.sokolvault.wayofturtles.domain.model.GoalCategory;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {

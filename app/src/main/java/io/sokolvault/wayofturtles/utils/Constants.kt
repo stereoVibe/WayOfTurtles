@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles
+package io.sokolvault.wayofturtles.utils
 
 
 class Constants {

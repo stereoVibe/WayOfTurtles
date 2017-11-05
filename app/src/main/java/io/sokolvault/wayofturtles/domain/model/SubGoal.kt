@@ -1,5 +1,5 @@
 package io.sokolvault.wayofturtles.domain.model
 
-interface SubGoal {
+interface SubGoal{
     val compositeGoalID: Int
 }

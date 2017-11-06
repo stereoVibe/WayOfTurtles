@@ -12,22 +12,24 @@ import io.sokolvault.wayofturtles.domain.model.BigGoal
 import io.sokolvault.wayofturtles.domain.model.GoalCategory
 import io.sokolvault.wayofturtles.domain.model.SubGoal
 import io.sokolvault.wayofturtles.domain.repository.BigGoalRepository
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.runBlocking
 import nl.komponents.kovenant.Kovenant.context
 import org.jetbrains.anko.coroutines.experimental.asReference
+import org.jetbrains.anko.coroutines.experimental.bg
+import org.jetbrains.anko.doAsyncResult
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
-class BigGoalViewModel : GoalViewModel<BigGoal>(), BigGoalRepository {
+class BigGoalViewModel: GoalViewModel<BigGoal>(), BigGoalRepository {
 
-
-    val context: Context? = getApplication<Application>()
-
-    val singleGoal: LiveData<Resource<BigGoal>> = AbsentLiveData.create()
+    var singleGoal: LiveData<BigGoal> = MutableLiveData<BigGoal>()
     override lateinit var goalsList: LiveData<Resource<List<BigGoal>>>
 
-    override fun createNewGoal(goal: BigGoal): LiveData<BigGoal> {
+    override fun createNewGoal(goal: BigGoal) {
         CreateNewBigGoalUseCase().execute(goal, singleGoal)
-        return this.createNewGoal(goal)
     }
 
     override fun updateGoal(goal: BigGoal): LiveData<BigGoal> {

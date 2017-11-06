@@ -22,13 +22,29 @@ import io.sokolvault.wayofturtles.utils.Constants
         TaskEntity::class), version = 1)
 abstract class GoalsDatabase: RoomDatabase() {
 
+
+
     abstract fun bigGoalDAO(): BigGoalDAO
     abstract fun jobsDAO(): JobDAO
     abstract fun taskDAO(): TaskDAO
 
-//    companion object {
-//        fun
-//    }
+    companion object {
+        private var sInstance: GoalsDatabase? = null
+        private val LOCK = Any()
+
+        fun getInstance(context: Context): GoalsDatabase{
+            if (sInstance == null) {
+                synchronized(LOCK) {
+                    sInstance = Room.databaseBuilder(context.applicationContext,
+                            GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+//                    Log.d(LOG_TAG, "New database creating")
+                }
+//                sInstance = Room.databaseBuilder(context.applicationContext,
+//                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+            }
+            return sInstance as GoalsDatabase
+        }
+    }
 
 //        private val LOG_TAG = GoalsDatabase::class.java.simpleName
 //

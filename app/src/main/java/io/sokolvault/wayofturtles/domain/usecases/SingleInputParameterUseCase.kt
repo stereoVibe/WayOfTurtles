@@ -16,6 +16,7 @@ interface SingleInputParameterUseCase<P> {
 
 //    fun execute(goal: P, liveData: LiveData<P>, setListener: (P) -> P)
 
-    fun execute(goal: P, liveData: LiveData<Resource<P>>)
+    fun execute(goal: P, liveData: LiveData<P>)
 //    fun setListener(liveData: LiveData<P>)
+    fun execute(goal: BigGoal, liveData: LiveData<BigGoal>)
 }

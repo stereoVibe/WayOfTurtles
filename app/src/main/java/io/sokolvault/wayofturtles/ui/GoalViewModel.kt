@@ -11,8 +11,8 @@ import io.sokolvault.wayofturtles.data.Resource
 import io.sokolvault.wayofturtles.domain.model.Goal
 import io.sokolvault.wayofturtles.domain.repository.RepositoryContract
 
-abstract class GoalViewModel<D:Goal>(appContext: Context = Application().applicationContext) :
-        AndroidViewModel(appContext as Application), RepositoryContract<D, D>{
+abstract class GoalViewModel<D:Goal> :
+        ViewModel(), RepositoryContract<D, D>{
 
     abstract var goalsList: LiveData<Resource<List<D>>>
     val objectResult: LiveData<D> = MutableLiveData<D>()

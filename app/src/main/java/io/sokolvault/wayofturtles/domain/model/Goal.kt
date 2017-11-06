@@ -7,7 +7,7 @@ import io.sokolvault.wayofturtles.utils.AppTypeConverters
 @TypeConverters(AppTypeConverters::class)
 abstract class Goal(var title: String) {
 
-    abstract val id: Int
+    abstract var id: Int
     var description: String = ""
 
 //  Start values for this fields in any Goal class

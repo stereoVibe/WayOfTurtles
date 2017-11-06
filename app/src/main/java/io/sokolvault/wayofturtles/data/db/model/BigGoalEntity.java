@@ -7,7 +7,10 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Set;
 
 import io.sokolvault.wayofturtles.utils.AppTypeConverters;
 import io.sokolvault.wayofturtles.domain.model.GoalCategory;
@@ -30,7 +33,7 @@ public class BigGoalEntity extends Goal {
     private Enum<GoalCategory> categoryEnum;
 
     @Ignore
-    private ArrayList<SubGoal> mSubGoalsList;
+    private Set<SubGoal> mSubGoalsList;
 
     @Ignore
     public BigGoalEntity(String title, String description) {
@@ -41,6 +44,11 @@ public class BigGoalEntity extends Goal {
     public BigGoalEntity(String title){
         super(title);
     }
+
+//    @Ignore
+//    public BigGoalEntity(int id, @NotNull String title, @NotNull String description) {
+//
+//    }
 
     @Override
     public int getId() {
@@ -57,6 +65,14 @@ public class BigGoalEntity extends Goal {
 
     public void setCategoryEnum(Enum<GoalCategory> categoryEnum) {
         this.categoryEnum = categoryEnum;
+    }
+
+    public Set<SubGoal> getSubGoalsList() {
+        return mSubGoalsList;
+    }
+
+    public void setSubGoalsList(Set<SubGoal> mSubGoalsList) {
+        this.mSubGoalsList = mSubGoalsList;
     }
 
     //    @Ignore

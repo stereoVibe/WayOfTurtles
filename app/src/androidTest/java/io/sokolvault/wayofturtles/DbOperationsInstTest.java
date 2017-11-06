@@ -1,6 +1,7 @@
 package io.sokolvault.wayofturtles;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -24,8 +25,10 @@ import io.sokolvault.wayofturtles.data.db.dao.BigGoalDAO;
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
 import io.sokolvault.wayofturtles.data.db.model.JobEntity;
 import io.sokolvault.wayofturtles.data.db.model.TaskEntity;
+import io.sokolvault.wayofturtles.domain.model.BigGoal;
 import io.sokolvault.wayofturtles.domain.model.Goal;
 import io.sokolvault.wayofturtles.domain.model.GoalCategory;
+import io.sokolvault.wayofturtles.ui.BigGoalViewModel;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {
@@ -67,6 +70,14 @@ public class DbOperationsInstTest {
         mDatabase.close();
     }
 
+//    @Test
+//    public void asyncWorkTest(){
+//        BigGoal bigGoal = new BigGoal(1, "ttitle");
+//        BigGoalViewModel bigGoalViewModel = ViewModelProviders
+//                .of(this, ViewModelFactory(arrayMap))
+//                .get(BigGoalViewModel::class.java)
+//    }
+//
 //    CRUD tests
 
 //  INSERT & READ tests

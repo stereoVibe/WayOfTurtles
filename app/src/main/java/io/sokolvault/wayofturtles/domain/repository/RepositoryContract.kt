@@ -7,7 +7,7 @@ import io.sokolvault.wayofturtles.domain.model.GoalCategory
 
 interface RepositoryContract <in I:Goal, O:Goal> {
 
-    fun createNewGoal(goal: I): LiveData<O>
+    fun createNewGoal(goal: I)
 
     fun updateGoal(goal: I): LiveData<O>
 

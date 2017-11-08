@@ -1,11 +1,8 @@
 package io.sokolvault.wayofturtles.utils
 
 import android.arch.persistence.room.TypeConverter
-import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity
-import io.sokolvault.wayofturtles.domain.model.BigGoal
 
-import io.sokolvault.wayofturtles.domain.model.Goal
-import io.sokolvault.wayofturtles.domain.model.GoalCategory
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 
 
 open class AppTypeConverters {

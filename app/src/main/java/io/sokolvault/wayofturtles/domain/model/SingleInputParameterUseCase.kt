@@ -1,9 +1,6 @@
-package io.sokolvault.wayofturtles.domain.usecases
+package io.sokolvault.wayofturtles.domain.model
 
 import android.arch.lifecycle.LiveData
-import io.sokolvault.wayofturtles.R
-import io.sokolvault.wayofturtles.data.Resource
-import io.sokolvault.wayofturtles.domain.model.BigGoal
 
 
 interface SingleInputParameterUseCase<P> {
@@ -15,8 +12,7 @@ interface SingleInputParameterUseCase<P> {
 //    }
 
 //    fun execute(goal: P, liveData: LiveData<P>, setListener: (P) -> P)
-
     fun execute(goal: P, liveData: LiveData<P>)
 //    fun setListener(liveData: LiveData<P>)
-    fun execute(goal: BigGoal, liveData: LiveData<BigGoal>)
+//    fun execute(goal: BigGoal, liveData: LiveData<BigGoal>)
 }

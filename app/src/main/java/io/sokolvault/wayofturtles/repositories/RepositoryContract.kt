@@ -1,11 +1,11 @@
-package io.sokolvault.wayofturtles.domain.repository
+package io.sokolvault.wayofturtles.repositories
 
 import android.arch.lifecycle.LiveData
-import io.sokolvault.wayofturtles.domain.model.Goal
-import io.sokolvault.wayofturtles.domain.model.GoalCategory
+import io.sokolvault.wayofturtles.model.base.Goal
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 
 
-interface RepositoryContract <in I:Goal, O:Goal> {
+interface RepositoryContract <in I: Goal, O: Goal> {
 
     fun createNewGoal(goal: I)
 

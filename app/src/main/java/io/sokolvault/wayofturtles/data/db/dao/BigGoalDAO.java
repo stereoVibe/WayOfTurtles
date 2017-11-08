@@ -1,5 +1,6 @@
 package io.sokolvault.wayofturtles.data.db.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -9,6 +10,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import io.sokolvault.wayofturtles.model.complex.CompositeGoal;
 import io.sokolvault.wayofturtles.utils.AppTypeConverters;
 import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity;
 
@@ -20,7 +22,7 @@ public interface BigGoalDAO {
     List<BigGoalEntity> getAll();
 
     @Query("SELECT * FROM big_goals WHERE big_goal_id = :id")
-    BigGoalEntity getBigGoalById(int id);
+    LiveData<CompositeGoal> getBigGoalById(int id);
 
     @Insert
     Long insertBigGoal(BigGoalEntity bigGoal);

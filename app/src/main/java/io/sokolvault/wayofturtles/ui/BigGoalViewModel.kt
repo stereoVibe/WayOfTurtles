@@ -1,50 +1,38 @@
 package io.sokolvault.wayofturtles.ui
 
-import android.app.Application
-import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.content.Context
-import io.sokolvault.wayofturtles.AbsentLiveData
 import io.sokolvault.wayofturtles.data.Resource
-import io.sokolvault.wayofturtles.domain.interactors.CreateNewBigGoalUseCase
-import io.sokolvault.wayofturtles.domain.model.BigGoal
-import io.sokolvault.wayofturtles.domain.model.GoalCategory
-import io.sokolvault.wayofturtles.domain.model.SubGoal
-import io.sokolvault.wayofturtles.domain.repository.BigGoalRepository
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.runBlocking
-import nl.komponents.kovenant.Kovenant.context
-import org.jetbrains.anko.coroutines.experimental.asReference
-import org.jetbrains.anko.coroutines.experimental.bg
-import org.jetbrains.anko.doAsyncResult
-import java.io.IOException
-import java.util.*
-import javax.inject.Inject
+import io.sokolvault.wayofturtles.domain.presence.CreateNewBigGoalUseCase
+import io.sokolvault.wayofturtles.domain.output.GetBigGoalByIdUseCase
+import io.sokolvault.wayofturtles.model.complex.CompositeGoal
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
+import io.sokolvault.wayofturtles.model.complex.SubGoal
+import io.sokolvault.wayofturtles.repositories.BigGoalRepository
 
-class BigGoalViewModel: GoalViewModel<BigGoal>(), BigGoalRepository {
+class BigGoalViewModel: GoalViewModel<CompositeGoal>(), BigGoalRepository {
 
-    var singleGoal: LiveData<BigGoal> = MutableLiveData<BigGoal>()
-    override lateinit var goalsList: LiveData<Resource<List<BigGoal>>>
+    var singleGoal: LiveData<CompositeGoal> = MutableLiveData<CompositeGoal>()
+    override lateinit var goalsList: LiveData<Resource<List<CompositeGoal>>>
 
-    override fun createNewGoal(goal: BigGoal) {
+    override fun createNewGoal(goal: CompositeGoal) {
         CreateNewBigGoalUseCase().execute(goal, singleGoal)
     }
 
-    override fun updateGoal(goal: BigGoal): LiveData<BigGoal> {
+    override fun updateGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
         return this.updateGoal(goal)
     }
 
-    override fun deleteGoal(goal: BigGoal): LiveData<BigGoal> {
+    override fun deleteGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
         return this.deleteGoal(goal)
     }
 
-    override fun getGoalById(id: Int): LiveData<BigGoal> {
-        return this.getGoalById(id)
+    override fun getGoalById(id: Int): LiveData<CompositeGoal> {
+        singleGoal = GetBigGoalByIdUseCase().execute(id)
+        return singleGoal
     }
 
-    override fun getGoalsFilteredByCategoryTag(category: GoalCategory): Set<LiveData<BigGoal>> {
+    override fun getGoalsFilteredByCategoryTag(category: GoalCategory): Set<LiveData<CompositeGoal>> {
         return this.getGoalsFilteredByCategoryTag(category)
     }
 

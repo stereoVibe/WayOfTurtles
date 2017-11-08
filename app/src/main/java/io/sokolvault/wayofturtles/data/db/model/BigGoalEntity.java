@@ -7,15 +7,12 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 import java.util.Set;
 
 import io.sokolvault.wayofturtles.utils.AppTypeConverters;
-import io.sokolvault.wayofturtles.domain.model.GoalCategory;
-import io.sokolvault.wayofturtles.domain.model.Goal;
-import io.sokolvault.wayofturtles.domain.model.SubGoal;
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
+import io.sokolvault.wayofturtles.model.base.Goal;
+import io.sokolvault.wayofturtles.model.complex.SubGoal;
 
 /* BigGoal class is responsible for holding all Sub Goals, like a container.
 *  Its function to fetching sub goals to appropriate Big Goal and holds overall progress,

@@ -9,9 +9,9 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import io.sokolvault.wayofturtles.utils.AppTypeConverters;
-import io.sokolvault.wayofturtles.domain.model.GoalCategory;
-import io.sokolvault.wayofturtles.domain.model.Goal;
-import io.sokolvault.wayofturtles.domain.model.SubGoal;
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
+import io.sokolvault.wayofturtles.model.base.Goal;
+import io.sokolvault.wayofturtles.model.complex.SubGoal;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -73,7 +73,7 @@ public class JobEntity extends Goal implements SubGoal {
     }
 
     @Override
-    public int getCompositeGoalID() {
+    public int getCompositeGoalId() {
         return mCompositeGoalID;
     }
 

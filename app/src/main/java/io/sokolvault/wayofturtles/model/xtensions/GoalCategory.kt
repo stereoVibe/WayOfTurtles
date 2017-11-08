@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.domain.model
+package io.sokolvault.wayofturtles.model.xtensions
 
 enum class GoalCategory {
     NONE,

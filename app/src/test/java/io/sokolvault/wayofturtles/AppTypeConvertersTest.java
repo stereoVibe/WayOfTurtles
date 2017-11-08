@@ -3,7 +3,7 @@ package io.sokolvault.wayofturtles;
 import org.junit.Assert;
 import org.junit.Test;
 
-import io.sokolvault.wayofturtles.domain.model.GoalCategory;
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
 import io.sokolvault.wayofturtles.utils.AppTypeConverters;
 
 

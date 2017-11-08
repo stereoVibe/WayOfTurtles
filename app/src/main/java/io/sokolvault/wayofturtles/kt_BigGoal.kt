@@ -11,12 +11,12 @@
 //    private lateinit var mTitle: String
 //    private lateinit var mDescription: String
 //    private var isComplete: Boolean = false
-//    private var mProgress: Int = 0
+//    private var progress: Int = 0
 //
-//    constructor(mTitle: String, mDescription: String, isComplete: Boolean, mProgress: Int) {
+//    constructor(mTitle: String, mDescription: String, isComplete: Boolean, progress: Int) {
 //        this.title = title
 //        this.mDescription = mDescription
 //        this.isComplete = isComplete
-//        this.mProgress = mProgress
+//        this.progress = progress
 //    }
 //}

@@ -1,13 +1,10 @@
-package io.sokolvault.wayofturtles.domain.interactors
+package io.sokolvault.wayofturtles.domain.presence
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import io.sokolvault.wayofturtles.AbsentLiveData
-import io.sokolvault.wayofturtles.data.Resource
-import io.sokolvault.wayofturtles.data.Resource.Companion.success
-import io.sokolvault.wayofturtles.domain.model.BigGoal
-import io.sokolvault.wayofturtles.domain.repository.BigGoalRepositoryImpl
-import io.sokolvault.wayofturtles.domain.usecases.SingleInputParameterUseCase
+import io.sokolvault.wayofturtles.model.complex.CompositeGoal
+import io.sokolvault.wayofturtles.repositories.BigGoalRepositoryImpl
+import io.sokolvault.wayofturtles.domain.model.SingleInputParameterUseCase
 import io.sokolvault.wayofturtles.utils.DbOps
 import io.sokolvault.wayofturtles.utils.Status
 import kotlinx.coroutines.experimental.android.UI
@@ -16,15 +13,15 @@ import org.jetbrains.anko.coroutines.experimental.bg
 
 
 class CreateNewBigGoalUseCase(private val repository: BigGoalRepositoryImpl = BigGoalRepositoryImpl())
-    : SingleInputParameterUseCase<BigGoal> {
+    : SingleInputParameterUseCase<CompositeGoal> {
 
-    override fun execute(goal: BigGoal, liveData: LiveData<BigGoal>) {
+    override fun execute(goal: CompositeGoal, liveData: LiveData<CompositeGoal>) {
         DbOps.status = Status.LOADING
-        val bigGoal = BigGoal(5, "fromExecute")
+//        val bigGoal = BigGoal(5, "fromExecute")
         liveData as MutableLiveData
         async (UI){
             bg {
-                liveData.postValue(bigGoal)
+                liveData.postValue(goal)
             }.await()
             DbOps.status = Status.SUCCESS
         }

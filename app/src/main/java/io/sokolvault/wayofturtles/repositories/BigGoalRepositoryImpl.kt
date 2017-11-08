@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles.domain.repository
+package io.sokolvault.wayofturtles.repositories
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -6,22 +6,22 @@ import android.util.Log
 import io.sokolvault.wayofturtles.AbsentLiveData
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase
 import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity
-import io.sokolvault.wayofturtles.domain.model.BigGoal
-import io.sokolvault.wayofturtles.domain.model.GoalCategory
-import io.sokolvault.wayofturtles.domain.model.SubGoal
+import io.sokolvault.wayofturtles.model.complex.CompositeGoal
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
+import io.sokolvault.wayofturtles.model.complex.SubGoal
 import io.sokolvault.wayofturtles.utils.DbOps
 import io.sokolvault.wayofturtles.utils.DbOps.Companion.toEntityBigGoalConverter
 import io.sokolvault.wayofturtles.utils.DbOps.Companion.toBigGoalConverter
+import io.sokolvault.wayofturtles.utils.DbOps.Companion.asyncGet
 import io.sokolvault.wayofturtles.utils.Status
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.runBlocking
 import org.jetbrains.anko.coroutines.experimental.bg
 
 class BigGoalRepositoryImpl : BigGoalRepository {
 
     private val goalsDb : GoalsDatabase = getDbInstance()
-    private val singleLiveData: LiveData<BigGoal> = AbsentLiveData.create()
+    private val singleLiveData: LiveData<CompositeGoal> = AbsentLiveData.create()
 
     companion object {
         private lateinit var goalsDb: GoalsDatabase
@@ -36,20 +36,20 @@ class BigGoalRepositoryImpl : BigGoalRepository {
         }
     }
 
-    override fun createNewGoal(goal: BigGoal) {
+    override fun createNewGoal(goal: CompositeGoal) {
 //        let { goalsDb is GoalsDatabase }
         var goalId: Int = -1
         val entity = toEntityBigGoalConverter(goal, BigGoalEntity("1", "2"))
         var bigGoalEntity: BigGoalEntity
-        var goal: BigGoal? = null
+        var goal: CompositeGoal? = null
         fun getBigGoal(id: Int) = goalsDb.bigGoalDAO().getBigGoalById(id)
-        fun convert(bigGoalEntity: BigGoalEntity) = toBigGoalConverter(bigGoalEntity, BigGoal(1, "2"))
+        fun convert(bigGoalEntity: BigGoalEntity) = toBigGoalConverter(bigGoalEntity, CompositeGoal(1, "2"))
 
         fun uiJobs(await: Int, await1: BigGoalEntity) {
             goalId = await
             goal = convert(await1)
 
-            singleLiveData as MutableLiveData<BigGoal>
+            singleLiveData as MutableLiveData<CompositeGoal>
             singleLiveData.postValue(goal)
         }
 
@@ -63,9 +63,9 @@ class BigGoalRepositoryImpl : BigGoalRepository {
                 getBigGoal(goalId)
             }
 //            bigGoalEntity = data2.await()
-            uiJobs(data.await(), data2.await())
+//            uiJobs(data.await(), data2.await())
 
-            singleLiveData as MutableLiveData<BigGoal>
+            singleLiveData as MutableLiveData<CompositeGoal>
             when(data.isCompleted && data2.isCompleted) {
                 true -> singleLiveData.setValue(goal)
                 true -> DbOps.status = Status.SUCCESS
@@ -77,19 +77,19 @@ class BigGoalRepositoryImpl : BigGoalRepository {
         Log.d(singleLiveData::class.simpleName, singleLiveData::getValue.toString())
     }
 
-    override fun updateGoal(goal: BigGoal): LiveData<BigGoal> {
+    override fun updateGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
         return this.updateGoal(goal)
     }
 
-    override fun deleteGoal(goal: BigGoal): LiveData<BigGoal> {
+    override fun deleteGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
         return this.deleteGoal(goal)
     }
 
-    override fun getGoalById(id: Int): LiveData<BigGoal> {
-        return this.getGoalById(id)
+    override fun getGoalById(id: Int): LiveData<CompositeGoal> {
+        return checkNotNull(goalsDb.bigGoalDAO().asyncGet(id))
     }
 
-    override fun getGoalsFilteredByCategoryTag(category: GoalCategory): Set<LiveData<BigGoal>> {
+    override fun getGoalsFilteredByCategoryTag(category: GoalCategory): Set<LiveData<CompositeGoal>> {
         return this.getGoalsFilteredByCategoryTag(category)
     }
 

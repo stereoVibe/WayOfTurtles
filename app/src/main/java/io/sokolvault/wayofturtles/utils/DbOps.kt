@@ -1,18 +1,17 @@
 package io.sokolvault.wayofturtles.utils
 
+import android.arch.lifecycle.LiveData
 import android.util.Log
 import io.sokolvault.wayofturtles.data.db.dao.BigGoalDAO
 import io.sokolvault.wayofturtles.data.db.dao.JobDAO
 import io.sokolvault.wayofturtles.data.db.model.BigGoalEntity
 import io.sokolvault.wayofturtles.data.db.model.JobEntity
-import io.sokolvault.wayofturtles.domain.model.BigGoal
-import io.sokolvault.wayofturtles.domain.model.Goal
-import kotlinx.coroutines.experimental.NonCancellable.isCompleted
+import io.sokolvault.wayofturtles.model.complex.CompositeGoal
+import io.sokolvault.wayofturtles.dto.DataBigGoal
+import io.sokolvault.wayofturtles.model.base.Goal
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.withTimeoutOrNull
 import org.jetbrains.anko.coroutines.experimental.bg
-import org.jetbrains.anko.doAsyncResult
 
 
 class DbOps {
@@ -43,18 +42,18 @@ class DbOps {
             return -1
         }
 
-        fun BigGoalDAO.asyncGet(bigGoalId: Int): BigGoalEntity{
-            status = Status.LOADING
-            var bigGoal: BigGoalEntity? = null
+        fun BigGoalDAO.asyncGet(bigGoalId: Int): LiveData<CompositeGoal>? {
+            var compositeGoal: LiveData<CompositeGoal>? = null
 
-            val async = async(UI) {
-                bg {
-                    bigGoal = this@asyncGet.getBigGoalById(bigGoalId)
-                    return@bg bigGoal
+            async(UI) {
+                val data = bg {
+                    status = Status.LOADING
+                    this@asyncGet.getBigGoalById(bigGoalId)
                 }
+                compositeGoal = data.await()
             }
             status = Status.IDLE
-            return bigGoal as BigGoalEntity
+            return compositeGoal
         }
 
         fun JobDAO.asyncSubGoalInsert(jobEntitySubGoal: JobEntity){
@@ -71,29 +70,29 @@ class DbOps {
         }
 
 
-        private fun <I:Goal, O:Goal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
+        private fun <I: Goal, O: Goal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
 
             val assign: (I, O) -> Unit = { i, o -> apply {
                 o.id = i.id
                 o.description = i.description
                 o.title = i.title
-                o.mGoalCategory = i.mGoalCategory
-                o.mProgress = i.mProgress
+                o.goalCategory = i.goalCategory
+                o.progress = i.progress
                 o.isComplete = i.isComplete
             }}
             assign(inputGoal, outputGoal)
             return outputGoal
         }
 
-        fun toEntityBigGoalConverter(inputGoal: BigGoal, outputGoal: BigGoalEntity): BigGoalEntity{
+        fun toEntityBigGoalConverter(inputGoal: DataBigGoal, outputGoal: BigGoalEntity): BigGoalEntity{
             baseGoalConverter(inputGoal, outputGoal)
-            outputGoal.subGoalsList = inputGoal.subGoals
+//            outputGoal.subGoalsList = inputGoal.subGoals
             return outputGoal
         }
 
-        fun toBigGoalConverter(inputGoal: BigGoalEntity, outputGoal: BigGoal): BigGoal{
+        fun toBigGoalConverter(inputGoal: BigGoalEntity, outputGoal: DataBigGoal): CompositeGoal {
             baseGoalConverter(inputGoal, outputGoal)
-            outputGoal.subGoals = inputGoal.subGoalsList
+//            outputGoal.subGoalsSet = inputGoal.subGoalsList
             return outputGoal
         }
     }

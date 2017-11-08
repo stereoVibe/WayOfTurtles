@@ -1,7 +1,6 @@
 package io.sokolvault.wayofturtles;
 
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -25,10 +24,8 @@ import io.sokolvault.wayofturtles.data.db.dao.BigGoalDAO;
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
 import io.sokolvault.wayofturtles.data.db.model.JobEntity;
 import io.sokolvault.wayofturtles.data.db.model.TaskEntity;
-import io.sokolvault.wayofturtles.domain.model.BigGoal;
-import io.sokolvault.wayofturtles.domain.model.Goal;
-import io.sokolvault.wayofturtles.domain.model.GoalCategory;
-import io.sokolvault.wayofturtles.ui.BigGoalViewModel;
+import io.sokolvault.wayofturtles.model.base.Goal;
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {
@@ -100,7 +97,7 @@ public class DbOperationsInstTest {
                 getFirstGoalEntityAndAssertForSize(mJobDAO.getAll());
 
         performCoreAsserts(JOB, dbJob);
-        assertEquals(JOB.getCompositeGoalID(), dbJob.getCompositeGoalID());
+        assertEquals(JOB.getCompositeGoalId(), dbJob.getCompositeGoalId());
         assertEquals(JOB.getTasksQuantity(), dbJob.getTasksQuantity());
         assertEquals(JOB.getCompletedTasksQuantity(), dbJob.getCompletedTasksQuantity());
     }
@@ -126,7 +123,7 @@ public class DbOperationsInstTest {
     @Test
     public void updateAndGetJobEntityTest(){
         /**
-         * ID for BigGoal should be updated, as it matches the compositeGoalID in
+         * ID for BigGoal should be updated, as it matches the compositeGoalId in
          * all SubGoals (JobEntity here), so it must exist. Because of auto generated id for BigGoal,
          * we can't updated it in DB, so it needs another insert - {@link #addSecondBigGoal()}
         **/
@@ -145,7 +142,7 @@ public class DbOperationsInstTest {
                 getFirstGoalEntityAndAssertForSize(mJobDAO.getAll());
 
         performCoreAsserts(JOB, dbJob);
-        assertEquals(JOB.getCompositeGoalID(), dbJob.getCompositeGoalID());
+        assertEquals(JOB.getCompositeGoalId(), dbJob.getCompositeGoalId());
         assertEquals(JOB.getTasksQuantity(), dbJob.getTasksQuantity());
         assertEquals(JOB.getCompletedTasksQuantity(), dbJob.getCompletedTasksQuantity());
     }
@@ -153,7 +150,7 @@ public class DbOperationsInstTest {
     @Test
     public void updateAndGetAndGetTaskEntityTest(){
         /**
-         * ID for BigGoal should be updated, as it matches the compositeGoalID in
+         * ID for BigGoal should be updated, as it matches the compositeGoalId in
          * all SubGoals (TaskEntity here), so it must exist. Because of auto generated id for BigGoal,
          * we can't updated it in DB, so it needs another insert - {@link #addSecondBigGoal()}
          **/
@@ -206,16 +203,16 @@ public class DbOperationsInstTest {
         assertEquals(mockGoal.getTitle(), actualGoal.getTitle());
         assertEquals(mockGoal.getDescription(), actualGoal.getDescription());
         assertEquals(mockGoal.isComplete(), actualGoal.isComplete());
-        assertEquals(mockGoal.getMGoalCategory(), actualGoal.getMGoalCategory());
-        assertEquals(String.valueOf(mockGoal.getMProgress()), String.valueOf(actualGoal.getMProgress()));
+        assertEquals(mockGoal.getGoalCategory(), actualGoal.getGoalCategory());
+        assertEquals(String.valueOf(mockGoal.getProgress()), String.valueOf(actualGoal.getProgress()));
     }
 
 //  Bundle of local updates matches all Goals in the app.
     private <T extends Goal> void performCoreUpdates(T goal){
         goal.setTitle("Updated title");
         goal.setDescription("Updated description");
-        goal.setMGoalCategory(GoalCategory.FAMILY);
-        goal.setMProgress(100.0D);
+        goal.setGoalCategory(GoalCategory.FAMILY);
+        goal.setProgress(100.0D);
         goal.setComplete(true);
     }
 }

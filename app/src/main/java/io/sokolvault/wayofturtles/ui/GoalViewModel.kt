@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.sokolvault.wayofturtles.RequestToUseCaseListener
 import io.sokolvault.wayofturtles.data.Resource
-import io.sokolvault.wayofturtles.model.base.Goal
+import io.sokolvault.wayofturtles.model.Goal
 import io.sokolvault.wayofturtles.repositories.RepositoryContract
 
 abstract class GoalViewModel<D: Goal> :

@@ -1,10 +1,11 @@
 package io.sokolvault.wayofturtles.repositories
 
-import io.sokolvault.wayofturtles.model.complex.CompositeGoal
-import io.sokolvault.wayofturtles.model.complex.SubGoal
+import io.sokolvault.wayofturtles.model.CompositeGoal
+import io.sokolvault.wayofturtles.model.Internable
+import io.sokolvault.wayofturtles.model.SingleGoal
 
 interface BigGoalRepository : RepositoryContract<CompositeGoal, CompositeGoal> {
 
-    fun <T: SubGoal> getSubGoals(): List<T>
+//    fun <T: Internable<SingleGoal>> getSubGoals(): List<T>
 
 }

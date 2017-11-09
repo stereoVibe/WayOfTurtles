@@ -8,15 +8,22 @@ import android.os.Bundle
 import android.util.ArrayMap
 import android.util.Log
 import android.widget.Button
+import io.sokolvault.wayofturtles.di.ContextModule
 
-import io.sokolvault.wayofturtles.dto.DataBigGoal
+import io.sokolvault.wayofturtles.carriers.DataCompositeGoal
+import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
+import io.sokolvault.wayofturtles.di.DaggerGoalsDAOApplicationComponent
 import io.sokolvault.wayofturtles.repositories.BigGoalRepositoryImpl
 import io.sokolvault.wayofturtles.ui.BigGoalViewModel
 import io.sokolvault.wayofturtles.ui.ViewModelFactory
 import io.sokolvault.wayofturtles.utils.DbOps
 import io.sokolvault.wayofturtles.utils.Status
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.find
 import org.jetbrains.anko.longToast
+import java.util.*
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
 class MainActivity : AppCompatActivity() {
@@ -26,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        applicationContext.deleteDatabase("goals")
+//        applicationContext.deleteDatabase(Constants.DATABASE_NAME)
         setContentView(R.layout.activity_main)
 
         val loadButton: Button = find(R.id.loadButton)
@@ -43,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 .get(BigGoalViewModel::class.java)
 
 //        val bigGoal = BigGoal(3, "Заголовок")
-        val bigGoal = DataBigGoal(3, "Заголовок")
+
 
         bigGoalViewModel.singleGoal.observe(this, Observer {
 
@@ -62,8 +69,16 @@ class MainActivity : AppCompatActivity() {
 
 //        toast(DbOps.checkStatus().toString())
         loadButton.setOnClickListener({
-            bigGoalViewModel.createNewGoal(bigGoal)
-            bigGoalViewModel.getGoalById(bigGoal.id)
+            async(UI) {
+                bg {
+                    val rand = Random(6).nextInt()
+                    val bigGoal = CompositeGoalRoom("Заголовок $rand")
+                    goalsDataComponent.getDbInstance().bigGoalDAO().insertBigGoal(bigGoal)
+                }.await()
+                longToast("Заебись! Че-то получилось")
+            }
+//            bigGoalViewModel.createNewGoal(bigGoal)
+//            bigGoalViewModel.getGoalById(bigGoal.id)
         })
 
 //        val bigGoalDAO = goalsDataComponent.getBigGoalDao()
@@ -87,6 +102,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        applicationContext.deleteDatabase("goals")
+//        applicationContext.deleteDatabase(Constants.DATABASE_NAME)
     }
 }

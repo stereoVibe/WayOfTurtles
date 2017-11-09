@@ -1,14 +1,12 @@
 package io.sokolvault.wayofturtles.model.xtensions
 
-import io.sokolvault.wayofturtles.model.complex.SubGoal
-import io.sokolvault.wayofturtles.model.straight.SingleGoal
+import io.sokolvault.wayofturtles.model.Internable
+import io.sokolvault.wayofturtles.model.SingleGoal
 
+interface Compoundable<out T: SingleGoal>{
+//    val subGoals: LinkedHashMap<Int, Internable<SingleGoal>>
 
-interface Compoundable<T: SingleGoal> {
+    fun addSubGoalToList(internable: Internable<T>)
+    fun addAllSubGoals(internables: List<Internable<T>>)
 
-    var subGoals: LinkedHashMap<Int, SubGoal<T>>
-
-    fun addSubGoalToMap(subGoal: SubGoal<T>)
-    fun addAllSubGoals(subGoals: Set<SubGoal<T>>)
-    fun calculateSumProgress(): Int
 }

@@ -2,7 +2,7 @@ package io.sokolvault.wayofturtles.domain.presence
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import io.sokolvault.wayofturtles.model.complex.CompositeGoal
+import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.repositories.BigGoalRepositoryImpl
 import io.sokolvault.wayofturtles.domain.model.SingleInputParameterUseCase
 import io.sokolvault.wayofturtles.utils.DbOps
@@ -16,17 +16,17 @@ class CreateNewBigGoalUseCase(private val repository: BigGoalRepositoryImpl = Bi
     : SingleInputParameterUseCase<CompositeGoal> {
 
     override fun execute(goal: CompositeGoal, liveData: LiveData<CompositeGoal>) {
-        DbOps.status = Status.LOADING
-//        val bigGoal = BigGoal(5, "fromExecute")
-        liveData as MutableLiveData
-        async (UI){
-            bg {
-                liveData.postValue(goal)
-            }.await()
-            DbOps.status = Status.SUCCESS
-        }
+//        DbOps.status = Status.LOADING
+////        val bigGoal = BigGoal(5, "fromExecute")
+//        liveData as MutableLiveData
+//        async (UI){
+//            bg {
+//                liveData.postValue(goal)
+//            }.await()
+//            DbOps.status = Status.SUCCESS
+//        }
 
-//        repository.createNewGoal(goal)
+        repository.createNewGoal(goal)
     }
 
 }

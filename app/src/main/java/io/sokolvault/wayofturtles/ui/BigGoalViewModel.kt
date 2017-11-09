@@ -5,9 +5,10 @@ import android.arch.lifecycle.MutableLiveData
 import io.sokolvault.wayofturtles.data.Resource
 import io.sokolvault.wayofturtles.domain.presence.CreateNewBigGoalUseCase
 import io.sokolvault.wayofturtles.domain.output.GetBigGoalByIdUseCase
-import io.sokolvault.wayofturtles.model.complex.CompositeGoal
+import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
-import io.sokolvault.wayofturtles.model.complex.SubGoal
+import io.sokolvault.wayofturtles.model.Internable
+import io.sokolvault.wayofturtles.model.SingleGoal
 import io.sokolvault.wayofturtles.repositories.BigGoalRepository
 
 class BigGoalViewModel: GoalViewModel<CompositeGoal>(), BigGoalRepository {
@@ -48,7 +49,7 @@ class BigGoalViewModel: GoalViewModel<CompositeGoal>(), BigGoalRepository {
         return this.setProgress(progress)
     }
 
-    override fun <T : SubGoal> getSubGoals(): List<T> {
+    fun <T : Internable<SingleGoal>> getSubGoals(): List<T> {
         return this.getSubGoals()
     }
 }

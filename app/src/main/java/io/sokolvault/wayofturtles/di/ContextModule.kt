@@ -1,4 +1,4 @@
-package io.sokolvault.wayofturtles
+package io.sokolvault.wayofturtles.di
 
 import android.content.Context
 import dagger.Module

@@ -1,7 +1,7 @@
 package io.sokolvault.wayofturtles.domain.output
 
 import android.arch.lifecycle.LiveData
-import io.sokolvault.wayofturtles.model.complex.CompositeGoal
+import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.repositories.BigGoalRepositoryImpl
 import io.sokolvault.wayofturtles.domain.model.GetByIdUseCase
 

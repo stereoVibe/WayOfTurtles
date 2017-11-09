@@ -1,7 +1,7 @@
 package io.sokolvault.wayofturtles.repositories
 
 import android.arch.lifecycle.LiveData
-import io.sokolvault.wayofturtles.model.base.Goal
+import io.sokolvault.wayofturtles.model.Goal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 
 

@@ -13,7 +13,7 @@ data class DataCompositeGoal(override var id: Int,
     override var subGoals: ArrayList<Internable<SingleGoal>> = ArrayList()
 
     override fun addSubGoalToList(internable: Internable<SingleGoal>){
-        if (internable.compositeGoalId == id){ this.subGoals.add(internable.id, internable) }
+        if (internable.compositeGoalId == id){ this.subGoals.add(internable) }
     }
 
     override fun addAllSubGoals(internables: List<Internable<SingleGoal>>){ this.subGoals.addAll(internables) }

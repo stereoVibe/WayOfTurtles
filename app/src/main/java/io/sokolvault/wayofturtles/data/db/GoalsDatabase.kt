@@ -42,6 +42,18 @@ abstract class GoalsDatabase: RoomDatabase() {
             }
             return sInstance as GoalsDatabase
         }
+
+        fun getInMemoryInstance(context: Context):GoalsDatabase{
+            if (sInstance == null) {
+                synchronized(LOCK) {
+                    sInstance = Room.inMemoryDatabaseBuilder(context, GoalsDatabase::class.java).build()
+//                    Log.d(LOG_TAG, "New database creating")
+                }
+//                sInstance = Room.databaseBuilder(context.applicationContext,
+//                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+            }
+            return sInstance as GoalsDatabase
+        }
     }
 
 //        private val LOG_TAG = GoalsDatabase::class.java.simpleName

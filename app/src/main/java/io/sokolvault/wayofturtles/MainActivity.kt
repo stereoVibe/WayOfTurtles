@@ -1,23 +1,16 @@
 package io.sokolvault.wayofturtles
 
-import android.arch.lifecycle.Observer
+//import io.sokolvault.wayofturtles.di.DaggerGoalsDAOApplicationComponent
 import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.ArrayMap
 import android.util.Log
 import android.widget.Button
-import io.sokolvault.wayofturtles.di.ContextModule
-
-import io.sokolvault.wayofturtles.carriers.DataCompositeGoal
+import io.sokolvault.wayofturtles.data.db.GoalsDatabase
 import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
-import io.sokolvault.wayofturtles.di.DaggerGoalsDAOApplicationComponent
-import io.sokolvault.wayofturtles.repositories.BigGoalRepositoryImpl
 import io.sokolvault.wayofturtles.ui.BigGoalViewModel
-import io.sokolvault.wayofturtles.ui.ViewModelFactory
-import io.sokolvault.wayofturtles.utils.DbOps
-import io.sokolvault.wayofturtles.utils.Status
+import io.sokolvault.wayofturtles.utils.Constants
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -32,76 +25,77 @@ class MainActivity : AppCompatActivity() {
     private val arrayMap = ArrayMap<Class<out ViewModel>, ViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 //        applicationContext.deleteDatabase(Constants.DATABASE_NAME)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val loadButton: Button = find(R.id.loadButton)
 
-        val goalsDataComponent = DaggerGoalsDAOApplicationComponent.builder()
-                .contextModule(ContextModule(this))
-                .build()
+        val db = GoalsDatabase.getInstance(this.applicationContext)
+        var mdmDb = GoalsDatabase.getInMemoryInstance(this.applicationContext)
 
-        BigGoalRepositoryImpl.injectDbInstance(goalsDataComponent.getDbInstance())
+//        val goalsDataComponent = DaggerGoalsDAOApplicationComponent.builder()
+//                .contextModule(ContextModule(this))
+//                .build()
 
-        arrayMap.put(BigGoalViewModel::class.java, BigGoalViewModel())
-        bigGoalViewModel = ViewModelProviders
-                .of(this, ViewModelFactory(arrayMap))
-                .get(BigGoalViewModel::class.java)
+//        BigGoalRepositoryImpl.injectDbInstance(goalsDataComponent.getDbInstance())
+
+//        arrayMap.put(BigGoalViewModel::class.java, BigGoalViewModel())
+//        bigGoalViewModel = ViewModelProviders
+//                .of(this, ViewModelFactory(arrayMap))
+//                .get(BigGoalViewModel::class.java)
 
 //        val bigGoal = BigGoal(3, "Заголовок")
 
+//        bigGoalViewModel.singleGoal.observe(this, Observer {
+//            when(DbOps.status){
+//                Status.SUCCESS -> {
+//                    longToast("Заебись! Че-то получилось")
+//                    Log.d(this::class.simpleName, it?.title)
+//                    DbOps.status = Status.IDLE
+//                }
+//                Status.LOADING -> longToast("Загрузка говорят началась")
+//                Status.ERROR -> longToast("Ебись оно конем!")
+//                Status.IDLE -> longToast("Стою, жду")
+//                null -> longToast("Ты как сюда попал, Вася?!?!")
+//            }
+//        })
 
-        bigGoalViewModel.singleGoal.observe(this, Observer {
+//        toast(DbOps.checkStatus().toString
 
-            when(DbOps.status){
-                Status.SUCCESS -> {
-                    longToast("Заебись! Че-то получилось")
-                    Log.d(this::class.simpleName, it?.title)
-                    DbOps.status = Status.IDLE
-                }
-                Status.LOADING -> longToast("Загрузка говорят началась")
-                Status.ERROR -> longToast("Ебись оно конем!")
-                Status.IDLE -> longToast("Стою, жду")
-                null -> longToast("Ты как сюда попал, Вася?!?!")
-            }
-        })
-
-//        toast(DbOps.checkStatus().toString())
-        loadButton.setOnClickListener({
+        loadButton.setOnClickListener({ it ->
             async(UI) {
-                bg {
-                    val rand = Random(6).nextInt()
+
+                val toNat:     (Int) -> Int     = { x -> x * -1}
+                val isNat:     (Int) -> Boolean = { x -> x < 0}
+                val checkRand: (Int) -> Int     = { it -> when(isNat(it)) {
+                                true -> toNat(it)
+                                else -> it} }
+
+                val data = bg {
+                    val seed = Random().nextGaussian() * 12.6
+                    val rand = checkRand(seed.toInt())
                     val bigGoal = CompositeGoalRoom("Заголовок $rand")
-                    goalsDataComponent.getDbInstance().bigGoalDAO().insertBigGoal(bigGoal)
-                }.await()
-                longToast("Заебись! Че-то получилось")
+//                    goalsDataComponent.getDbInstance().bigGoalDAO().insertBigGoal(bigGoal)
+                    mdmDb.bigGoalDAO().insertBigGoal(bigGoal)
+                }
+                longToast("Че-то получилось ${data.await()}")
             }
 //            bigGoalViewModel.createNewGoal(bigGoal)
 //            bigGoalViewModel.getGoalById(bigGoal.id)
+            mdmDb = GoalsDatabase.getInMemoryInstance(this@MainActivity.applicationContext)
+            val status = mdmDb.isOpen
+            Log.d(mdmDb::class.simpleName, "База открыта? $status")
         })
 
 //        val bigGoalDAO = goalsDataComponent.getBigGoalDao()
 //        bigGoalDAO.asyncInsert(BigGoalEntity("Вставка в БД через расширяемую функцию"))
-//
-//        val jobDAO1 = goalsDataComponent.getJobDao()
-//
-//        jobDAO1.asyncSubGoalInsert(JobEntity.newBuilder()
-//                .setCompositeGoalID(3)
-//                .setId(14)
-//                .setTitle("This is Job 14")
-//                .setTasksQuantity(5)
-//                .build())
-
-//        async(UI) {
-//            bg{
-//                Log.d("Хуепес", jobDAO1.getAll().size.toString())
-//            }
-//        }
     }
 
     override fun onStop() {
         super.onStop()
-//        applicationContext.deleteDatabase(Constants.DATABASE_NAME)
+        GoalsDatabase.getInstance(applicationContext).close()
+        val status: Boolean = applicationContext.deleteDatabase(Constants.DATABASE_NAME)
+        Log.d(this::class.simpleName, "Сработал On Stop. $status.")
     }
 }

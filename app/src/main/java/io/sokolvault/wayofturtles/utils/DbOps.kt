@@ -6,6 +6,7 @@ import io.sokolvault.wayofturtles.data.db.dao.CompositeGoalDAO
 import io.sokolvault.wayofturtles.data.db.dao.JobSubGoalDAO
 import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
+import io.sokolvault.wayofturtles.model.BaseGoal
 import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.model.Goal
 import kotlinx.coroutines.experimental.android.UI
@@ -69,7 +70,7 @@ class DbOps {
         }
 
 
-        private fun <I: Goal, O: Goal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
+        private fun <I: BaseGoal, O: BaseGoal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
 
             val assign: (I, O) -> Unit = { i, o -> apply {
                 o.id = i.id

@@ -9,7 +9,6 @@ import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom
 import io.sokolvault.wayofturtles.model.CompositeGoal
-import io.sokolvault.wayofturtles.model.Goal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async

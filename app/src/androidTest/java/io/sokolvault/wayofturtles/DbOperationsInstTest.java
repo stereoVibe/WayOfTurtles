@@ -24,6 +24,7 @@ import io.sokolvault.wayofturtles.data.db.dao.TaskSubGoalDAO;
 import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom;
+import io.sokolvault.wayofturtles.model.BaseGoal;
 import io.sokolvault.wayofturtles.model.Goal;
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
 
@@ -203,7 +204,7 @@ public class DbOperationsInstTest {
     }
 
 //  Bundle of asserts matches all Goals in the app.
-    private <T extends Goal> void performCoreAsserts(T mockGoal, T actualGoal){
+    private <T extends BaseGoal> void performCoreAsserts(T mockGoal, T actualGoal){
         assertEquals(mockGoal.getId(), actualGoal.getId());
         assertEquals(mockGoal.getTitle(), actualGoal.getTitle());
         assertEquals(mockGoal.getDescription(), actualGoal.getDescription());

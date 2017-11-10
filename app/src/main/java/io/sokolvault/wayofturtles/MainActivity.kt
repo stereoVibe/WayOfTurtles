@@ -90,6 +90,56 @@ class MainActivity : AppCompatActivity() {
 
 //        val bigGoalDAO = goalsDataComponent.getBigGoalDao()
 //        bigGoalDAO.asyncInsert(BigGoalEntity("Вставка в БД через расширяемую функцию"))
+
+//        while (true) {
+//            val mountainH: Int = Random().nextInt()
+//            val findClosestMax: (Int, Array<Int>) -> (Int) = { x, y -> if (y[x] > y[x + 1]) x else x + 1 }
+//            var heights: Array<Int> = Array(8, { _ -> 0 })
+//            val inBound: (Int) -> (Int) = { i ->  if(i < 8) i + 1 else i }
+//
+//            heights.max()
+//
+//            val refreshMax = fun(indx: Int, max: Int, heights: Array<Int>) :Int{
+//                val localMax: Int
+//                return if (heights[indx] > max) {
+//                    localMax = heights[indx]
+//                    heights[indx] = 0
+//                    localMax
+//                } else max
+//            }
+//
+//            val locateMax = fun(index: Int, heights: Array<Int>): Int {
+//                var max : Int = 0
+//                for (i in 0 until 8) {
+//                    max = refreshMax(i, max, heights)
+//                    if ( > max) return i else index
+//                }
+//            }
+//
+//
+////            val locateMax: (Int, Int, Array<Int>) -> (Int) = { i, max, arr ->
+////                    if (arr[i] > max) arr[i] else max
+////                    }
+//
+//            for (i in heights.iterator()){
+//
+//            }
+//
+//            for (i in 0 until 8){
+//                heights[i] = mountainH
+//            }
+////            val heights = arrayOf()
+//
+//
+//            // Write an action using println()
+//
+//            // To debug: System.err.println("Debug messages...");
+//            for (i in 0 until 8) {  // The index of the mountain to fire on.
+//                "${heights.size}"
+//                println(i)
+//            }
+//        }
+
     }
 
     override fun onStop() {
@@ -98,4 +148,5 @@ class MainActivity : AppCompatActivity() {
         val status: Boolean = applicationContext.deleteDatabase(Constants.DATABASE_NAME)
         Log.d(this::class.simpleName, "Сработал On Stop. $status.")
     }
+
 }

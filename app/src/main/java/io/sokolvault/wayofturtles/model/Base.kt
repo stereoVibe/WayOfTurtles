@@ -19,7 +19,7 @@ interface Goal{
 
 /* Wrapper */
 abstract class BaseGoal: Goal{
-    abstract var id: Int
+    abstract val id: Int
     abstract override var title: String
     abstract override var description: String
     override var progress: Double = 0.0
@@ -31,12 +31,10 @@ abstract class BaseGoal: Goal{
 }
 
 abstract class SingleGoal
-    :BaseGoal(){
-}
+    :BaseGoal()
 
 abstract class CompositeGoal
     :BaseGoal(), Compoundable<SingleGoal>{
-
     abstract var subGoals: ArrayList<Internable<SingleGoal>>
 
     fun calculateSumProgress(): Int {
@@ -49,14 +47,3 @@ abstract class CompositeGoal
         } else 0
     }
 }
-
-//@TypeConverters(AppTypeConverters::class)
-//abstract class Goal {
-//    abstract var id: Int
-//    abstract var title: String
-//    var description: String = ""
-//    //  Start values for this fields in any Goal class
-//    var progress = 0.0
-//    var isComplete = false
-//    @TypeConverters(AppTypeConverters::class) var goalCategory: Enum<GoalCategory> = GoalCategory.NONE
-//}

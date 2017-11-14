@@ -1,14 +1,21 @@
 package io.sokolvault.wayofturtles.repositories.presence
 
+import android.arch.lifecycle.LiveData
+import io.sokolvault.wayofturtles.model.CompositeGoal
+import io.sokolvault.wayofturtles.model.JobGoal
+import io.sokolvault.wayofturtles.model.SingleGoal
+import io.sokolvault.wayofturtles.model.TaskGoal
+
 /**
  * This @interface provides CREATE and DELETE operations
  * for interactors (use cases)
  * */
-interface PresenceRepository {
+interface PresenceRepositoryContract {
 
     /**
      *
      * Use this methods:
+     *
      * [createNewTaskGoal],
      * [createNewJobGoal],
      * [createNewCompositeGoal],
@@ -16,9 +23,9 @@ interface PresenceRepository {
      * [createNewJobSubGoal]
      * for CREATE operations
      * */
-    fun createNewTaskGoal()
-    fun createNewJobGoal()
-    fun createNewCompositeGoal()
+    fun createNewTaskGoal(task: TaskGoal)
+    fun createNewJobGoal(jobGoal: JobGoal)
+    fun createNewCompositeGoal(compositeGoal: CompositeGoal)
     fun createNewTaskSubGoal(compositeGoalId: Int)
     fun createNewJobSubGoal(compositeGoalId: Int)
 

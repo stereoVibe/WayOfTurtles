@@ -9,6 +9,8 @@ import android.util.Log
 import android.widget.Button
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase
 import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
+import io.sokolvault.wayofturtles.di.ContextModule
+import io.sokolvault.wayofturtles.di.DaggerGoalsDAOApplicationComponent
 import io.sokolvault.wayofturtles.ui.BigGoalViewModel
 import io.sokolvault.wayofturtles.utils.Constants
 import kotlinx.coroutines.experimental.android.UI
@@ -34,9 +36,9 @@ class MainActivity : AppCompatActivity() {
         val db = GoalsDatabase.getInstance(this.applicationContext)
         var mdmDb = GoalsDatabase.getInMemoryInstance(this.applicationContext)
 
-//        val goalsDataComponent = DaggerGoalsDAOApplicationComponent.builder()
-//                .contextModule(ContextModule(this))
-//                .build()
+        val goalsDataComponent = DaggerGoalsDAOApplicationComponent.builder()
+                .contextModule(ContextModule(this))
+                .build()
 
 //        BigGoalRepositoryImpl.injectDbInstance(goalsDataComponent.getDbInstance())
 

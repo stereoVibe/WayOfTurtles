@@ -5,11 +5,13 @@ import android.arch.lifecycle.MutableLiveData
 import io.sokolvault.wayofturtles.data.Resource
 import io.sokolvault.wayofturtles.domain.presence.CreateNewBigGoalUseCase
 import io.sokolvault.wayofturtles.domain.output.GetBigGoalByIdUseCase
+import io.sokolvault.wayofturtles.domain.presence.PresenceInteractor
 import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 import io.sokolvault.wayofturtles.model.Internable
 import io.sokolvault.wayofturtles.model.SingleGoal
 import io.sokolvault.wayofturtles.repositories.BigGoalRepository
+import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryImpl
 
 class BigGoalViewModel: GoalViewModel<CompositeGoal>(), BigGoalRepository {
 
@@ -17,7 +19,10 @@ class BigGoalViewModel: GoalViewModel<CompositeGoal>(), BigGoalRepository {
     override lateinit var goalsList: LiveData<Resource<List<CompositeGoal>>>
 
     override fun createNewGoal(goal: CompositeGoal) {
-        CreateNewBigGoalUseCase().execute(goal, singleGoal)
+//        CreateNewBigGoalUseCase().execute(goal, singleGoal)
+        PresenceInteractor
+                .UseCaseForCompositeGoal(PresenceRepositoryImpl())
+                .createGoal(goal)
     }
 
     override fun updateGoal(goal: CompositeGoal): LiveData<CompositeGoal> {

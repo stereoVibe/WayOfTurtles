@@ -9,7 +9,4 @@ data class DataTaskSubGoal(override var id: Int,
                            override val compositeGoalId: Int):TaskGoal(), Internable<TaskGoal> {
     override var description: String = ""
 
-    override fun isGoalOf(goal: TaskGoal): Boolean {
-        return true
-    }
 }

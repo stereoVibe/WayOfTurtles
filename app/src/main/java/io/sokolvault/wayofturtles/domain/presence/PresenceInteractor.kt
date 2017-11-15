@@ -1,21 +1,20 @@
 package io.sokolvault.wayofturtles.domain.presence
 
-import android.arch.lifecycle.LiveData
 import io.sokolvault.wayofturtles.domain.model.PresenceUseCase
 import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.model.Internable
 import io.sokolvault.wayofturtles.model.SingleGoal
-import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryContract
+import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryData
 
 class PresenceInteractor {
 
-    class UseCaseForCompositeGoal(private val repository: PresenceRepositoryContract) : PresenceUseCase<CompositeGoal> {
+    class UseCaseForCompositeGoal(private val repository: PresenceRepositoryData) : PresenceUseCase<CompositeGoal> {
 
         override fun createGoal(goal: CompositeGoal) =
                 repository.createNewCompositeGoal(goal)
 
         override fun deleteGoal(goal: CompositeGoal) {
-            return this.deleteGoal(goal)
+            repository.deleteCompositeGoal(goal)
         }
     }
 

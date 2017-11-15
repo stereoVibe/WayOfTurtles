@@ -2,59 +2,37 @@ package io.sokolvault.wayofturtles.ui
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import io.sokolvault.wayofturtles.data.Resource
-import io.sokolvault.wayofturtles.domain.presence.CreateNewBigGoalUseCase
-import io.sokolvault.wayofturtles.domain.output.GetBigGoalByIdUseCase
+import io.sokolvault.wayofturtles.domain.model.PresenceUseCase
 import io.sokolvault.wayofturtles.domain.presence.PresenceInteractor
 import io.sokolvault.wayofturtles.model.CompositeGoal
-import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
-import io.sokolvault.wayofturtles.model.Internable
-import io.sokolvault.wayofturtles.model.SingleGoal
-import io.sokolvault.wayofturtles.repositories.BigGoalRepository
-import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryImpl
+import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryData
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class BigGoalViewModel: GoalViewModel<CompositeGoal>(), BigGoalRepository {
+@Singleton
+class BigGoalViewModel
+@Inject constructor(private val repository: PresenceRepositoryData) : GoalViewModel<CompositeGoal>(),
+        PresenceUseCase<CompositeGoal> {
 
     var singleGoal: LiveData<CompositeGoal> = MutableLiveData<CompositeGoal>()
     override lateinit var goalsList: LiveData<Resource<List<CompositeGoal>>>
 
-    override fun createNewGoal(goal: CompositeGoal) {
-//        CreateNewBigGoalUseCase().execute(goal, singleGoal)
+    override fun createGoal(goal: CompositeGoal) {
+
+        Log.d("ViewModel Repo", repository.toString())
+
         PresenceInteractor
-                .UseCaseForCompositeGoal(PresenceRepositoryImpl())
+                .UseCaseForCompositeGoal(repository)
                 .createGoal(goal)
     }
 
-    override fun updateGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
-        return this.updateGoal(goal)
+    override fun deleteGoal(goal: CompositeGoal) {
+        PresenceInteractor
+                .UseCaseForCompositeGoal(repository)
+                .deleteGoal(goal)
     }
 
-    override fun deleteGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
-        return this.deleteGoal(goal)
-    }
 
-    override fun getGoalById(id: Int): LiveData<CompositeGoal> {
-        singleGoal = GetBigGoalByIdUseCase().execute(id)
-        return singleGoal
-    }
-
-    override fun getGoalsFilteredByCategoryTag(category: GoalCategory): Set<LiveData<CompositeGoal>> {
-        return this.getGoalsFilteredByCategoryTag(category)
-    }
-
-    override fun addCategoryTagToGoal(category: GoalCategory) {
-        return this.addCategoryTagToGoal(category)
-    }
-
-    override fun setCompleteStatus(status: Boolean) {
-        return this.setCompleteStatus(status)
-    }
-
-    override fun setProgress(progress: Int) {
-        return this.setProgress(progress)
-    }
-
-    fun <T : Internable<SingleGoal>> getSubGoals(): List<T> {
-        return this.getSubGoals()
-    }
 }

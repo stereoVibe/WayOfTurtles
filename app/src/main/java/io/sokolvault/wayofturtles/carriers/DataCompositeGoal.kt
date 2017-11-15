@@ -6,9 +6,9 @@ import io.sokolvault.wayofturtles.model.SingleGoal
 import io.sokolvault.wayofturtles.model.Internable
 
 
-data class DataCompositeGoal(override var id: Int,
-                             override var title: String)
+data class DataCompositeGoal(override var title: String)
     : CompositeGoal(), Compoundable<SingleGoal> {
+    override var id: Int = 0
     override var description: String = ""
     override var subGoals: ArrayList<Internable<SingleGoal>> = ArrayList()
 

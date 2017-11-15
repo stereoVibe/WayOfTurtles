@@ -1,17 +1,21 @@
 package io.sokolvault.wayofturtles.repositories.presence
 
-import android.arch.lifecycle.LiveData
+import android.util.Log
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase
+import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
+import io.sokolvault.wayofturtles.di.ApplicationContext
 import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.model.JobGoal
 import io.sokolvault.wayofturtles.model.TaskGoal
-import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryContract
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class PresenceRepositoryImpl : PresenceRepositoryContract {
+@Singleton
+class PresenceRepositoryData
+@Inject constructor(roomDatabase: GoalsDatabase) :
+        PresenceRepositoryContract {
 
-    @Inject
-    lateinit var dbInstance: GoalsDatabase
+    private val database: GoalsDatabase = roomDatabase
 
     override fun createNewTaskGoal(task: TaskGoal) {
     }
@@ -20,7 +24,11 @@ class PresenceRepositoryImpl : PresenceRepositoryContract {
     }
 
     override fun createNewCompositeGoal(compositeGoal: CompositeGoal) {
-        dbInstance.bigGoalDAO().insertBigGoal()
+        Log.d("База", database.toString())
+        val id = database.bigGoalDAO().insertBigGoal(CompositeGoalRoom(compositeGoal.title))
+        Log.d("Номер цели", id.toString())
+        val gettingGoal = database.bigGoalDAO().getBigGoalById(id.toInt()).toString()
+        Log.d("Цель", gettingGoal.capitalize())
     }
 
     override fun createNewTaskSubGoal(compositeGoalId: Int) {
@@ -35,7 +43,7 @@ class PresenceRepositoryImpl : PresenceRepositoryContract {
     override fun deleteJobGoal() {
     }
 
-    override fun deleteCompositeGoal() {
+    override fun deleteCompositeGoal(compositeGoal: CompositeGoal) {
     }
 
     override fun deleteTaskSubGoal() {
@@ -43,4 +51,7 @@ class PresenceRepositoryImpl : PresenceRepositoryContract {
 
     override fun deleteJobSubGoal() {
     }
+
+
+
 }

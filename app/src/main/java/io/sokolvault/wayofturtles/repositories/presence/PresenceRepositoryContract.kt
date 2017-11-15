@@ -41,7 +41,7 @@ interface PresenceRepositoryContract {
      * */
     fun deleteTaskGoal()
     fun deleteJobGoal()
-    fun deleteCompositeGoal()
+    fun deleteCompositeGoal(compositeGoal: CompositeGoal)
     fun deleteTaskSubGoal()
     fun deleteJobSubGoal()
 }

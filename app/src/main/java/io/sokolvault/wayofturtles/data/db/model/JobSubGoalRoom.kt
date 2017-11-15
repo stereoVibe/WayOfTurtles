@@ -35,7 +35,4 @@ class JobSubGoalRoom(@PrimaryKey(autoGenerate = true)
 
     override var description: String = ""
 
-    override fun isGoalOf(goal: JobGoal): Boolean {
-        return true
-    }
 }

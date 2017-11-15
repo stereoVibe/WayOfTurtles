@@ -10,8 +10,4 @@ data class DataJobSubGoal(override var id: Int,
                           override val compositeGoalId: Int)
     :JobGoal(), Internable<JobGoal>{
     override var description: String = ""
-
-    override fun isGoalOf(goal: JobGoal): Boolean {
-        return goal::class.isInstance(this)
-    }
 }

@@ -13,47 +13,75 @@ import io.sokolvault.wayofturtles.data.db.dao.TaskSubGoalDAO
 import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom
+import io.sokolvault.wayofturtles.di.ApplicationContext
 import io.sokolvault.wayofturtles.utils.Constants
+import nl.komponents.kovenant.DirectDispatcher.Companion.instance
+import nl.komponents.kovenant.Kovenant.context
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @TypeConverters(AppTypeConverters::class)
 @Database(entities = arrayOf(
         CompositeGoalRoom::class,
         JobSubGoalRoom::class,
         TaskSubGoalRoom::class), version = 1)
-abstract class GoalsDatabase: RoomDatabase() {
+abstract class GoalsDatabase : RoomDatabase() {
 
     abstract fun bigGoalDAO(): CompositeGoalDAO
     abstract fun jobsDAO(): JobSubGoalDAO
     abstract fun taskDAO(): TaskSubGoalDAO
 
     companion object {
-        private var sInstance: GoalsDatabase? = null
-        private val LOCK = Any()
 
-        fun getInstance(context: Context): GoalsDatabase{
-            if (sInstance == null) {
-                synchronized(LOCK) {
-                    sInstance = Room.databaseBuilder(context.applicationContext,
-                            GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
-//                    Log.d(LOG_TAG, "New database creating")
-                }
-//                sInstance = Room.databaseBuilder(context.applicationContext,
-//                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
-            }
-            return sInstance as GoalsDatabase
+        lateinit var instance: GoalsDatabase
+
+        @Inject
+        fun getDbInstance(context: Context): GoalsDatabase {
+            instance = Room.databaseBuilder(context.applicationContext,
+                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+            return instance
         }
 
-        fun getInMemoryInstance(context: Context):GoalsDatabase{
-            if (sInstance == null) {
-                synchronized(LOCK) {
-                    sInstance = Room.inMemoryDatabaseBuilder(context, GoalsDatabase::class.java).build()
-//                    Log.d(LOG_TAG, "New database creating")
-                }
-//                sInstance = Room.databaseBuilder(context.applicationContext,
+//        @Inject
+//        fun getInMemoryInstance(@ApplicationContext provideContext: Context): GoalsDatabase {
+//            instance = Room.inMemoryDatabaseBuilder(provideContext, GoalsDatabase::class.java).build()
+//            return instance
+//        }
+
+//        @Inject
+//        fun getInstance(@ApplicationContext provideContext: Context): GoalsDatabase =
+//                Room.databaseBuilder(provideContext.applicationContext,
 //                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
-            }
-            return sInstance as GoalsDatabase
-        }
+//        var sInstance: GoalsDatabase?
+//        private val LOCK = Any()
+//
+//        @Inject
+//        fun getInstance(@ApplicationContext provideContext: Context): GoalsDatabase{
+//            if (sInstance == null) {
+//                synchronized(LOCK) {
+//                    sInstance = Room.databaseBuilder(provideContext.applicationContext,
+//                            GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+////                    Log.d(LOG_TAG, "New database creating")
+//                }
+////                sInstance = Room.databaseBuilder(provideContext.applicationContext,
+////                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+//            }
+//            return sInstance as GoalsDatabase
+//        }
+//
+//        @Inject
+//        fun getInMemoryInstance(provideContext: Context) : GoalsDatabase{
+//            if (sInstance == null) {
+//                synchronized(LOCK) {
+//                    sInstance = Room.inMemoryDatabaseBuilder(provideContext, GoalsDatabase::class.java).build()
+////                    Log.d(LOG_TAG, "New database creating")
+//                }
+////                sInstance = Room.databaseBuilder(provideContext.applicationContext,
+////                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
+//            }
+//            return sInstance as GoalsDatabase
+//        }
     }
 
 //        private val LOG_TAG = GoalsDatabase::class.java.simpleName
@@ -61,16 +89,16 @@ abstract class GoalsDatabase: RoomDatabase() {
 //        private val LOCK = Any()
 //        private lateinit var sInstance: GoalsDatabase
 //
-//        fun getInstance(context: Context): GoalsDatabase {
+//        fun getInstance(provideContext: Context): GoalsDatabase {
 //            Log.d(LOG_TAG, "Getting the instance of database")
 //
 //            if (sInstance == null) {
 //                synchronized(LOCK) {
-//                    sInstance = Room.databaseBuilder(context.applicationContext,
+//                    sInstance = Room.databaseBuilder(provideContext.applicationContext,
 //                            GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
 ////                    Log.d(LOG_TAG, "New database creating")
 //                }
-//                sInstance = Room.databaseBuilder(context.applicationContext,
+//                sInstance = Room.databaseBuilder(provideContext.applicationContext,
 //                        GoalsDatabase::class.java, Constants.DATABASE_NAME).build()
 //            }
 //            return sInstance

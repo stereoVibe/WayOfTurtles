@@ -19,7 +19,7 @@ interface Goal{
 
 /* Wrapper */
 abstract class BaseGoal: Goal{
-    abstract val id: Int
+    abstract var id: Int
     abstract override var title: String
     abstract override var description: String
     override var progress: Double = 0.0

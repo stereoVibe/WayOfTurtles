@@ -2,16 +2,16 @@ package io.sokolvault.wayofturtles
 
 //import io.sokolvault.wayofturtles.di.DaggerGoalsDAOApplicationComponent
 import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.ArrayMap
 import android.util.Log
 import android.widget.Button
-import io.sokolvault.wayofturtles.data.db.GoalsDatabase
-import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
-import io.sokolvault.wayofturtles.di.ContextModule
-import io.sokolvault.wayofturtles.di.DaggerGoalsDAOApplicationComponent
+import io.sokolvault.wayofturtles.carriers.DataCompositeGoal
+import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryData
 import io.sokolvault.wayofturtles.ui.BigGoalViewModel
+import io.sokolvault.wayofturtles.ui.ViewModelFactory
 import io.sokolvault.wayofturtles.utils.Constants
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -19,33 +19,46 @@ import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.find
 import org.jetbrains.anko.longToast
 import java.util.*
+import javax.inject.Inject
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var bigGoalViewModel: BigGoalViewModel
+//    @Inject
+//    lateinit var dbase: GoalsDatabase
+
+    lateinit var bigGoalViewModel: BigGoalViewModel
+
+    @Inject
+    lateinit var repository: PresenceRepositoryData
+
     private val arrayMap = ArrayMap<Class<out ViewModel>, ViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 //        applicationContext.deleteDatabase(Constants.DATABASE_NAME)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        App.getComponent().injectMainActivity(this)
         val loadButton: Button = find(R.id.loadButton)
 
-        val db = GoalsDatabase.getInstance(this.applicationContext)
-        var mdmDb = GoalsDatabase.getInMemoryInstance(this.applicationContext)
+//        val db = GoalsDatabase.getInstance(this.applicationContext)
+//        var mdmDb = GoalsDatabase.getInMemoryInstance(this.applicationContext)
 
-        val goalsDataComponent = DaggerGoalsDAOApplicationComponent.builder()
-                .contextModule(ContextModule(this))
-                .build()
+//        val goalsDataComponent = DaggerGoalsDAOComponent.builder()
+//                .contextModule(ContextModule(this))
+//                .build()
+//        goalsDataComponent.injectGoalsDAOComponent(this)
 
-//        BigGoalRepositoryImpl.injectDbInstance(goalsDataComponent.getDbInstance())
+//        val turtlesWay = TurtlesWayApp.get(this)
 
-//        arrayMap.put(BigGoalViewModel::class.java, BigGoalViewModel())
-//        bigGoalViewModel = ViewModelProviders
-//                .of(this, ViewModelFactory(arrayMap))
-//                .get(BigGoalViewModel::class.java)
+
+//        BigGoalRepositoryImpl.injectDbInstance(goalsDataComponent.provideDbInstance())
+
+
+        arrayMap.put(BigGoalViewModel::class.java, BigGoalViewModel(repository))
+        bigGoalViewModel = ViewModelProviders
+                .of(this, ViewModelFactory(arrayMap))
+                .get(BigGoalViewModel::class.java)
 
 //        val bigGoal = BigGoal(3, "Заголовок")
 
@@ -77,20 +90,22 @@ class MainActivity : AppCompatActivity() {
                 val data = bg {
                     val seed = Random().nextGaussian() * 12.6
                     val rand = checkRand(seed.toInt())
-                    val bigGoal = CompositeGoalRoom("Заголовок $rand")
-//                    goalsDataComponent.getDbInstance().bigGoalDAO().insertBigGoal(bigGoal)
-                    mdmDb.bigGoalDAO().insertBigGoal(bigGoal)
+                    val bigGoal = DataCompositeGoal("Заголовок + $rand")
+                    Log.d("Цель", "${bigGoal.title}")
+                    bigGoalViewModel.createGoal(bigGoal)
+//                    goalsDataComponent.provideDbInstance().bigGoalDAO().insertBigGoal(bigGoal)
+//                    mdmDb.bigGoalDAO().insertBigGoal(bigGoal)
                 }
                 longToast("Че-то получилось ${data.await()}")
             }
 //            bigGoalViewModel.createNewGoal(bigGoal)
 //            bigGoalViewModel.getGoalById(bigGoal.id)
-            mdmDb = GoalsDatabase.getInMemoryInstance(this@MainActivity.applicationContext)
-            val status = mdmDb.isOpen
-            Log.d(mdmDb::class.simpleName, "База открыта? $status")
+//            mdmDb = GoalsDatabase.getInMemoryInstance(this@MainActivity.applicationContext)
+//            val status = mdmDb.isOpen
+//            Log.d(mdmDb::class.simpleName, "База открыта? $status")
         })
 
-//        val bigGoalDAO = goalsDataComponent.getBigGoalDao()
+//        val bigGoalDAO = goalsDataComponent.provideBigGoalDao()
 //        bigGoalDAO.asyncInsert(BigGoalEntity("Вставка в БД через расширяемую функцию"))
 
 //        while (true) {
@@ -146,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        GoalsDatabase.getInstance(applicationContext).close()
+//        GoalsDatabase.getInstance(applicationContext).close()
         val status: Boolean = applicationContext.deleteDatabase(Constants.DATABASE_NAME)
         Log.d(this::class.simpleName, "Сработал On Stop. $status.")
     }

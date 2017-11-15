@@ -20,10 +20,10 @@ interface CompositeGoalDAO {
     val all: List<CompositeGoalRoom>
 
     @Query("SELECT * FROM composite_goals WHERE id = :id")
-    fun getBigGoalById(id: Int): LiveData<CompositeGoalRoom>
+    fun getBigGoalById(id: Int): CompositeGoalRoom
 
     @Insert(onConflict = REPLACE)
-    fun insertBigGoal(bigGoal: CompositeGoalRoom)
+    fun insertBigGoal(bigGoal: CompositeGoalRoom): Long
 
     @Update
     fun updateBigGoal(bigGoalEntity: CompositeGoalRoom)

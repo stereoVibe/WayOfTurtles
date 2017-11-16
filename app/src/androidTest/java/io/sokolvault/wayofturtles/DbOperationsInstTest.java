@@ -26,7 +26,9 @@ import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom;
 import io.sokolvault.wayofturtles.model.BaseGoal;
 import io.sokolvault.wayofturtles.model.Goal;
+import io.sokolvault.wayofturtles.model.xtensions.CountUnit;
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
+import io.sokolvault.wayofturtles.model.xtensions.MoneyUnits;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {
@@ -35,14 +37,7 @@ public class DbOperationsInstTest {
             new CompositeGoalRoom("title");
 
     private final JobSubGoalRoom JOB = new JobSubGoalRoom(1,
-            "Заголовок ", 10, 1);
-//    private final JobSubGoalRoom JOB = JobSubGoalRoom.newBuilder()
-//            .setId(1)
-//            .setCompositeGoalID(1)
-//            .setTitle("Job Title")
-//            .setDescription("Job description")
-//            .setTasksQuantity(10)
-//            .build();
+            "Заголовок ", 10, 1, new CountUnit.Money(100, MoneyUnits.BITCOIN.getValue()));
 
     private final TaskSubGoalRoom TASK =
             new TaskSubGoalRoom(1, "Task", 1);
@@ -97,6 +92,9 @@ public class DbOperationsInstTest {
 
     @Test
     public void insertAndGetJobEntityTest(){
+
+        JOB.getCounts().getCountUnit();
+        JOB.getCounts().getStep();
 
         mJobDAO.insertJobSubGoal(JOB);
         JobSubGoalRoom dbJob =

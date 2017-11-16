@@ -4,6 +4,7 @@ import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
 import io.sokolvault.wayofturtles.model.Internable
 import io.sokolvault.wayofturtles.model.JobGoal
+import io.sokolvault.wayofturtles.model.xtensions.CountUnit
 import io.sokolvault.wayofturtles.utils.AppTypeConverters
 import io.sokolvault.wayofturtles.utils.Constants.COMPOSITE_GOAL_ID_COLUMN_NAME
 import io.sokolvault.wayofturtles.utils.Constants.JOBS_QUANTITY_COLUMN_NAME
@@ -28,7 +29,8 @@ class JobSubGoalRoom(@PrimaryKey(autoGenerate = true)
                      @ColumnInfo(name = JOBS_QUANTITY_COLUMN_NAME)
                      override var jobsQuantity: Int,
                      @ColumnInfo(name = FOREIGN_KEY_COMPOSITE_GOAL_ID_COLUMN)
-                     override var compositeGoalId: Int)
+                     override var compositeGoalId: Int,
+                     override val counts: CountUnit)
     :JobGoal(), Internable<JobGoal> {
 
     override var description: String = ""

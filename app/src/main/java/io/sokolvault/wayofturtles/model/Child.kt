@@ -1,5 +1,7 @@
 package io.sokolvault.wayofturtles.model
 
+import io.sokolvault.wayofturtles.model.xtensions.CountUnit
+
 interface Internable<in T: SingleGoal>:Goal {
     val compositeGoalId: Int
 }
@@ -10,6 +12,7 @@ abstract class TaskGoal
 abstract class JobGoal
     :SingleGoal(){
     abstract val jobsQuantity: Int
+    abstract val counts: CountUnit
     var completedJobs: Int = 0
 
     fun completeOneJob(){

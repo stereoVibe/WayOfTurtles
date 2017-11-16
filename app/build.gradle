@@ -29,7 +29,7 @@ android {
         }
         dependencies {
 //            classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51'
-            classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.1.51'
+            classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.1.60'
         }
     }
 

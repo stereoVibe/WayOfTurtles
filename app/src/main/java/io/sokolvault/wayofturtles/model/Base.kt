@@ -34,7 +34,6 @@ abstract class CompositeGoal
 
     fun calculateSumProgress(): Int {
         return if (subGoals.isNotEmpty()) {
-            progress.toInt()
             for (subProgress in subGoals) {
                 progress += subProgress.progress.toInt()
             }

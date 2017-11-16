@@ -22,6 +22,7 @@ import java.util.*
 data class CompositeGoalRoom constructor(private var goalTitle: String)
     : CompositeGoal() {
 
+    @Ignore
     constructor(title: String, description: String) : this(title) {
         this.description = description
     }

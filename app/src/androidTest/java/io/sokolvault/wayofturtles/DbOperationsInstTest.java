@@ -17,48 +17,55 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import io.sokolvault.wayofturtles.db.JobDAO;
-import io.sokolvault.wayofturtles.db.TaskDAO;
-import io.sokolvault.wayofturtles.db.model.BigGoalEntity;
-import io.sokolvault.wayofturtles.db.BigGoalDAO;
-import io.sokolvault.wayofturtles.db.GoalsDatabase;
-import io.sokolvault.wayofturtles.db.model.JobEntity;
-import io.sokolvault.wayofturtles.db.model.TaskEntity;
-import io.sokolvault.wayofturtles.model.AbstractGoal;
+import io.sokolvault.wayofturtles.data.db.dao.CompositeGoalDAO;
+import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
+import io.sokolvault.wayofturtles.data.db.dao.JobSubGoalDAO;
+import io.sokolvault.wayofturtles.data.db.dao.TaskSubGoalDAO;
+import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom;
+import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom;
+import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom;
+import io.sokolvault.wayofturtles.model.BaseGoal;
+import io.sokolvault.wayofturtles.model.Goal;
+import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {
 
-    private BigGoalEntity BIG_GOAL =
-            new BigGoalEntity("title", "description");
+    private CompositeGoalRoom BIG_GOAL =
+            new CompositeGoalRoom("title");
 
-    private final JobEntity JOB = JobEntity.newBuilder()
-            .setId(1)
-            .setCompositeGoalID(1)
-            .setTitle("Job Title")
-            .setDescription("Job description")
-            .setTasksQuantity(10)
-            .build();
+    private final JobSubGoalRoom JOB = new JobSubGoalRoom(1,
+            "Заголовок ", 10, 1);
+//    private final JobSubGoalRoom JOB = JobSubGoalRoom.newBuilder()
+//            .setId(1)
+//            .setCompositeGoalID(1)
+//            .setTitle("Job Title")
+//            .setDescription("Job description")
+//            .setTasksQuantity(10)
+//            .build();
 
-    private final TaskEntity TASK =
-            new TaskEntity("Task title", 1);
+    private final TaskSubGoalRoom TASK =
+            new TaskSubGoalRoom(1, "Task", 1);
 
 
-    private BigGoalDAO mBigGoalDAO;
-    private JobDAO mJobDAO;
-    private TaskDAO mTaskDAO;
+    private CompositeGoalDAO mCompositeGoalDAO;
+    private JobSubGoalDAO mJobDAO;
+    private TaskSubGoalDAO mTaskDAO;
     private GoalsDatabase mDatabase;
 
     @Before
     public void setUp() throws Exception {
+        BIG_GOAL.setDescription("описание");
+        JOB.setDescription("Описание");
+        TASK.setDescription("Descript");
         Context context = InstrumentationRegistry.getTargetContext();
         mDatabase = Room.inMemoryDatabaseBuilder(context, GoalsDatabase.class).build();
-        mBigGoalDAO = mDatabase.bigGoalDAO();
+        mCompositeGoalDAO = mDatabase.compositeGoalDAO();
         mJobDAO = mDatabase.jobsDAO();
-        mTaskDAO = mDatabase.taskDAO();
+        mTaskDAO = mDatabase.tasksDAO();
 
         BIG_GOAL.setId(1);
-        mDatabase.bigGoalDAO().insertBigGoal(BIG_GOAL);
+        mDatabase.compositeGoalDAO().insertBigGoal(BIG_GOAL);
     }
 
     @After
@@ -66,16 +73,24 @@ public class DbOperationsInstTest {
         mDatabase.close();
     }
 
+//    @Test
+//    public void asyncWorkTest(){
+//        BigGoal bigGoal = new BigGoal(1, "ttitle");
+//        BigGoalViewModel bigGoalViewModel = ViewModelProviders
+//                .of(this, ViewModelFactory(arrayMap))
+//                .get(BigGoalViewModel::class.java)
+//    }
+//
 //    CRUD tests
 
 //  INSERT & READ tests
     @Test
-    public void insertAndGetBigGoalEntityTest(){
+    public void insertAndGetCompositeGoalRoomTest(){
         BIG_GOAL.setId(2); // Setting the ID to be sure it will match auto generating
-        mBigGoalDAO.insertBigGoal(BIG_GOAL);
+        mCompositeGoalDAO.insertBigGoal(BIG_GOAL);
 
-        BigGoalEntity dbBigGoal = mBigGoalDAO.getAll().get(1);
-        assertEquals(2, mBigGoalDAO.getAll().size());
+        CompositeGoalRoom dbBigGoal = mCompositeGoalDAO.getAll().get(1);
+        assertEquals(2, mCompositeGoalDAO.getAll().size());
 
         performCoreAsserts(BIG_GOAL, dbBigGoal);
     }
@@ -84,29 +99,29 @@ public class DbOperationsInstTest {
     public void insertAndGetJobEntityTest(){
 
         mJobDAO.insertJobSubGoal(JOB);
-        JobEntity dbJob =
+        JobSubGoalRoom dbJob =
                 getFirstGoalEntityAndAssertForSize(mJobDAO.getAll());
 
         performCoreAsserts(JOB, dbJob);
-        assertEquals(JOB.getCompositeGoalID(), dbJob.getCompositeGoalID());
-        assertEquals(JOB.getTasksQuantity(), dbJob.getTasksQuantity());
-        assertEquals(JOB.getCompletedTasksQuantity(), dbJob.getCompletedTasksQuantity());
+        assertEquals(JOB.getCompositeGoalId(), dbJob.getCompositeGoalId());
+        assertEquals(JOB.getJobsQuantity(), dbJob.getJobsQuantity());
+        assertEquals(JOB.getCompletedJobs(), dbJob.getCompletedJobs());
     }
 
     @Test
     public void insertAndGetTaskEntityTest(){
         mTaskDAO.insertTaskSubGoal(TASK);
-        TaskEntity dbTask =
+        TaskSubGoalRoom dbTask =
                 getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
         performCoreAsserts(TASK, dbTask);
     }
 //  UPDATE & READ
     @Test
-    public void updateAndGetBigGoalEntityTest(){
+    public void updateAndGetCompositeGoalRoomTest(){
         performCoreUpdates(BIG_GOAL);
-        mBigGoalDAO.updateBigGoal(BIG_GOAL);
+        mCompositeGoalDAO.updateBigGoal(BIG_GOAL);
 
-        BigGoalEntity dbBigGoal = mBigGoalDAO.getAll().get(0);
+        CompositeGoalRoom dbBigGoal = mCompositeGoalDAO.getAll().get(0);
 
         performCoreAsserts(BIG_GOAL, dbBigGoal);
     }
@@ -114,7 +129,7 @@ public class DbOperationsInstTest {
     @Test
     public void updateAndGetJobEntityTest(){
         /**
-         * ID for BigGoal should be updated, as it matches the compositeGoalID in
+         * ID for BigGoal should be updated, as it matches the compositeGoalId in
          * all SubGoals (JobEntity here), so it must exist. Because of auto generated id for BigGoal,
          * we can't updated it in DB, so it needs another insert - {@link #addSecondBigGoal()}
         **/
@@ -123,25 +138,25 @@ public class DbOperationsInstTest {
         mJobDAO.insertJobSubGoal(JOB); // UPDATE needs something to update %)
 
         performCoreUpdates(JOB);
-        JOB.setCompositeGoalID(2);
-        JOB.setTasksQuantity(20);
-        JOB.setCompletedTasksQuantity(20);
+        JOB.setCompositeGoalId(2);
+        JOB.setJobsQuantity(20);
+        JOB.setCompletedJobs(20);
 
         mJobDAO.updateJobSubGoal(JOB);
 
-        JobEntity dbJob =
+        JobSubGoalRoom dbJob =
                 getFirstGoalEntityAndAssertForSize(mJobDAO.getAll());
 
         performCoreAsserts(JOB, dbJob);
-        assertEquals(JOB.getCompositeGoalID(), dbJob.getCompositeGoalID());
-        assertEquals(JOB.getTasksQuantity(), dbJob.getTasksQuantity());
-        assertEquals(JOB.getCompletedTasksQuantity(), dbJob.getCompletedTasksQuantity());
+        assertEquals(JOB.getCompositeGoalId(), dbJob.getCompositeGoalId());
+        assertEquals(JOB.getJobsQuantity(), dbJob.getJobsQuantity());
+        assertEquals(JOB.getCompletedJobs(), dbJob.getCompletedJobs());
     }
 
     @Test
     public void updateAndGetAndGetTaskEntityTest(){
         /**
-         * ID for BigGoal should be updated, as it matches the compositeGoalID in
+         * ID for BigGoal should be updated, as it matches the compositeGoalId in
          * all SubGoals (TaskEntity here), so it must exist. Because of auto generated id for BigGoal,
          * we can't updated it in DB, so it needs another insert - {@link #addSecondBigGoal()}
          **/
@@ -152,58 +167,58 @@ public class DbOperationsInstTest {
         performCoreUpdates(TASK);
 
         mTaskDAO.updateTaskSubGoal(TASK);
-        TaskEntity dbTask = getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
+        TaskSubGoalRoom dbTask = getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
         performCoreAsserts(TASK, dbTask);
     }
 
 //  DELETE & READ (failed to get)
     @Test(expected = IndexOutOfBoundsException.class)
-    public void deleteAndFailToGetBigGoalEntityTest(){
-        mBigGoalDAO.delete(BIG_GOAL);
-        assertNull(mBigGoalDAO.getAll().get(0));
+    public void deleteAndFailToGetCompositeGoalRoomTest(){
+        mCompositeGoalDAO.delete(BIG_GOAL);
+        assertNull(mCompositeGoalDAO.getAll().get(0));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void deleteAndFailToGetJobEntityTest(){
-        JobEntity jobEntity = mJobDAO.getAll().get(0);
-        mJobDAO.insertJobSubGoal(jobEntity);
+        JobSubGoalRoom jobSubGoalRoom = mJobDAO.getAll().get(0);
+        mJobDAO.insertJobSubGoal(jobSubGoalRoom);
         assertNull(mJobDAO.getAll().get(0));
     }
-
+//
     @Test(expected = IndexOutOfBoundsException.class)
     public void deleteAndFailToGetTaskEntityTest(){
-        TaskEntity taskEntity = mTaskDAO.getAll().get(0);
+        TaskSubGoalRoom taskEntity = mTaskDAO.getAll().get(0);
         mTaskDAO.insertTaskSubGoal(taskEntity);
         assertNull(mTaskDAO.getAll().get(0));
     }
 
     private void addSecondBigGoal() {
         BIG_GOAL.setId(2); // setting new id for local variable
-        mBigGoalDAO.insertBigGoal(BIG_GOAL);
-        assertNotNull(mBigGoalDAO.getBigGoalById(2));
+        mCompositeGoalDAO.insertBigGoal(BIG_GOAL);
+        assertNotNull(mCompositeGoalDAO.getBigGoalById(2));
     }
 
-    private <T extends AbstractGoal> T getFirstGoalEntityAndAssertForSize(List<T> goals){
+    private <T extends Goal> T getFirstGoalEntityAndAssertForSize(List<T> goals){
         assertThat(goals.size(), is(1) );
         return goals.get(0);
     }
 
 //  Bundle of asserts matches all Goals in the app.
-    private <T extends AbstractGoal> void performCoreAsserts(T mockGoal, T actualGoal){
+    private <T extends BaseGoal> void performCoreAsserts(T mockGoal, T actualGoal){
         assertEquals(mockGoal.getId(), actualGoal.getId());
         assertEquals(mockGoal.getTitle(), actualGoal.getTitle());
         assertEquals(mockGoal.getDescription(), actualGoal.getDescription());
         assertEquals(mockGoal.isComplete(), actualGoal.isComplete());
-        assertEquals(mockGoal.getMGoalCategory(), actualGoal.getMGoalCategory());
-        assertEquals(String.valueOf(mockGoal.getMProgress()), String.valueOf(actualGoal.getMProgress()));
+        assertEquals(mockGoal.getGoalCategory(), actualGoal.getGoalCategory());
+        assertEquals(String.valueOf(mockGoal.getProgress()), String.valueOf(actualGoal.getProgress()));
     }
 
 //  Bundle of local updates matches all Goals in the app.
-    private <T extends AbstractGoal> void performCoreUpdates(T goal){
+    private <T extends Goal> void performCoreUpdates(T goal){
         goal.setTitle("Updated title");
         goal.setDescription("Updated description");
-        goal.setMGoalCategory(GoalCategory.FAMILY);
-        goal.setMProgress(100.0D);
+        goal.setGoalCategory(GoalCategory.FAMILY);
+        goal.setProgress(100.0D);
         goal.setComplete(true);
     }
 }

@@ -3,9 +3,9 @@
 //import android.content.Context
 //import io.sokolvault.wayofturtles.utils.DbOps
 //import io.sokolvault.wayofturtles.model.BigGoal
-//import io.sokolvault.wayofturtles.db.BigGoalDAO
-//import io.sokolvault.wayofturtles.db.GoalsDatabase
-//import io.sokolvault.wayofturtles.db.JobDAO
+//import io.sokolvault.wayofturtles.data.db.BigGoalDAO
+//import io.sokolvault.wayofturtles.data.db.GoalsDatabase
+//import io.sokolvault.wayofturtles.data.db.dao.JobDAO
 //import io.sokolvault.wayofturtles.model.Job
 //import org.junit.After
 //import org.junit.Assert.*
@@ -36,7 +36,7 @@
 //        bigGoal = BigGoal("title")
 //        mContext = ShadowApplication.getInstance().applicationContext
 //        mDatabase = GoalsDatabase.getInstance(mContext)
-//        mBigGoalDAO = mDatabase.bigGoalDAO()
+//        mBigGoalDAO = mDatabase.compositeGoalDAO()
 //        mJobDAO = mDatabase.jobsDAO()
 //    }
 //
@@ -75,8 +75,8 @@
 //                .setDescription("discr")
 //                .build()
 //
-////        assertNotNull(subGoal.compositeGoalID)
-//        assertEquals(localBigGoalID, subGoal.compositeGoalID)
+////        assertNotNull(subGoal.compositeGoalId)
+//        assertEquals(localBigGoalID, subGoal.compositeGoalId)
 //    }
 //
 //    @Test
@@ -112,7 +112,7 @@
 //            }.start()
 //            (LOCK as java.lang.Object).wait()
 ////            assertNotNull(jobsList)
-//            assertEquals(localBigGoalID, jobsList!![0].compositeGoalID)
+//            assertEquals(localBigGoalID, jobsList!![0].compositeGoalId)
 //        }
 //    }
 //
@@ -159,7 +159,7 @@
 ////            (LOCK2 as java.lang.Object).wait()
 ////
 ////            for (i in 1..5) {
-////                assertEquals(localBigGoalID, jobsList!![i-1].compositeGoalID)
+////                assertEquals(localBigGoalID, jobsList!![i-1].compositeGoalId)
 ////            }
 ////        }
 ////

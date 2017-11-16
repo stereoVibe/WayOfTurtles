@@ -13,7 +13,8 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.sokolvault.wayofturtles.db.GoalsDatabase;
+import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
+import io.sokolvault.wayofturtles.utils.Constants;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -40,7 +41,7 @@ public class DbOperationsTest {
         MockContext mockContext = new MockContext();
         mockContext.createPackageContext(mockContext.getPackageName(), Context.BIND_AUTO_CREATE);
         dbMock = Room.databaseBuilder(mockContext.getApplicationContext(),
-                GoalsDatabase.class,Constants.Companion.getDATABASE_NAME())
+                GoalsDatabase.class, Constants.DATABASE_NAME)
                 .build();
 //        MockitoAnnotations.initMocks(this);
 //        Context mockContext = mock(Context.class);
@@ -52,7 +53,7 @@ public class DbOperationsTest {
 
     @Test
     public void shouldCreateEntityOfBigGoalTest(){
-//        List<BigGoal> bigGoalList = dbMock.bigGoalDAO().getAll();
+//        List<BigGoal> bigGoalList = dbMock.compositeGoalDAO().getAll();
 //        assertFalse(verify(bigGoalList).isEmpty());
 ////        dbMock.createBigGoalEntity()
         assertNull(dbMock);

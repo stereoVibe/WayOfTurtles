@@ -13,14 +13,10 @@ import io.sokolvault.wayofturtles.data.db.dao.TaskSubGoalDAO
 import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom
-import io.sokolvault.wayofturtles.di.ApplicationContext
 import io.sokolvault.wayofturtles.utils.Constants
-import nl.komponents.kovenant.DirectDispatcher.Companion.instance
-import nl.komponents.kovenant.Kovenant.context
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 @TypeConverters(AppTypeConverters::class)
 @Database(entities = arrayOf(
         CompositeGoalRoom::class,
@@ -28,15 +24,14 @@ import javax.inject.Singleton
         TaskSubGoalRoom::class), version = 1)
 abstract class GoalsDatabase : RoomDatabase() {
 
-    abstract fun bigGoalDAO(): CompositeGoalDAO
+    abstract fun compositeGoalDAO(): CompositeGoalDAO
     abstract fun jobsDAO(): JobSubGoalDAO
-    abstract fun taskDAO(): TaskSubGoalDAO
+    abstract fun tasksDAO(): TaskSubGoalDAO
 
     companion object {
 
-        lateinit var instance: GoalsDatabase
+        private lateinit var instance: GoalsDatabase
 
-        @Inject
         fun getDbInstance(context: Context): GoalsDatabase {
             instance = Room.databaseBuilder(context.applicationContext,
                         GoalsDatabase::class.java, Constants.DATABASE_NAME).build()

@@ -8,7 +8,6 @@ import io.sokolvault.wayofturtles.utils.AppTypeConverters
 import io.sokolvault.wayofturtles.utils.Constants
 
 /* Core class for all goals in the app */
-
 interface Goal{
     var title: String
     var description: String
@@ -17,16 +16,12 @@ interface Goal{
     var goalCategory: Enum<GoalCategory>
 }
 
-/* Wrapper */
 abstract class BaseGoal: Goal{
     abstract var id: Int
     abstract override var title: String
     abstract override var description: String
     override var progress: Double = 0.0
-    @ColumnInfo(name = Constants.COMPLETE_COLUMN_NAME)
     override var isComplete: Boolean = false
-    @TypeConverters(AppTypeConverters::class)
-    @ColumnInfo(name = Constants.GOAL_CATEGORY_COLUMN_NAME)
     override var goalCategory: Enum<GoalCategory> = GoalCategory.NONE
 }
 

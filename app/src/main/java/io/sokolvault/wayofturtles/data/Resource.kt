@@ -1,6 +1,5 @@
 package io.sokolvault.wayofturtles.data
 
-import io.sokolvault.wayofturtles.utils.DbOps.Companion.status
 import io.sokolvault.wayofturtles.utils.Status
 
 /**

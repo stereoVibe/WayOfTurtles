@@ -4,13 +4,11 @@ import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
 import io.sokolvault.wayofturtles.model.Internable
 import io.sokolvault.wayofturtles.model.JobGoal
-import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 import io.sokolvault.wayofturtles.utils.AppTypeConverters
-import io.sokolvault.wayofturtles.utils.Constants
-import io.sokolvault.wayofturtles.utils.Constants.Companion.COMPOSITE_GOAL_ID_COLUMN_NAME
-import io.sokolvault.wayofturtles.utils.Constants.Companion.FOREIGN_KEY_COMPOSITE_GOAL_ID_COLUMN
-import io.sokolvault.wayofturtles.utils.Constants.Companion.JOBS_QUANTITY_COLUMN_NAME
-import io.sokolvault.wayofturtles.utils.Constants.Companion.JOB_SUBGOALS_TABLE_NAME
+import io.sokolvault.wayofturtles.utils.Constants.COMPOSITE_GOAL_ID_COLUMN_NAME
+import io.sokolvault.wayofturtles.utils.Constants.JOBS_QUANTITY_COLUMN_NAME
+import io.sokolvault.wayofturtles.utils.Constants.FOREIGN_KEY_COMPOSITE_GOAL_ID_COLUMN
+import io.sokolvault.wayofturtles.utils.Constants.JOB_SUBGOALS_TABLE_NAME
 
 @Entity(tableName = JOB_SUBGOALS_TABLE_NAME,
         indices = arrayOf(Index(

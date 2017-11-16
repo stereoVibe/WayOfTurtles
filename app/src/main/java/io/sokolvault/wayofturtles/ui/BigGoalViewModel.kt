@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import io.sokolvault.wayofturtles.data.Resource
-import io.sokolvault.wayofturtles.domain.model.PresenceUseCase
+import io.sokolvault.wayofturtles.domain.presence.PresenceUseCase
 import io.sokolvault.wayofturtles.domain.presence.PresenceInteractor
 import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryData

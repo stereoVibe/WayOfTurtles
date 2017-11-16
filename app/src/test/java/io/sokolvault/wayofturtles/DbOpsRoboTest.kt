@@ -36,7 +36,7 @@
 //        bigGoal = BigGoal("title")
 //        mContext = ShadowApplication.getInstance().applicationContext
 //        mDatabase = GoalsDatabase.getInstance(mContext)
-//        mBigGoalDAO = mDatabase.bigGoalDAO()
+//        mBigGoalDAO = mDatabase.compositeGoalDAO()
 //        mJobDAO = mDatabase.jobsDAO()
 //    }
 //

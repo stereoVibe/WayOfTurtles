@@ -29,7 +29,7 @@
 //
 ////    @Provides
 ////    fun getBigGoalDao(dbInstance: GoalsDatabase): CompositeGoalDAO {
-////        return dbInstance.bigGoalDAO()
+////        return dbInstance.compositeGoalDAO()
 ////    }
 ////
 ////    @Provides
@@ -39,6 +39,6 @@
 //
 ////    @Provides
 ////    fun getTaskDao(dbInstance: GoalsDatabase): TaskDAO{
-////        return dbInstance.taskDAO()
+////        return dbInstance.tasksDAO()
 ////    }
 //}

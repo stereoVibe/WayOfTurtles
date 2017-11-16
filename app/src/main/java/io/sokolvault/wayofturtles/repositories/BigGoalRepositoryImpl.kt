@@ -1,9 +1,7 @@
 package io.sokolvault.wayofturtles.repositories
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.util.Log
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase
 import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
@@ -13,7 +11,6 @@ import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-import org.jetbrains.anko.custom.async
 
 class BigGoalRepositoryImpl : BigGoalRepository {
 //    override fun <T : Internable<SingleGoal>> getSubGoals(): List<T> {
@@ -44,16 +41,16 @@ class BigGoalRepositoryImpl : BigGoalRepository {
 
         async (UI){
             val bigGoalDAO = bg {
-                goalsDb.bigGoalDAO().insertBigGoal(compGoal)
+                goalsDb.compositeGoalDAO().insertBigGoal(compGoal)
             }.await()
 //            val data2 = bg {
 //                goalsDb.jobsDAO().insertJobSubGoal(jobGoal)
 //            }
 //            val data3 = bg {
-//                goalsDb.taskDAO().insertTaskSubGoal(taskGoal)
+//                goalsDb.tasksDAO().insertTaskSubGoal(taskGoal)
 //            }
 //
-//            Log.d(Goal::class.simpleName, " ${bigGoalDAO.await()} 1.. " +
+//            Log.d(Goal::class.simpleName, " ${compositeGoalDAO.await()} 1.. " +
 //                    "+ ${data2.await()} 2... " +
 //                    "+ ${data3.await()} 3... ")
         }
@@ -64,7 +61,7 @@ class BigGoalRepositoryImpl : BigGoalRepository {
 //        val entity = toEntityBigGoalConverter(goal, BigGoalEntity("1", "2"))
 //        var bigGoalEntity: BigGoalEntity
 //        var goal: CompositeGoal? = null
-//        fun getBigGoal(id: Int) = goalsDb.bigGoalDAO().getBigGoalById(id)
+//        fun getBigGoal(id: Int) = goalsDb.compositeGoalDAO().getBigGoalById(id)
 //        fun convert(bigGoalEntity: BigGoalEntity) = toBigGoalConverter(bigGoalEntity, CompositeGoal(1, "2"))
 //
 //        fun uiJobs(await: Int, await1: BigGoalEntity) {
@@ -77,7 +74,7 @@ class BigGoalRepositoryImpl : BigGoalRepository {
 //
 //        async (UI) {
 //            val data = bg {
-//                goalsDb.bigGoalDAO().insertBigGoal(entity).toInt()
+//                goalsDb.compositeGoalDAO().insertBigGoal(entity).toInt()
 //            }
 //            when(data.isCompleted) { true -> DbOps.status = Status.SUCCESS }
 //
@@ -108,7 +105,7 @@ class BigGoalRepositoryImpl : BigGoalRepository {
     }
 
     override fun getGoalById(id: Int): LiveData<CompositeGoal> {
-//        return checkNotNull(goalsDb.bigGoalDAO().asyncGet(id))
+//        return checkNotNull(goalsDb.compositeGoalDAO().asyncGet(id))
         return MutableLiveData<CompositeGoal>()
     }
 

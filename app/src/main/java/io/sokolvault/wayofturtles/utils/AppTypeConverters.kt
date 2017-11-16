@@ -8,17 +8,14 @@ import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 open class AppTypeConverters {
 
     @TypeConverter
-    fun fromEnumToString(enum: Enum<GoalCategory>?): String? {
-        if (enum != null) {
-            return enum.name
-        }
-        return GoalCategory.NONE.name
+    fun fromEnumToString(enum: Enum<GoalCategory>?): String? = when {
+        enum != null -> enum.name
+                else -> GoalCategory.NONE.name
     }
 
     @TypeConverter
-    fun fromStringToEnum(string: String?): Enum<GoalCategory>?{
-        return string?.let { GoalCategory.valueOf(it) }
-    }
+    fun fromStringToEnum(string: String?): Enum<GoalCategory>? =
+            string?.let { GoalCategory.valueOf(it) }
 
 //    fun fromBigGoalToEntity(bigGoal: BigGoal): BigGoalEntity{
 //        var bigGoalEntity: BigGoalEntity

@@ -14,9 +14,22 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
 
-class DbOps {
+object DbOps {
 
-    companion object {
+    private fun <I: BaseGoal, O: BaseGoal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
+
+        val assign: (I, O) -> Unit = { i, o -> apply {
+            o.id = i.id
+            o.description = i.description
+            o.title = i.title
+            o.goalCategory = i.goalCategory
+            o.progress = i.progress
+            o.isComplete = i.isComplete
+        }}
+        assign(inputGoal, outputGoal)
+        return outputGoal
+    }
+
         var status = Status.IDLE
 
         private fun setSuccess(){
@@ -70,20 +83,6 @@ class DbOps {
         }
 
 
-        private fun <I: BaseGoal, O: BaseGoal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
-
-            val assign: (I, O) -> Unit = { i, o -> apply {
-                o.id = i.id
-                o.description = i.description
-                o.title = i.title
-                o.goalCategory = i.goalCategory
-                o.progress = i.progress
-                o.isComplete = i.isComplete
-            }}
-            assign(inputGoal, outputGoal)
-            return outputGoal
-        }
-
 //        fun toEntityBigGoalConverter(inputGoal: DataCompositeGoal, outputGoal: BigGoalEntity): BigGoalEntity{
 //            baseGoalConverter(inputGoal, outputGoal)
 ////            outputGoal.subGoalsList = inputGoal.subGoals
@@ -95,6 +94,4 @@ class DbOps {
 ////            outputGoal.subGoalsSet = inputGoal.subGoalsList
 //            return outputGoal
 //        }
-    }
-
 }

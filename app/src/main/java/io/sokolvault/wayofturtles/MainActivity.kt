@@ -9,6 +9,7 @@ import android.util.ArrayMap
 import android.util.Log
 import android.widget.Button
 import io.sokolvault.wayofturtles.carriers.DataCompositeGoal
+import io.sokolvault.wayofturtles.data.db.GoalsDatabase
 import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryData
 import io.sokolvault.wayofturtles.ui.BigGoalViewModel
 import io.sokolvault.wayofturtles.ui.ViewModelFactory
@@ -91,10 +92,10 @@ class MainActivity : AppCompatActivity() {
                     val seed = Random().nextGaussian() * 12.6
                     val rand = checkRand(seed.toInt())
                     val bigGoal = DataCompositeGoal("Заголовок + $rand")
-                    Log.d("Цель", "${bigGoal.title}")
+                    Log.d("Цель", bigGoal.title)
                     bigGoalViewModel.createGoal(bigGoal)
-//                    goalsDataComponent.provideDbInstance().bigGoalDAO().insertBigGoal(bigGoal)
-//                    mdmDb.bigGoalDAO().insertBigGoal(bigGoal)
+//                    goalsDataComponent.provideDbInstance().compositeGoalDAO().insertBigGoal(bigGoal)
+//                    mdmDb.compositeGoalDAO().insertBigGoal(bigGoal)
                 }
                 longToast("Че-то получилось ${data.await()}")
             }
@@ -105,8 +106,8 @@ class MainActivity : AppCompatActivity() {
 //            Log.d(mdmDb::class.simpleName, "База открыта? $status")
         })
 
-//        val bigGoalDAO = goalsDataComponent.provideBigGoalDao()
-//        bigGoalDAO.asyncInsert(BigGoalEntity("Вставка в БД через расширяемую функцию"))
+//        val compositeGoalDAO = goalsDataComponent.provideBigGoalDao()
+//        compositeGoalDAO.asyncInsert(BigGoalEntity("Вставка в БД через расширяемую функцию"))
 
 //        while (true) {
 //            val mountainH: Int = Random().nextInt()
@@ -161,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-//        GoalsDatabase.getInstance(applicationContext).close()
+        GoalsDatabase.getDbInstance(applicationContext).close()
         val status: Boolean = applicationContext.deleteDatabase(Constants.DATABASE_NAME)
         Log.d(this::class.simpleName, "Сработал On Stop. $status.")
     }

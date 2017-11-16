@@ -1,9 +1,8 @@
 package io.sokolvault.wayofturtles.utils
 
 
-class Constants {
+object Constants {
 
-    companion object {
 //        Database name
         const val DATABASE_NAME = "goals"
 
@@ -21,6 +20,4 @@ class Constants {
         const val GOAL_CATEGORY_COLUMN_NAME = "goal_category"
         const val SUBGOALS_COLUMN_NAME = "sub_goals"
         const val JOBS_QUANTITY_COLUMN_NAME = "jobs_quantity"
-    }
-
 }

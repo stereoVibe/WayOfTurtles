@@ -60,12 +60,12 @@ public class DbOperationsInstTest {
         TASK.setDescription("Descript");
         Context context = InstrumentationRegistry.getTargetContext();
         mDatabase = Room.inMemoryDatabaseBuilder(context, GoalsDatabase.class).build();
-        mCompositeGoalDAO = mDatabase.bigGoalDAO();
+        mCompositeGoalDAO = mDatabase.compositeGoalDAO();
         mJobDAO = mDatabase.jobsDAO();
-        mTaskDAO = mDatabase.taskDAO();
+        mTaskDAO = mDatabase.tasksDAO();
 
         BIG_GOAL.setId(1);
-        mDatabase.bigGoalDAO().insertBigGoal(BIG_GOAL);
+        mDatabase.compositeGoalDAO().insertBigGoal(BIG_GOAL);
     }
 
     @After

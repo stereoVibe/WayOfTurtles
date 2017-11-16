@@ -1,7 +1,5 @@
-package io.sokolvault.wayofturtles.domain.model
+package io.sokolvault.wayofturtles.domain.presence
 
-import android.arch.lifecycle.LiveData
-import io.sokolvault.wayofturtles.model.BaseGoal
 import io.sokolvault.wayofturtles.model.Goal
 
 interface PresenceUseCase<G: Goal> {

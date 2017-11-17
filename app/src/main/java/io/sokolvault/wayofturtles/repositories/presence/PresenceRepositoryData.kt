@@ -5,7 +5,7 @@ import io.sokolvault.wayofturtles.data.db.GoalsDatabase
 import io.sokolvault.wayofturtles.data.db.model.HybridGoalRoom
 import io.sokolvault.wayofturtles.model.HybridGoal
 import io.sokolvault.wayofturtles.model.JobGoal
-import io.sokolvault.wayofturtles.model.TaskGoal
+import io.sokolvault.wayofturtles.model.MonotypeGoal
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +16,7 @@ class PresenceRepositoryData
 
     private val database: GoalsDatabase = roomDatabase
 
-    override fun createNewTaskGoal(task: TaskGoal) {
+    override fun createNewTaskGoal(monotype: MonotypeGoal) {
     }
 
     override fun createNewJobGoal(jobGoal: JobGoal) {

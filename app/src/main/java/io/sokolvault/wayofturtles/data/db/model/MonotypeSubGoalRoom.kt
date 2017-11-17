@@ -2,9 +2,9 @@ package io.sokolvault.wayofturtles.data.db.model
 
 import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
+import io.sokolvault.wayofturtles.model.MonotypeGoal
 import io.sokolvault.wayofturtles.utils.AppTypeConverters
 import io.sokolvault.wayofturtles.model.xtensions.Internable
-import io.sokolvault.wayofturtles.model.TaskGoal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 import io.sokolvault.wayofturtles.utils.Constants
 import io.sokolvault.wayofturtles.utils.Constants.HYBRID_GOAL_ID_COLUMN_NAME
@@ -23,10 +23,10 @@ import io.sokolvault.wayofturtles.utils.Constants.TASK_SUBGOALS_TABLE_NAME
                 onUpdate = CASCADE,
                 deferred = true)))
 @TypeConverters(AppTypeConverters::class)
-class TaskSubGoalRoom(override var title: String,
-                      @ColumnInfo(name = FOREIGN_KEY_HYBRID_GOAL_ID_COLUMN)
+class MonotypeSubGoalRoom(override var title: String,
+                          @ColumnInfo(name = FOREIGN_KEY_HYBRID_GOAL_ID_COLUMN)
                       override val hybridGoalId: Int)
-    :TaskGoal(), Internable<TaskGoal> {
+    : MonotypeGoal(), Internable<MonotypeGoal> {
 
     @PrimaryKey(autoGenerate = true)
     override var id: Int = 0

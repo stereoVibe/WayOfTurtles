@@ -15,10 +15,10 @@ import io.sokolvault.wayofturtles.utils.AppTypeConverters
 @TypeConverters(AppTypeConverters::class)
 interface CompositeGoalDAO {
 
-    @get:Query("SELECT * FROM composite_goals")
+    @get:Query("SELECT * FROM hybrid_goals")
     val all: List<HybridGoalRoom>
 
-    @Query("SELECT * FROM composite_goals WHERE id = :id")
+    @Query("SELECT * FROM hybrid_goals WHERE id = :id")
     fun getBigGoalById(id: Int): HybridGoalRoom
 
     @Insert(onConflict = REPLACE)

@@ -2,7 +2,7 @@ package io.sokolvault.wayofturtles.repositories.presence
 
 import io.sokolvault.wayofturtles.model.HybridGoal
 import io.sokolvault.wayofturtles.model.JobGoal
-import io.sokolvault.wayofturtles.model.TaskGoal
+import io.sokolvault.wayofturtles.model.MonotypeGoal
 
 /**
  * This @interface provides CREATE and DELETE operations
@@ -21,7 +21,7 @@ interface PresenceRepositoryContract {
      * [createNewJobSubGoal]
      * for CREATE operations
      * */
-    fun createNewTaskGoal(task: TaskGoal)
+    fun createNewTaskGoal(monotype: MonotypeGoal)
     fun createNewJobGoal(jobGoal: JobGoal)
     fun createNewCompositeGoal(hybridGoal: HybridGoal)
     fun createNewTaskSubGoal(compositeGoalId: Int)

@@ -18,16 +18,16 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.sokolvault.wayofturtles.carriers.DataJobSubGoal;
 import io.sokolvault.wayofturtles.data.db.dao.CompositeGoalDAO;
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
 import io.sokolvault.wayofturtles.data.db.dao.JobSubGoalDAO;
 import io.sokolvault.wayofturtles.data.db.dao.TaskSubGoalDAO;
 import io.sokolvault.wayofturtles.data.db.model.HybridGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom;
-import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom;
+import io.sokolvault.wayofturtles.data.db.model.MonotypeSubGoalRoom;
 import io.sokolvault.wayofturtles.model.Goal;
-import io.sokolvault.wayofturtles.model.Goal;
-import io.sokolvault.wayofturtles.model.HybridGoal;
+import io.sokolvault.wayofturtles.model.xtensions.StepType;
 import io.sokolvault.wayofturtles.model.xtensions.StepUnit;
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
 import io.sokolvault.wayofturtles.model.xtensions.MoneyUnits;
@@ -36,14 +36,21 @@ import io.sokolvault.wayofturtles.model.xtensions.MoneyUnits;
 public class DbOperationsInstTest {
 
     private HybridGoalRoom BIG_GOAL =
-            new HybridGoalRoom("title", new ArrayList<>());
+            new HybridGoalRoom("title");
 
     private final JobSubGoalRoom JOB = new JobSubGoalRoom("Заголовок ",
-            10, 1,
-            new StepUnit.Money(100, MoneyUnits.BITCOIN.getValue()));
+            10, 1);
 
-    private final TaskSubGoalRoom TASK =
-            new TaskSubGoalRoom("Task", 1);
+    private final DataJobSubGoal dataJOB = new DataJobSubGoal(1,
+            "pfu",
+            1,
+            0,
+            10,
+            0,
+            false, new StepUnit.Piece(1));
+
+    private final MonotypeSubGoalRoom TASK =
+            new MonotypeSubGoalRoom("Task", 1);
 
 
     private CompositeGoalDAO mCompositeGoalDAO;
@@ -63,6 +70,8 @@ public class DbOperationsInstTest {
         mTaskDAO = mDatabase.tasksDAO();
 
         BIG_GOAL.setId(1);
+        JOB.setId(1);
+        TASK.setId(1);
         mDatabase.compositeGoalDAO().insertBigGoal(BIG_GOAL);
     }
 
@@ -112,7 +121,7 @@ public class DbOperationsInstTest {
     @Test
     public void insertAndGetTaskEntityTest(){
         mTaskDAO.insertTaskSubGoal(TASK);
-        TaskSubGoalRoom dbTask =
+        MonotypeSubGoalRoom dbTask =
                 getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
         performCoreAsserts(TASK, dbTask);
     }
@@ -168,7 +177,7 @@ public class DbOperationsInstTest {
         performCoreUpdates(TASK);
 
         mTaskDAO.updateTaskSubGoal(TASK);
-        TaskSubGoalRoom dbTask = getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
+        MonotypeSubGoalRoom dbTask = getFirstGoalEntityAndAssertForSize(mTaskDAO.getAll());
         performCoreAsserts(TASK, dbTask);
     }
 
@@ -188,7 +197,7 @@ public class DbOperationsInstTest {
 //
     @Test(expected = IndexOutOfBoundsException.class)
     public void deleteAndFailToGetTaskEntityTest(){
-        TaskSubGoalRoom taskEntity = mTaskDAO.getAll().get(0);
+        MonotypeSubGoalRoom taskEntity = mTaskDAO.getAll().get(0);
         mTaskDAO.insertTaskSubGoal(taskEntity);
         assertNull(mTaskDAO.getAll().get(0));
     }

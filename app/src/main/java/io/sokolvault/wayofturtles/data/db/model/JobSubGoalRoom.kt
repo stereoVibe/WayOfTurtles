@@ -29,9 +29,8 @@ class JobSubGoalRoom(override var title: String,
                      @ColumnInfo(name = CYCLES_QUANTITY_COLUMN_NAME)
                      override var cycleQuantity: Int,
                      @ColumnInfo(name = FOREIGN_KEY_HYBRID_GOAL_ID_COLUMN)
-                     override var hybridGoalId: Int,
-                     override val counts: StepUnit)
-    :JobGoal(), Internable<JobGoal> {
+                     override var hybridGoalId: Int)
+    : JobGoal(), Internable<JobGoal> {
 
     @PrimaryKey(autoGenerate = true)
     override var id: Int = 0
@@ -43,7 +42,9 @@ class JobSubGoalRoom(override var title: String,
     override var isComplete: Boolean = false
     @ColumnInfo(name = Constants.GOAL_CATEGORY_COLUMN_NAME)
     override var goalCategory: Enum<GoalCategory> = GoalCategory.NONE
+    @Ignore
+    override val counts: StepUnit = StepUnit.Piece(0)
 
-    override fun calculateProgress(): Double = ((completedCycles*100)/cycleQuantity).toDouble()
+    override fun calculateProgress(): Double = ((completedCycles * 100)/cycleQuantity).toDouble()
 
 }

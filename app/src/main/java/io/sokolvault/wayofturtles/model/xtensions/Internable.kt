@@ -1,7 +1,8 @@
 package io.sokolvault.wayofturtles.model.xtensions
 
+import io.sokolvault.wayofturtles.model.Goal
 import io.sokolvault.wayofturtles.model.MonotypeGoal
 
-interface Internable<T: MonotypeGoal> {
+interface Internable<T: MonotypeGoal> : Goal {
     val hybridGoalId: Int
 }

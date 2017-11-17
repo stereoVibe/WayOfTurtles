@@ -3,22 +3,19 @@ package io.sokolvault.wayofturtles.model
 import io.sokolvault.wayofturtles.model.xtensions.*
 
 /* Core class for all goals in the app */
-abstract class Goal {
-    abstract var id: Int
-    abstract var title: String
-    abstract var description: String
-    abstract var isComplete: Boolean
-    abstract var goalCategory: Enum<GoalCategory>
+interface Goal {
+     var id: Int
+     var title: String
+     var description: String
+     var isComplete: Boolean
+     var goalCategory: Enum<GoalCategory>
 }
 
 abstract class MonotypeGoal
-    :Goal()
+    :Goal
 
 abstract class HybridGoal
-    :Goal(), Compoundable<MonotypeGoal>, Progressable
-
-abstract class TaskGoal
-    : MonotypeGoal()
+    :Goal, Compoundable<MonotypeGoal>, Progressable
 
 abstract class JobGoal
     : MonotypeGoal(), Progressable, MonoСyclical {

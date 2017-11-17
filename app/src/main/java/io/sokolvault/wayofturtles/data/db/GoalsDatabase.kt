@@ -12,14 +12,14 @@ import io.sokolvault.wayofturtles.data.db.dao.TaskSubGoalDAO
 
 import io.sokolvault.wayofturtles.data.db.model.HybridGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
-import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom
+import io.sokolvault.wayofturtles.data.db.model.MonotypeSubGoalRoom
 import io.sokolvault.wayofturtles.utils.Constants
 
 @TypeConverters(AppTypeConverters::class)
 @Database(entities = arrayOf(
         HybridGoalRoom::class,
         JobSubGoalRoom::class,
-        TaskSubGoalRoom::class), version = 1)
+        MonotypeSubGoalRoom::class), version = 1)
 abstract class GoalsDatabase : RoomDatabase() {
 
     abstract fun compositeGoalDAO(): CompositeGoalDAO

@@ -18,7 +18,8 @@ open class AppTypeConverters {
     fun fromStringToEnum(string: String?): Enum<GoalCategory>? =
             string?.let { GoalCategory.valueOf(it) }
 
-    fun fromStepUnitToStringArray(stepUnit: StepUnit): String {
+    @TypeConverter
+    fun fromStepUnitToString(stepUnit: StepUnit): String {
         val units: (StepUnit) -> String = { u -> "${u.step} ${u.unitType}"}
         return when (stepUnit) {
             is StepUnit.Money -> units(stepUnit)

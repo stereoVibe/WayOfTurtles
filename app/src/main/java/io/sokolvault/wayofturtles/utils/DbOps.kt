@@ -1,13 +1,8 @@
 package io.sokolvault.wayofturtles.utils
 
-import android.arch.lifecycle.LiveData
 import android.util.Log
-import io.sokolvault.wayofturtles.data.db.dao.CompositeGoalDAO
 import io.sokolvault.wayofturtles.data.db.dao.JobSubGoalDAO
-import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
-import io.sokolvault.wayofturtles.model.BaseGoal
-import io.sokolvault.wayofturtles.model.CompositeGoal
 import io.sokolvault.wayofturtles.model.Goal
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -16,14 +11,14 @@ import org.jetbrains.anko.coroutines.experimental.bg
 
 object DbOps {
 
-    private fun <I: BaseGoal, O: BaseGoal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
+    private fun <I: Goal, O: Goal>baseGoalConverter(inputGoal:I, outputGoal: O): O{
 
         val assign: (I, O) -> Unit = { i, o -> apply {
             o.id = i.id
             o.description = i.description
             o.title = i.title
             o.goalCategory = i.goalCategory
-            o.progress = i.progress
+//            o.progress = i.progress
             o.isComplete = i.isComplete
         }}
         assign(inputGoal, outputGoal)

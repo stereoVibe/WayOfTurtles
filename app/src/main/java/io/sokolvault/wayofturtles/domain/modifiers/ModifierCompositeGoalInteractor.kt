@@ -1,15 +1,15 @@
 package io.sokolvault.wayofturtles.domain.modifiers
 
 import io.sokolvault.wayofturtles.domain.model.ModifierUseCase
-import io.sokolvault.wayofturtles.model.CompositeGoal
+import io.sokolvault.wayofturtles.model.HybridGoal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 
-class ModifierCompositeGoalInteractor:ModifierUseCase<CompositeGoal> {
-    override fun updateGoal(goal: CompositeGoal) {
+class ModifierCompositeGoalInteractor:ModifierUseCase<HybridGoal> {
+    override fun updateGoal(goal: HybridGoal) {
         return this.updateGoal(goal)
     }
 
-    override fun updateGoals(vararg goals: CompositeGoal) {
+    override fun updateGoals(vararg goals: HybridGoal) {
         return this.updateGoals()
     }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Путь Черепах</string>
+    <string name="step_type_times">раз</string>
+    <string name="step_type_times_adds">раза</string>
+</resources>

@@ -1,9 +1,7 @@
 package io.sokolvault.wayofturtles.repositories.presence
 
-import android.arch.lifecycle.LiveData
-import io.sokolvault.wayofturtles.model.CompositeGoal
+import io.sokolvault.wayofturtles.model.HybridGoal
 import io.sokolvault.wayofturtles.model.JobGoal
-import io.sokolvault.wayofturtles.model.SingleGoal
 import io.sokolvault.wayofturtles.model.TaskGoal
 
 /**
@@ -25,7 +23,7 @@ interface PresenceRepositoryContract {
      * */
     fun createNewTaskGoal(task: TaskGoal)
     fun createNewJobGoal(jobGoal: JobGoal)
-    fun createNewCompositeGoal(compositeGoal: CompositeGoal)
+    fun createNewCompositeGoal(hybridGoal: HybridGoal)
     fun createNewTaskSubGoal(compositeGoalId: Int)
     fun createNewJobSubGoal(compositeGoalId: Int)
 
@@ -41,7 +39,7 @@ interface PresenceRepositoryContract {
      * */
     fun deleteTaskGoal()
     fun deleteJobGoal()
-    fun deleteCompositeGoal(compositeGoal: CompositeGoal)
+    fun deleteCompositeGoal(hybridGoal: HybridGoal)
     fun deleteTaskSubGoal()
     fun deleteJobSubGoal()
 }

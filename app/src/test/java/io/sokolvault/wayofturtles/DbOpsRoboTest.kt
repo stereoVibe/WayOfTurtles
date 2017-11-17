@@ -75,8 +75,8 @@
 //                .setDescription("discr")
 //                .build()
 //
-////        assertNotNull(subGoal.compositeGoalId)
-//        assertEquals(localBigGoalID, subGoal.compositeGoalId)
+////        assertNotNull(subGoal.hybridGoalId)
+//        assertEquals(localBigGoalID, subGoal.hybridGoalId)
 //    }
 //
 //    @Test
@@ -112,7 +112,7 @@
 //            }.start()
 //            (LOCK as java.lang.Object).wait()
 ////            assertNotNull(jobsList)
-//            assertEquals(localBigGoalID, jobsList!![0].compositeGoalId)
+//            assertEquals(localBigGoalID, jobsList!![0].hybridGoalId)
 //        }
 //    }
 //
@@ -159,7 +159,7 @@
 ////            (LOCK2 as java.lang.Object).wait()
 ////
 ////            for (i in 1..5) {
-////                assertEquals(localBigGoalID, jobsList!![i-1].compositeGoalId)
+////                assertEquals(localBigGoalID, jobsList!![i-1].hybridGoalId)
 ////            }
 ////        }
 ////

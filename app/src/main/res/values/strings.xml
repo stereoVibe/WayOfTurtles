@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Way Of Turtles</string>
+    <string name="step_type_times">times</string>
+    <string name="step_type_times_adds">time</string>
 </resources>

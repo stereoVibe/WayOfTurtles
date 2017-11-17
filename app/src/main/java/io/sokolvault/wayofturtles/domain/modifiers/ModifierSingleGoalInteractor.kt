@@ -1,15 +1,15 @@
 package io.sokolvault.wayofturtles.domain.modifiers
 
 import io.sokolvault.wayofturtles.domain.model.ModifierUseCase
-import io.sokolvault.wayofturtles.model.SingleGoal
+import io.sokolvault.wayofturtles.model.MonotypeGoal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 
-class ModifierSingleGoalInteractor: ModifierUseCase<SingleGoal> {
-    override fun updateGoal(goal: SingleGoal) {
+class ModifierSingleGoalInteractor: ModifierUseCase<MonotypeGoal> {
+    override fun updateGoal(goal: MonotypeGoal) {
         return this.updateGoal(goal)
     }
 
-    override fun updateGoals(vararg goals: SingleGoal) {
+    override fun updateGoals(vararg goals: MonotypeGoal) {
         return this.updateGoals(*goals)
     }
 

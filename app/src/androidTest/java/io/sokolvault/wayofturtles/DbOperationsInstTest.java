@@ -15,32 +15,35 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.sokolvault.wayofturtles.data.db.dao.CompositeGoalDAO;
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase;
 import io.sokolvault.wayofturtles.data.db.dao.JobSubGoalDAO;
 import io.sokolvault.wayofturtles.data.db.dao.TaskSubGoalDAO;
-import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom;
+import io.sokolvault.wayofturtles.data.db.model.HybridGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom;
-import io.sokolvault.wayofturtles.model.BaseGoal;
 import io.sokolvault.wayofturtles.model.Goal;
-import io.sokolvault.wayofturtles.model.xtensions.CountUnit;
+import io.sokolvault.wayofturtles.model.Goal;
+import io.sokolvault.wayofturtles.model.HybridGoal;
+import io.sokolvault.wayofturtles.model.xtensions.StepUnit;
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
 import io.sokolvault.wayofturtles.model.xtensions.MoneyUnits;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {
 
-    private CompositeGoalRoom BIG_GOAL =
-            new CompositeGoalRoom("title");
+    private HybridGoalRoom BIG_GOAL =
+            new HybridGoalRoom("title", new ArrayList<>());
 
-    private final JobSubGoalRoom JOB = new JobSubGoalRoom(1,
-            "Заголовок ", 10, 1, new CountUnit.Money(100, MoneyUnits.BITCOIN.getValue()));
+    private final JobSubGoalRoom JOB = new JobSubGoalRoom("Заголовок ",
+            10, 1,
+            new StepUnit.Money(100, MoneyUnits.BITCOIN.getValue()));
 
     private final TaskSubGoalRoom TASK =
-            new TaskSubGoalRoom(1, "Task", 1);
+            new TaskSubGoalRoom("Task", 1);
 
 
     private CompositeGoalDAO mCompositeGoalDAO;
@@ -84,7 +87,7 @@ public class DbOperationsInstTest {
         BIG_GOAL.setId(2); // Setting the ID to be sure it will match auto generating
         mCompositeGoalDAO.insertBigGoal(BIG_GOAL);
 
-        CompositeGoalRoom dbBigGoal = mCompositeGoalDAO.getAll().get(1);
+        HybridGoalRoom dbBigGoal = mCompositeGoalDAO.getAll().get(1);
         assertEquals(2, mCompositeGoalDAO.getAll().size());
 
         performCoreAsserts(BIG_GOAL, dbBigGoal);
@@ -93,7 +96,7 @@ public class DbOperationsInstTest {
     @Test
     public void insertAndGetJobEntityTest(){
 
-        JOB.getCounts().getCountUnit();
+        JOB.getCounts().getUnitType();
         JOB.getCounts().getStep();
 
         mJobDAO.insertJobSubGoal(JOB);
@@ -101,9 +104,9 @@ public class DbOperationsInstTest {
                 getFirstGoalEntityAndAssertForSize(mJobDAO.getAll());
 
         performCoreAsserts(JOB, dbJob);
-        assertEquals(JOB.getCompositeGoalId(), dbJob.getCompositeGoalId());
-        assertEquals(JOB.getJobsQuantity(), dbJob.getJobsQuantity());
-        assertEquals(JOB.getCompletedJobs(), dbJob.getCompletedJobs());
+        assertEquals(JOB.getHybridGoalId(), dbJob.getHybridGoalId());
+        assertEquals(JOB.getCycleQuantity(), dbJob.getCycleQuantity());
+        assertEquals(JOB.getCompletedCycles(), dbJob.getCompletedCycles());
     }
 
     @Test
@@ -119,7 +122,7 @@ public class DbOperationsInstTest {
         performCoreUpdates(BIG_GOAL);
         mCompositeGoalDAO.updateBigGoal(BIG_GOAL);
 
-        CompositeGoalRoom dbBigGoal = mCompositeGoalDAO.getAll().get(0);
+        HybridGoalRoom dbBigGoal = mCompositeGoalDAO.getAll().get(0);
 
         performCoreAsserts(BIG_GOAL, dbBigGoal);
     }
@@ -127,7 +130,7 @@ public class DbOperationsInstTest {
     @Test
     public void updateAndGetJobEntityTest(){
         /**
-         * ID for BigGoal should be updated, as it matches the compositeGoalId in
+         * ID for BigGoal should be updated, as it matches the hybridGoalId in
          * all SubGoals (JobEntity here), so it must exist. Because of auto generated id for BigGoal,
          * we can't updated it in DB, so it needs another insert - {@link #addSecondBigGoal()}
         **/
@@ -136,9 +139,9 @@ public class DbOperationsInstTest {
         mJobDAO.insertJobSubGoal(JOB); // UPDATE needs something to update %)
 
         performCoreUpdates(JOB);
-        JOB.setCompositeGoalId(2);
-        JOB.setJobsQuantity(20);
-        JOB.setCompletedJobs(20);
+        JOB.setHybridGoalId(2);
+        JOB.setCycleQuantity(20);
+        JOB.setCompletedCycles(20);
 
         mJobDAO.updateJobSubGoal(JOB);
 
@@ -146,15 +149,15 @@ public class DbOperationsInstTest {
                 getFirstGoalEntityAndAssertForSize(mJobDAO.getAll());
 
         performCoreAsserts(JOB, dbJob);
-        assertEquals(JOB.getCompositeGoalId(), dbJob.getCompositeGoalId());
-        assertEquals(JOB.getJobsQuantity(), dbJob.getJobsQuantity());
-        assertEquals(JOB.getCompletedJobs(), dbJob.getCompletedJobs());
+        assertEquals(JOB.getHybridGoalId(), dbJob.getHybridGoalId());
+        assertEquals(JOB.getCycleQuantity(), dbJob.getCycleQuantity());
+        assertEquals(JOB.getCompletedCycles(), dbJob.getCompletedCycles());
     }
 
     @Test
     public void updateAndGetAndGetTaskEntityTest(){
         /**
-         * ID for BigGoal should be updated, as it matches the compositeGoalId in
+         * ID for BigGoal should be updated, as it matches the hybridGoalId in
          * all SubGoals (TaskEntity here), so it must exist. Because of auto generated id for BigGoal,
          * we can't updated it in DB, so it needs another insert - {@link #addSecondBigGoal()}
          **/
@@ -202,13 +205,13 @@ public class DbOperationsInstTest {
     }
 
 //  Bundle of asserts matches all Goals in the app.
-    private <T extends BaseGoal> void performCoreAsserts(T mockGoal, T actualGoal){
+    private <T extends Goal> void performCoreAsserts(T mockGoal, T actualGoal){
         assertEquals(mockGoal.getId(), actualGoal.getId());
         assertEquals(mockGoal.getTitle(), actualGoal.getTitle());
         assertEquals(mockGoal.getDescription(), actualGoal.getDescription());
         assertEquals(mockGoal.isComplete(), actualGoal.isComplete());
         assertEquals(mockGoal.getGoalCategory(), actualGoal.getGoalCategory());
-        assertEquals(String.valueOf(mockGoal.getProgress()), String.valueOf(actualGoal.getProgress()));
+//        assertEquals(String.valueOf(mockGoal.getProgress()), String.valueOf(actualGoal.getProgress()));
     }
 
 //  Bundle of local updates matches all Goals in the app.
@@ -216,7 +219,7 @@ public class DbOperationsInstTest {
         goal.setTitle("Updated title");
         goal.setDescription("Updated description");
         goal.setGoalCategory(GoalCategory.FAMILY);
-        goal.setProgress(100.0D);
+//        goal.setProgress(100.0D);
         goal.setComplete(true);
     }
 }

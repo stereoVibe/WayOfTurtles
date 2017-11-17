@@ -2,8 +2,8 @@ package io.sokolvault.wayofturtles.repositories.presence
 
 import android.util.Log
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase
-import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
-import io.sokolvault.wayofturtles.model.CompositeGoal
+import io.sokolvault.wayofturtles.data.db.model.HybridGoalRoom
+import io.sokolvault.wayofturtles.model.HybridGoal
 import io.sokolvault.wayofturtles.model.JobGoal
 import io.sokolvault.wayofturtles.model.TaskGoal
 import javax.inject.Inject
@@ -22,9 +22,9 @@ class PresenceRepositoryData
     override fun createNewJobGoal(jobGoal: JobGoal) {
     }
 
-    override fun createNewCompositeGoal(compositeGoal: CompositeGoal) {
+    override fun createNewCompositeGoal(hybridGoal: HybridGoal) {
         Log.d("База", database.toString())
-        val id = database.compositeGoalDAO().insertBigGoal(CompositeGoalRoom(compositeGoal.title))
+        val id = database.compositeGoalDAO().insertBigGoal(HybridGoalRoom(hybridGoal.title))
         Log.d("Номер цели", id.toString())
         val gettingGoal = database.compositeGoalDAO().getBigGoalById(id.toInt()).toString()
         Log.d("Цель", gettingGoal.capitalize())
@@ -42,7 +42,7 @@ class PresenceRepositoryData
     override fun deleteJobGoal() {
     }
 
-    override fun deleteCompositeGoal(compositeGoal: CompositeGoal) {
+    override fun deleteCompositeGoal(hybridGoal: HybridGoal) {
     }
 
     override fun deleteTaskSubGoal() {

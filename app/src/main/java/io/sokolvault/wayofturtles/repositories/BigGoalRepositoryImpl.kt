@@ -3,10 +3,10 @@ package io.sokolvault.wayofturtles.repositories
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase
-import io.sokolvault.wayofturtles.data.db.model.CompositeGoalRoom
+import io.sokolvault.wayofturtles.data.db.model.HybridGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom
 import io.sokolvault.wayofturtles.data.db.model.TaskSubGoalRoom
-import io.sokolvault.wayofturtles.model.CompositeGoal
+import io.sokolvault.wayofturtles.model.HybridGoal
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -18,7 +18,7 @@ class BigGoalRepositoryImpl : BigGoalRepository {
 //    }
 
     private val goalsDb : GoalsDatabase = getDbInstance()
-    private val singleLiveData: LiveData<CompositeGoal> = MutableLiveData()
+    private val singleLiveData: LiveData<HybridGoal> = MutableLiveData()
 
     companion object {
         private lateinit var goalsDb: GoalsDatabase
@@ -34,8 +34,8 @@ class BigGoalRepositoryImpl : BigGoalRepository {
     }
 
 //    @SuppressLint("RestrictedApi")
-    override fun createNewGoal(goal: CompositeGoal) {
-        val compGoal = CompositeGoalRoom("Составная цель")
+    override fun createNewGoal(goal: HybridGoal) {
+        val compGoal = HybridGoalRoom("Составная цель")
         val taskGoal = TaskSubGoalRoom(1, "Таск", 1)
         val jobGoal = JobSubGoalRoom(1, "Жоб", 10, 1)
 
@@ -96,20 +96,20 @@ class BigGoalRepositoryImpl : BigGoalRepository {
 //        Log.d(singleLiveData::class.simpleName, singleLiveData::getValue.toString())
 //    }
 
-    override fun updateGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
+    override fun updateGoal(goal: HybridGoal): LiveData<HybridGoal> {
         return this.updateGoal(goal)
     }
 
-    override fun deleteGoal(goal: CompositeGoal): LiveData<CompositeGoal> {
+    override fun deleteGoal(goal: HybridGoal): LiveData<HybridGoal> {
         return this.deleteGoal(goal)
     }
 
-    override fun getGoalById(id: Int): LiveData<CompositeGoal> {
+    override fun getGoalById(id: Int): LiveData<HybridGoal> {
 //        return checkNotNull(goalsDb.compositeGoalDAO().asyncGet(id))
-        return MutableLiveData<CompositeGoal>()
+        return MutableLiveData<HybridGoal>()
     }
 
-    override fun getGoalsFilteredByCategoryTag(category: GoalCategory): Set<LiveData<CompositeGoal>> {
+    override fun getGoalsFilteredByCategoryTag(category: GoalCategory): Set<LiveData<HybridGoal>> {
         return this.getGoalsFilteredByCategoryTag(category)
     }
 

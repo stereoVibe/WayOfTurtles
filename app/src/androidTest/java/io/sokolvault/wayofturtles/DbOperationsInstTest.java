@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.sokolvault.wayofturtles.carriers.DataJobSubGoal;
@@ -27,10 +26,8 @@ import io.sokolvault.wayofturtles.data.db.model.HybridGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.JobSubGoalRoom;
 import io.sokolvault.wayofturtles.data.db.model.MonotypeSubGoalRoom;
 import io.sokolvault.wayofturtles.model.Goal;
-import io.sokolvault.wayofturtles.model.xtensions.StepType;
-import io.sokolvault.wayofturtles.model.xtensions.StepUnit;
+import io.sokolvault.wayofturtles.model.xtensions.step.StepUnit;
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
-import io.sokolvault.wayofturtles.model.xtensions.MoneyUnits;
 
 @RunWith(AndroidJUnit4.class)
 public class DbOperationsInstTest {

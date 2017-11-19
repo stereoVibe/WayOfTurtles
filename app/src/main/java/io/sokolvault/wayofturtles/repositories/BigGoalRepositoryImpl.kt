@@ -93,7 +93,7 @@
 ////            }
 ////        }.onAwait
 ////
-////        Log.d(singleLiveData::class.simpleName, singleLiveData::getValue.toString())
+////        Log.d(singleLiveData::class.simpleName, singleLiveData::getGradeModifier.toString())
 ////    }
 //
 //    override fun updateGoal(goal: HybridGoal): LiveData<HybridGoal> {

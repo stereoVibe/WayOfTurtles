@@ -3,7 +3,7 @@ package io.sokolvault.wayofturtles.utils
 import android.arch.persistence.room.TypeConverter
 
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
-import io.sokolvault.wayofturtles.model.xtensions.StepUnit
+import io.sokolvault.wayofturtles.model.xtensions.step.StepUnit
 
 
 open class AppTypeConverters {

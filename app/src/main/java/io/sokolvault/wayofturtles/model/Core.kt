@@ -1,6 +1,7 @@
 package io.sokolvault.wayofturtles.model
 
 import io.sokolvault.wayofturtles.model.xtensions.*
+import io.sokolvault.wayofturtles.model.xtensions.step.StepUnit
 
 /* Core class for all goals in the app */
 interface Goal {

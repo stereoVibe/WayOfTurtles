@@ -9,6 +9,7 @@ import android.util.ArrayMap
 import android.util.Log
 import android.widget.Button
 import io.sokolvault.wayofturtles.data.db.GoalsDatabase
+import io.sokolvault.wayofturtles.model.xtensions.Difficulty
 import io.sokolvault.wayofturtles.repositories.presence.PresenceRepositoryData
 import io.sokolvault.wayofturtles.ui.BigGoalViewModel
 import io.sokolvault.wayofturtles.ui.ViewModelFactory
@@ -45,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         bigGoalViewModel = ViewModelProviders
                 .of(this, ViewModelFactory(arrayMap))
                 .get(BigGoalViewModel::class.java)
+
+//        val prog: Double =
 
         loadButton.setOnClickListener({ it ->
             async(UI) {

@@ -3,6 +3,7 @@ package io.sokolvault.wayofturtles.data.db.model
 import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE
 import io.sokolvault.wayofturtles.model.MonotypeGoal
+import io.sokolvault.wayofturtles.model.xtensions.Difficulty
 import io.sokolvault.wayofturtles.utils.AppTypeConverters
 import io.sokolvault.wayofturtles.model.xtensions.Internable
 import io.sokolvault.wayofturtles.model.xtensions.GoalCategory
@@ -23,10 +24,17 @@ import io.sokolvault.wayofturtles.utils.Constants.TASK_SUBGOALS_TABLE_NAME
                 onUpdate = CASCADE,
                 deferred = true)))
 @TypeConverters(AppTypeConverters::class)
-class MonotypeSubGoalRoom(override var title: String,
+class MonotypeSubGoalRoom(override var title: String = "title",
                           @ColumnInfo(name = FOREIGN_KEY_HYBRID_GOAL_ID_COLUMN)
-                      override val hybridGoalId: Int)
+                          override var hybridGoalId: Int = 0)
     : MonotypeGoal(), Internable<MonotypeGoal> {
+
+    @Ignore
+    override val grade: Difficulty.Grade = Difficulty.Grade.NORMAL
+    @Ignore
+    override val modifier: Double = Difficulty.Grade.NORMAL.gradeModifier
+    @Ignore
+    override val modProgress: (Double) -> Double = { it * grade.gradeModifier }
 
     @PrimaryKey(autoGenerate = true)
     override var id: Int = 0

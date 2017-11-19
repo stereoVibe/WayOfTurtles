@@ -63,11 +63,9 @@ data class HybridGoalRoom constructor(override var title: String = "title")
         /*
         * Распределение целей (id) по группам (в виде List) соответствующим их сложности
         * */
-//        val (normalList, easyList, hardList) = listOf<MutableList<Int>>()
         val normalList: MutableList<Int> = mutableListOf()
         val easyList: MutableList<Int> = mutableListOf()
         val hardList: MutableList<Int> = mutableListOf()
-//        val easyList: MutableList<Int> = mutableListOf()
         iDAndDiffGradeMap.forEach { pair ->
             when (iDAndDiffGradeMap.getValue(pair.key)) {
                 Difficulty.Grade.EASY -> easyList.add(pair.key)
@@ -80,15 +78,6 @@ data class HybridGoalRoom constructor(override var title: String = "title")
         * Установка модификатора (множителя) сложности в зависимости от наличия градаций (групп)
         * в списке подцелей. Присваивание этого значения соответствующему кейсу
         * */
-//        TODO: следование when идет по порядку, последовательно и поэтому попадает на первый враиан
-//        val mod = when {
-//            easyList.isEmpty() -> 1.1
-//            hardList.isEmpty() -> 1.1
-//            normalList.isEmpty() -> 1.2
-//            else -> 1.0
-//        }
-//        modifier = mod
-
         modifier = if (easyList.isEmpty() && hardList.isEmpty()) 1.0
         else if (easyList.isEmpty() || hardList.isEmpty()) 1.1
         else if (normalList.isEmpty()) 1.2
@@ -129,6 +118,7 @@ data class HybridGoalRoom constructor(override var title: String = "title")
                     }
                 }
 
+//                TODO: Figure out how to implement progress update when cycles of JobSubGoals are completed
                 subGoals.filter { it.isComplete }.forEach {
                     val diff: Double? = shareMap[it.id]
                     result += diff!!

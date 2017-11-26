@@ -2,6 +2,7 @@ package io.sokolvault.wayofturtles.utils
 
 
 object Constants {
+//
 
 //        Database name
         const val DATABASE_NAME = "goals"

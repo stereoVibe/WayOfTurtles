@@ -17,9 +17,6 @@ import io.sokolvault.wayofturtles.model.xtensions.GoalCategory;
 
 import static org.mockito.Mockito.*;
 
-/**
- * Created by Vault on 18/11/2017.
- */
 public class HybridGoalRoomTest {
     ArrayList<MonotypeGoal> arrayList = new ArrayList<>();
 
@@ -70,19 +67,9 @@ public class HybridGoalRoomTest {
     }
 
     @Test
-    public void testSetId() throws Exception {
-        hybridGoalRoom.setId(0);
-    }
-
-    @Test
     public void testGetDescription() throws Exception {
         String result = hybridGoalRoom.getDescription();
         Assert.assertEquals("replaceMeWithExpectedResult", result);
-    }
-
-    @Test
-    public void testSetDescription() throws Exception {
-        hybridGoalRoom.setDescription("s");
     }
 
     @Test
@@ -93,19 +80,9 @@ public class HybridGoalRoomTest {
     }
 
     @Test
-    public void testSetComplete() throws Exception {
-        hybridGoalRoom.setComplete(true);
-    }
-
-    @Test
     public void testGetGoalCategory() throws Exception {
         Enum<GoalCategory> result = hybridGoalRoom.getGoalCategory();
         Assert.assertEquals(null, result);
-    }
-
-    @Test
-    public void testSetGoalCategory() throws Exception {
-        hybridGoalRoom.setGoalCategory(null);
     }
 
     @Test
@@ -115,19 +92,9 @@ public class HybridGoalRoomTest {
     }
 
     @Test
-    public void testSetProgress() throws Exception {
-        hybridGoalRoom.setProgress(0d);
-    }
-
-    @Test
     public void testGetAllSubGoalsQuantity() throws Exception {
         int result = hybridGoalRoom.getAllSubGoalsQuantity();
         Assert.assertEquals(0, result);
-    }
-
-    @Test
-    public void testSetAllSubGoalsQuantity() throws Exception {
-        hybridGoalRoom.setAllSubGoalsQuantity(0);
     }
 
     @Test
@@ -137,30 +104,10 @@ public class HybridGoalRoomTest {
     }
 
     @Test
-    public void testSetCompletedSubGoalsQuantity() throws Exception {
-        hybridGoalRoom.setCompletedSubGoalsQuantity(0);
-    }
-
-    @Test
     public void testGetSubGoals() throws Exception {
         ArrayList<MonotypeGoal> result = hybridGoalRoom.getSubGoals();
         Assert.assertEquals(new ArrayList<MonotypeGoal>(Arrays.asList(new MonotypeSubGoalRoom("title", 0))), result);
     }
-
-    @Test
-    public void testSetSubGoals() throws Exception {
-        hybridGoalRoom.setSubGoals(new ArrayList<MonotypeGoal>(Arrays.asList(new MonotypeSubGoalRoom("title", 0))));
-    }
-
-    @Test
-    public void testAddSubGoalToList() throws Exception {
-        hybridGoalRoom.addSubGoalToList(new MonotypeSubGoalRoom("title", 0));
-    }
-
-//    @Test
-//    public void testAddAllSubGoals() throws Exception {
-//        hybridGoalRoom.addAllSubGoals(Arrays.<? extends MonotypeGoal>asList(null));
-//    }
 
     @Test
     public void testCalculateProgress() throws Exception {
@@ -186,11 +133,6 @@ public class HybridGoalRoomTest {
     public void testGetTitle() throws Exception {
         String result = hybridGoalRoom.getTitle();
         Assert.assertEquals("replaceMeWithExpectedResult", result);
-    }
-
-    @Test
-    public void testSetTitle() throws Exception {
-        hybridGoalRoom.setTitle("s");
     }
 
     @Test
@@ -223,5 +165,3 @@ public class HybridGoalRoomTest {
         Assert.assertEquals(true, result);
     }
 }
-
-//Generated with love by TestMe :) Please report issues and submit feature requests at: http://weirddev.com/forum#!/testme
